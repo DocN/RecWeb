@@ -11,26 +11,51 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 //route imports
 import {RouterModule, Routes} from '@angular/router';
 import { LoginPortalComponent } from './login-portal/login-portal.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+
+//http crud
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
+
+//sessions
+import { SessionService } from './services/session.service';
+import { LogoutComponent } from './logout/logout.component';
 
 const appRoutes:Routes = [
   {
     path: 'login',
     component: LoginPortalComponent,
   },
+  {
+    path: 'logout',
+    component: LogoutComponent,
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+  },
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginPortalComponent
+    LoginPortalComponent,
+    DashboardComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
     MDBBootstrapModule.forRoot(),
     RouterModule.forRoot(appRoutes, {useHash: true}),
+    HttpClientModule,
+    HttpModule, 
+    FormsModule,
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
-  providers: [],
+  providers: [
+    SessionService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
