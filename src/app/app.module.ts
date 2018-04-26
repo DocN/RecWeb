@@ -23,6 +23,9 @@ import { SessionService } from './services/session.service';
 import { LogoutComponent } from './logout/logout.component';
 import { NavbarComponent } from './dashboard-modules/navbar/navbar.component';
 
+//Json Service
+import { GetJsonService } from './services/get-json.service';
+
 const appRoutes:Routes = [
   {
     path: 'login',
@@ -57,6 +60,7 @@ const appRoutes:Routes = [
   schemas: [ NO_ERRORS_SCHEMA ],
   providers: [
     SessionService,
+    GetJsonService,
   ],
   bootstrap: [AppComponent]
 })
