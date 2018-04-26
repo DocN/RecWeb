@@ -21,6 +21,7 @@ import { HttpModule } from '@angular/http';
 //sessions
 import { SessionService } from './services/session.service';
 import { LogoutComponent } from './logout/logout.component';
+import { NavbarComponent } from './dashboard-modules/navbar/navbar.component';
 
 const appRoutes:Routes = [
   {
@@ -42,7 +43,8 @@ const appRoutes:Routes = [
     AppComponent,
     LoginPortalComponent,
     DashboardComponent,
-    LogoutComponent
+    LogoutComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,

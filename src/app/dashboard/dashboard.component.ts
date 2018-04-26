@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SessionService } from '../services/session.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,8 +9,13 @@ import { SessionService } from '../services/session.service';
 })
 export class DashboardComponent implements OnInit {
   private active = '';
-  constructor(private session:SessionService) { 
+  //https://fontawesome.bootstrapcheatsheets.com/
+  constructor(private router:Router, private session:SessionService) { 
     this.active = this.session.getActive();
+    console.log(this.active);
+    if(!this.active) {
+      this.router.navigate(['/login']);
+    }
   }
 
   ngOnInit() {
