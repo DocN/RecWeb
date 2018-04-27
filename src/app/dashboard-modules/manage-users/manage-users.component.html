@@ -1,0 +1,98 @@
+<div class="container-fluid">
+
+  <div *ngIf="this.route == 0">
+    <div class="row">
+      <div class="topMargin"></div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <div class="card selectionCardRight pull-right" (click)="goToExternal()">
+            <i class="iconSpecsExternal fa fa-user fa-fw"></i>
+            Manage External Users
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="card selectionCardLeft pull-left" (click)="goToInternal()">
+          <i class="iconSpecsInternal fa fa-user fa-fw"></i>
+          Manage Internal Users
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="this.route == 1 && this.subRoute == 0">
+    <div class="row">
+      <div class="col-3"></div>
+      <div class="col-6 centerElement">
+        <div class="box">
+          <div class="card selectionCardRight pull-left" (click)="goCreateInternal()">
+            <i class="iconSpecsInternal fa fa-user-circle fa-fw"></i>
+            Add User
+          </div>
+        </div>
+        <div class="box">
+          <div class="card selectionCardRight pull-left" (click)="goToExternal()">
+            <i class="iconSpecsInternal fa fa-trash-o fa-fw"></i>
+            Delete User
+          </div>
+        </div>
+        <div class="box">
+          <div class="card selectionCardRight pull-left" (click)="goToExternal()">
+            <i class="iconSpecsInternal fa fa-user fa-fw"></i>
+            Edit User
+          </div>
+        </div>
+      </div>
+      <div class="col-3"></div>
+    </div>
+  </div>
+  <div *ngIf="this.route == 1 && this.subRoute == 1">
+    <div class="row">
+    </div>
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col-8">
+        <div class="card addAccountCard">
+          <h1 class="addAccountTitle">Creating Internal Account</h1>
+          <div class="card-body">
+            <div class="addAccountFont">
+              Username: <br>
+              <input name="intusername" [(ngModel)]="model.intusername" #username="ngModel" type="text">
+            </div>
+            <div class="addAccountFont">
+              Password: <br>
+              <input name="intpassword" [(ngModel)]="model.intpassword" #username="ngModel" type="password">
+            </div>
+            <div class="addAccountFont">
+              Re-type Password: <br>
+              <input name="intrepassword" [(ngModel)]="model.intrepassword" #username="ngModel" type="password">
+            </div>
+            <div class="namecontain">
+              <div class="addAccountFont">
+                First Name: <br>
+                <input name="intfirstname" [(ngModel)]="model.intfirstname" #username="ngModel" type="text">
+              </div>
+              <div class="addAccountFont">
+                Last Name: <br>
+                <input name="intlastname" [(ngModel)]="model.intlastname" #username="ngModel" type="text">
+              </div>
+            </div>
+            <div class="addAccountFont">
+              Access Level <br>
+              <select #accessSelector class="mdb-select" (change)="setInterSelectorAccessLevel(accessSelector.value)">
+                  <option value="1">Level 1 - Administrator </option>
+                  <option value="2">Level 2 - Receptionist </option>
+                  <option value="3">Level 3 - Instructor </option>
+              </select>
+            </div>
+            <div class="addAccountFont pull-right">
+              <button type="button" class="createButton btn btn-success" (click)="registerInternalAccount()">Create Account</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-2"></div>
+  </div>
+  <div *ngIf="this.route == 2 && this.subRoute == 0">
+    external
+  </div>
+</div>

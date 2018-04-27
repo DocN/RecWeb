@@ -22,6 +22,7 @@ export class SessionService {
     this.uid = this.currentSession["uid"];
     this.username = this.currentSession["username"];
     this.authLevel = this.currentSession["authLevel"];
+    console.log(this.authLevel);
     this.firstname = this.currentSession["firstname"];
     this.lastname = this.currentSession["lastname"];
     this.active = this.currentSession["active"];
@@ -40,7 +41,7 @@ export class SessionService {
   logout() {
     this.uid = '';
     this.username = '';
-    this.authLevel = '';
+    this.authLevel = '100';
     this.firstname = '';
     this.lastname = '';
     this.active = '';

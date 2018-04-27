@@ -14,12 +14,14 @@ export class DashboardComponent implements OnInit {
   private moduleNames: any[] = [];
   private moduleIcons: any[] = [];
   private moduleRoutes: any[] = [];
+  private currentRoute;
+  private currentTitle = 'Dashboard';
 
   //https://fontawesome.bootstrapcheatsheets.com
   
   constructor(private router:Router, private http: HttpClient, private session:SessionService, private jsonURL:GetJsonService) { 
     this.active = this.session.getActive();
-    console.log(this.active);
+
     if(!this.active) {
       this.router.navigate(['/login']);
     }
@@ -43,9 +45,13 @@ export class DashboardComponent implements OnInit {
               count = count +1;
             }
             for(let i = 0; i< count; i++) {
-              this.moduleNames.push(res[i].name);
-              this.moduleIcons.push(res[i].icon);
-              this.moduleRoutes.push(res[i].route);
+              console.log(this.session.getAuthLevel());
+              console.log(res[i].minAccessLevel);
+              if(Number(res[i].minAccessLevel) >= Number(this.session.getAuthLevel())) {
+                this.moduleNames.push(res[i].name);
+                this.moduleIcons.push(res[i].icon);
+                this.moduleRoutes.push(res[i].route);
+              }
             }
           }
           
@@ -56,5 +62,17 @@ export class DashboardComponent implements OnInit {
         }
     );
   }
+
+  goTo($event) {
+    console.log($event);
+    this.currentRoute = $event;
+    if($event == '/') {
+      this.currentTitle = "Dashboard";
+    }
+    else if($event == '/users') {
+      this.currentTitle = "Manage Users";
+    }
+  }
+
 
 }

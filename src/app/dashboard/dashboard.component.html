@@ -2,20 +2,20 @@
   <app-navbar></app-navbar>
   <div class="container-fluid">
     <div class="row">
-      <div class="col-3">
+      <div class="col-2">
         <div class="leftNav">
           <div class="moduleNavContainer">
-              <div class="moduleNav">
-                <i class="fa fa-home fa-fw"></i> Dashboard
-              </div>
-              <div class="moduleNav">
-                <i class="fa fa-user fa-fw"></i> Manage Users
-              </div>
-              <div class="moduleNav">
-                <i class="fa fa-pencil-square-o fa-fw"></i> Manage Schedule
+              <div class="moduleNav" *ngFor="let moduleName of moduleNames;let i = index">
+                <div class="selectRoute" (click)="goTo(moduleRoutes[i])"><i class="fa {{moduleIcons[i]}} fa-fw"></i> {{moduleName}} </div>
               </div>
           </div>
         </div>
+      </div>
+      <div class="col-10">
+        <div class="fragTitle">{{currentTitle}}</div>
+          <div *ngIf="this.currentRoute == '/users'">
+              <app-manage-users></app-manage-users>
+          </div>
       </div>
     </div>
   </div>
