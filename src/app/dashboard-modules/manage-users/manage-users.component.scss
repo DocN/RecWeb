@@ -37,11 +37,14 @@
     margin-right:auto;
 }
 
+.iconContainer {
+    width:100%;
+}
+
 .addAccountCard {
     padding:40px;
     margin-left:auto;
     margin-right:auto;
-    height:1000px;
     width:100%;
 }
 
@@ -52,7 +55,7 @@
 
 .addAccountFont {
     font-weight:350;
-    font-size:40px;
+    font-size:30px;
 }
 
 .spacerLeft {
@@ -68,3 +71,7 @@
     width:200px;
 }
 
+
+.bgtest {
+    background-color:red;
+}

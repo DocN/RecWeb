@@ -21,28 +21,30 @@
   </div>
   <div *ngIf="this.route == 1 && this.subRoute == 0">
     <div class="row">
-      <div class="col-3"></div>
-      <div class="col-6 centerElement">
-        <div class="box">
-          <div class="card selectionCardRight pull-left" (click)="goCreateInternal()">
-            <i class="iconSpecsInternal fa fa-user-circle fa-fw"></i>
-            Add User
+      <div class="col-2"></div>
+      <div class="col-8">
+        <div class="row">
+          <div class="col-4">
+            <div class="card selectionCardRight" (click)="goCreateInternal()">
+              <i class="iconSpecsInternal fa fa-user-circle fa-fw"></i>
+              Add User
           </div>
-        </div>
-        <div class="box">
-          <div class="card selectionCardRight pull-left" (click)="goToExternal()">
-            <i class="iconSpecsInternal fa fa-trash-o fa-fw"></i>
-            Delete User
           </div>
-        </div>
-        <div class="box">
-          <div class="card selectionCardRight pull-left" (click)="goToExternal()">
-            <i class="iconSpecsInternal fa fa-user fa-fw"></i>
-            Edit User
+          <div class="col-4">
+            <div class="card selectionCardRight" (click)="goToExternal()">
+              <i class="iconSpecsInternal fa fa-trash-o fa-fw"></i>
+              Delete User
+            </div>
           </div>
+          <div class="col-4">
+            <div class="card selectionCardRight" (click)="goToExternal()">
+              <i class="iconSpecsInternal fa fa-user fa-fw"></i>
+              Edit User
+            </div>         
+          </div>    
         </div>
       </div>
-      <div class="col-3"></div>
+      <div class="col-2"></div>
     </div>
   </div>
   <div *ngIf="this.route == 1 && this.subRoute == 1">
