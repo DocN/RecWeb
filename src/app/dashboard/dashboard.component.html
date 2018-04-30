@@ -12,8 +12,8 @@
         </div>
       </div>
       <div class="col-10">
-        <div class="fragTitle">{{currentTitle}}</div>
-          <div *ngIf="this.currentRoute == '/users'">
+        <div class="fragTitle">{{this.dashroute.currentTitle}} <hr></div>
+          <div *ngIf="this.dashroute.currentRoute == '/users'">
               <app-manage-users></app-manage-users>
           </div>
       </div>

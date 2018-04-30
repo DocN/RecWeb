@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SessionService } from '../services/session.service';
 import { GetJsonService } from '../services/get-json.service';
+import { DashrouteService } from '../services/dashroute.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
@@ -14,12 +15,10 @@ export class DashboardComponent implements OnInit {
   private moduleNames: any[] = [];
   private moduleIcons: any[] = [];
   private moduleRoutes: any[] = [];
-  private currentRoute;
-  private currentTitle = 'Dashboard';
 
   //https://fontawesome.bootstrapcheatsheets.com
   
-  constructor(private router:Router, private http: HttpClient, private session:SessionService, private jsonURL:GetJsonService) { 
+  constructor(private router:Router, private http: HttpClient, private session:SessionService, private jsonURL:GetJsonService, private dashroute:DashrouteService) { 
     this.active = this.session.getActive();
 
     if(!this.active) {
@@ -65,14 +64,12 @@ export class DashboardComponent implements OnInit {
 
   goTo($event) {
     console.log($event);
-    this.currentRoute = $event;
+    this.dashroute.currentRoute = $event;
     if($event == '/') {
-      this.currentTitle = "Dashboard";
+      this.dashroute.currentTitle = "Dashboard";
     }
     else if($event == '/users') {
-      this.currentTitle = "Manage Users";
+      this.dashroute.currentTitle = "Manage Users";
     }
   }
-
-
 }

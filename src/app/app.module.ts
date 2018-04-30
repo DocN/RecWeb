@@ -26,6 +26,7 @@ import { NavbarComponent } from './dashboard-modules/navbar/navbar.component';
 //Json Service
 import { GetJsonService } from './services/get-json.service';
 import { ManageUsersComponent } from './dashboard-modules/manage-users/manage-users.component';
+import { DashrouteService } from './services/dashroute.service';
 
 const appRoutes:Routes = [
   {
@@ -63,6 +64,7 @@ const appRoutes:Routes = [
   providers: [
     SessionService,
     GetJsonService,
+    DashrouteService
   ],
   bootstrap: [AppComponent]
 })

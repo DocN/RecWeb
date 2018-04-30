@@ -21,6 +21,9 @@
   </div>
   <div *ngIf="this.route == 1 && this.subRoute == 0">
     <div class="row">
+      <div class="topMargin"></div>
+    </div>
+    <div class="row">
       <div class="col-2"></div>
       <div class="col-8">
         <div class="row">
@@ -37,7 +40,7 @@
             </div>
           </div>
           <div class="col-4">
-            <div class="card selectionCardRight" (click)="goToExternal()">
+            <div class="card selectionCardRight" (click)="goEditInternal()">
               <i class="iconSpecsInternal fa fa-user fa-fw"></i>
               Edit User
             </div>         
@@ -55,10 +58,16 @@
       <div class="col-8">
         <div class="card addAccountCard">
           <h1 class="addAccountTitle">Creating Internal Account</h1>
+          <div class="errorsTable">
+            {{validusername}}
+          </div>
+          <div class="errorsTable" *ngFor="let currentError of formErrors">
+            {{currentError}}
+          </div>
           <div class="card-body">
             <div class="addAccountFont">
               Username: <br>
-              <input name="intusername" [(ngModel)]="model.intusername" #username="ngModel" type="text">
+              <input name="intusername" [(ngModel)]="model.intusername" #username="ngModel" type="text" (keyup)="validateInternalUsername()">
             </div>
             <div class="addAccountFont">
               Password: <br>
@@ -94,7 +103,55 @@
       </div>
       <div class="col-2"></div>
   </div>
-  <div *ngIf="this.route == 2 && this.subRoute == 0">
-    external
+</div>
+
+<div *ngIf="this.route == 1 && this.subRoute == 2">
+  <div class="container">
+    <div class="row">
+      <div class="topMargin"></div>
+    </div>
+    <div class="row">
+      <div class="greenhighlight">
+        <i class="fa fa-check-square-o fa-fw"></i> {{successMessageInternal}}
+      </div>
+    </div>
+    <div class="row">
+      <div class="returntodashbutton" (click)="goToDashboard()"><i class="fa fa-arrow-left fa-fw"></i>Return to Dashboard</div>
+    </div>
   </div>
+</div>
+
+<div *ngIf="this.route == 1 && this.subRoute == 3">
+  <table class="table table-hover table-dark">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">First</th>
+        <th scope="col">Last</th>
+        <th scope="col">Handle</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>Jacob</td>
+        <td>Thornton</td>
+        <td>@fat</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td colspan="2">Larry the Bird</td>
+        <td>@twitter</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div *ngIf="this.route == 2 && this.subRoute == 0">
+  external
 </div>
