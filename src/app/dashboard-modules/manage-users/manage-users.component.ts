@@ -36,6 +36,17 @@ export class ManageUsersComponent implements OnInit {
   private usernameList = [];
   private firstnameList = [];
   private lastnameList = [];
+  private authLevelList = [];
+  private activeList = [];
+
+  private selectedID = '0';
+  private selected: any = {};
+  private selectedUsername = '';
+  private selectedUserID = '';
+  private selectedFirstname = '';
+  private selectedLastname = '';
+  private selectedAuthLevel = '';
+  private selectedActive = '';
 
   ngOnInit() {
   }
@@ -179,7 +190,7 @@ export class ManageUsersComponent implements OnInit {
   }
 
   getInternalUserTable() {
-    let data = {'user': this.model.intusername};
+    let data = {};
     this.http.post(this.jsonURL.getInternalUserTableURL(), data)
       .subscribe(
         (res) => {
@@ -187,7 +198,18 @@ export class ManageUsersComponent implements OnInit {
             return;
           }
           if(res.toString() != "") {
-            console.log(res);
+            var count = 0;
+            while(res[count] != null) {
+              count = count +1;
+            }
+            for(let i =0; i < count; i++) {
+              this.userIDList.push(res[i].UID);
+              this.usernameList.push(res[i].username);
+              this.firstnameList.push(res[i].firstname);
+              this.lastnameList.push(res[i].lastname);
+              this.authLevelList.push(res[i].authLevel);
+              this.activeList.push(res[i].active);
+            }
           }
         },
         err => {
@@ -196,4 +218,24 @@ export class ManageUsersComponent implements OnInit {
         }
     );
   }
+
+  selectInternalUser($event) {
+    var currentID = $event["srcElement"]["id"];
+    currentID = currentID.slice(8);
+    console.log(currentID + "here");
+    this.selectedID = currentID;
+    this.subRoute = '4';
+    this.route = '1';
+
+    this.selected.username = this.usernameList[currentID];
+    this.selected.userID = this.userIDList[currentID];
+    this.selected.firstname = this.firstnameList[currentID];
+    this.selected.lastname = this.lastnameList[currentID];
+    this.selected.authLevel = this.authLevelList[currentID];
+    this.selected.active = this.activeList[currentID];
+  }
+  
+  editAuthLevel($val) {
+    this.selected.authLevel = $val;
+  }  
 }
