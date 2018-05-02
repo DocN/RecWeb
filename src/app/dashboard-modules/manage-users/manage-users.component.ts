@@ -47,6 +47,8 @@ export class ManageUsersComponent implements OnInit {
   private selectedLastname = '';
   private selectedAuthLevel = '';
   private selectedActive = '';
+  private changeInternalPW = 0;
+  private changeInternalPWError = '';
 
   ngOnInit() {
   }
@@ -238,4 +240,22 @@ export class ManageUsersComponent implements OnInit {
   editAuthLevel($val) {
     this.selected.authLevel = $val;
   }  
+
+  changeInternalPasswordBtn() {
+    if(this.changeInternalPW == 0) {
+      this.changeInternalPW = 1;
+    }
+    else {
+      this.changeInternalPW = 0;
+    }
+  }
+
+  changeUserInternalPassword() {
+    if(this.changeInternalPW == 1) {
+
+    }
+    else {
+
+    }
+  }
 }

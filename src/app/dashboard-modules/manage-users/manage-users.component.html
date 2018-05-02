@@ -178,6 +178,7 @@
               <div class="rowItem"><div class="editcurrentTitle">Username: </div><input name="selectedUsername" [(ngModel)]="selected.username" #selectedUsername="ngModel" class="editInputbox" type="text" readonly></div>
               <div class="rowItem"><div class="editcurrentTitle">First Name:</div><input name="selectedFirstname" [(ngModel)]="selected.firstname" #selectedFirstname="ngModel" class="editInputbox" type="text"></div>
               <div class="rowItem"><div class="editcurrentTitle">Last name:</div><input name="selectedLastname" [(ngModel)]="selected.lastname" #selectedLastname="ngModel" class="editInputbox" type="text"></div>
+              
               <div class="rowItem">
               <div class="editcurrentTitle">Access Level: </div>
                 <select #accessSelector class="mdb-select accessBoxFrame" (change)="editAuthLevel(accessSelector.value)">
@@ -197,6 +198,17 @@
                       <option value="3" selected>Level 3 - Instructor </option>
                     </ng-template>
                 </select>
+              </div>
+              <div class="rowItem">
+                <button type="button" class="btn btn-info changepwButton" (click)="changeInternalPasswordBtn()">Reset Password</button>
+              </div>
+            </div>
+            <div class="col-6">
+              <div *ngIf="this.changeInternalPW == 1" class="changePasswordFrame animated fadeIn">
+                <div class="rowItem">{{changeInternalPWError}}</div>
+                <div class="rowItem"><div class="editcurrentTitle">New Password: </div><input name="selectedNewPasword" [(ngModel)]="selected.newPassword" #selectedNewPasword="ngModel" class="editInputbox" type="text"></div>
+                <div class="rowItem"><div class="editcurrentTitle">Re-type New Password: </div><input name="selectedNewRePasword" [(ngModel)]="selected.newRePassword" #selectedNewRePasword="ngModel" class="editInputbox" type="text"></div>
+                <div class="rowItem"><button type="button" class="btn btn-success changepwButton" (click)="changeUserInternalPassword()">Change Password</button></div>
               </div>
             </div>
           </div>
