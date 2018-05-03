@@ -47,8 +47,9 @@ export class ManageUsersComponent implements OnInit {
   private selectedLastname = '';
   private selectedAuthLevel = '';
   private selectedActive = '';
-  private changeInternalPW = 0;
-  private changeInternalPWError = '';
+  private changeInternalPW = 1;
+  private changeInternalPWResponse = '';
+  private changepasswordStatus = 0;
 
   ngOnInit() {
   }
@@ -238,6 +239,7 @@ export class ManageUsersComponent implements OnInit {
   }
   
   editAuthLevel($val) {
+    console.log("here " + $val);
     this.selected.authLevel = $val;
   }  
 
@@ -252,10 +254,68 @@ export class ManageUsersComponent implements OnInit {
 
   changeUserInternalPassword() {
     if(this.changeInternalPW == 1) {
-
+      if(!this.selected.newPassword || this.selected.newPassword.length < 5) {
+        this.changeInternalPWResponse = "Invalid password, please enter a password with 5 characters or more";
+        this.changepasswordStatus = 0;
+        return;
+      }
+      //check if the password is the same
+      if(this.selected.newRePassword == this.selected.newPassword) {
+        var newepassword = crypto.MD5(this.selected.newPassword + this.selected.username).toString();
+        let data = {'user': this.selected.username, 'userid': this.selected.userID, 'newepassword': newepassword};
+        this.http.post(this.jsonURL.getChangeInternalUserPWURL(), data)
+          .subscribe(
+            (res) => {
+              if(!res) {
+                console.log("failed to make changes");
+                return;
+              }
+              if(res.toString() != "") {
+                if(res['valid'] == '1') {
+                  this.changeInternalPWResponse = "Password Successfully Changed";
+                  this.changepasswordStatus = 1;
+                }
+                else {
+                  this.changeInternalPWResponse = "Password Change Failed";
+                  this.changepasswordStatus = 0;
+                }
+              }
+            },
+            err => {
+              console.log(err);
+              //finish loading
+            }
+        );
+      }
+      else {
+        this.changeInternalPWResponse = "The specified passwords do not match";
+        this.changepasswordStatus = 0;
+      }
     }
     else {
-
+      
     }
+  }
+
+  editUserDetailsApply() {
+    let data = {'username': this.selected.username, 'UID': this.selected.userID, 'authLevel': this.selected.authLevel, 'firstname' : this.selected.firstname, 'lastname' : this.selected.lastname};
+    this.http.post(this.jsonURL.getApplyInternalUserChangesURL(), data)
+      .subscribe(
+        (res) => {
+          if(!res) {
+            return;
+          }
+          if(res.toString() != "") {
+            if(res['valid'] == '1') {
+              this.successMessageInternal = "Changes Successfully Applied!";
+              this.subRoute = '5';
+            }
+          }
+        },
+        err => {
+          console.log(err);
+          //finish loading
+        }
+    );
   }
 }

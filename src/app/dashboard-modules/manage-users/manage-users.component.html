@@ -120,6 +120,7 @@
     </div>
   </div>
 </div>
+
 <!-- User internal table -->
 <div *ngIf="this.route == 1 && this.subRoute == 3">
   <div class="row">
@@ -199,17 +200,20 @@
                     </ng-template>
                 </select>
               </div>
-              <div class="rowItem">
-                <button type="button" class="btn btn-info changepwButton" (click)="changeInternalPasswordBtn()">Reset Password</button>
-              </div>
             </div>
             <div class="col-6">
-              <div *ngIf="this.changeInternalPW == 1" class="changePasswordFrame animated fadeIn">
-                <div class="rowItem">{{changeInternalPWError}}</div>
-                <div class="rowItem"><div class="editcurrentTitle">New Password: </div><input name="selectedNewPasword" [(ngModel)]="selected.newPassword" #selectedNewPasword="ngModel" class="editInputbox" type="text"></div>
-                <div class="rowItem"><div class="editcurrentTitle">Re-type New Password: </div><input name="selectedNewRePasword" [(ngModel)]="selected.newRePassword" #selectedNewRePasword="ngModel" class="editInputbox" type="text"></div>
+              <div *ngIf="this.changeInternalPW == 1" class="changePasswordFrame">
+                <div class="rowItem successColor" *ngIf="this.changepasswordStatus == 1">{{changeInternalPWResponse}}</div>
+                <div class="rowItem errorColor" *ngIf="this.changepasswordStatus == 0">{{changeInternalPWResponse}}</div>
+                <div class="rowItem"><div class="editcurrentTitle">New Password: </div><input name="selectedNewPasword" [(ngModel)]="selected.newPassword" #selectedNewPasword="ngModel" class="editInputbox" type="password"></div>
+                <div class="rowItem"><div class="editcurrentTitle">Re-type New Password: </div><input name="selectedNewRePasword" [(ngModel)]="selected.newRePassword" #selectedNewRePasword="ngModel" class="editInputbox" type="password"></div>
                 <div class="rowItem"><button type="button" class="btn btn-success changepwButton" (click)="changeUserInternalPassword()">Change Password</button></div>
               </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <button type="button" class="btn btn-success changepwButton pull-right" (click)="editUserDetailsApply()">Apply Changes</button>
             </div>
           </div>
         </div>
@@ -218,6 +222,23 @@
     <div class="col-1"></div>
   </div>
 </div>
+
+<div *ngIf="this.route == 1 && this.subRoute == 5">
+  <div class="container">
+    <div class="row">
+      <div class="topMargin"></div>
+    </div>
+    <div class="row">
+      <div class="greenhighlight">
+        <i class="fa fa-check-square-o fa-fw"></i> {{successMessageInternal}}
+      </div>
+    </div>
+    <div class="row">
+      <div class="returntodashbutton" (click)="goToDashboard()"><i class="fa fa-arrow-left fa-fw"></i>Return to Dashboard</div>
+    </div>
+  </div>
+</div>
+
 <div *ngIf="this.route == 2 && this.subRoute == 0">
   external
 </div>
