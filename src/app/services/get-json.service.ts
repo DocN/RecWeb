@@ -8,6 +8,10 @@ export class GetJsonService {
   private getUserInternalListURL = 'http://127.0.0.1/bcitrec/getInternalUsers.php';
   private changeInternalUserPWURL = 'http://127.0.0.1/bcitrec/updateUserInternalPassword.php';
   private applyInternalUserChangesURL = 'http://127.0.0.1/bcitrec/updateUserInternalEdit.php';
+  private registerExternalUserURL = 'http://127.0.0.1/bcitrec/external/addExternalUser.php';
+  private validateExtuserURL = 'http://127.0.0.1/bcitrec/external/validateExternalUser.php';
+  private extUsersTableURL = 'http://127.0.0.1/bcitrec/external/getExternalUsers.php';
+  
   constructor() { }
 
   getAdminModulesURL() {
@@ -30,5 +34,14 @@ export class GetJsonService {
   }
   getApplyInternalUserChangesURL() {
     return this.applyInternalUserChangesURL;
+  }
+  getRegisterExternalUserURL() {
+    return this.registerExternalUserURL;
+  }
+  getValidateExtuserURL() {
+    return this.validateExtuserURL;
+  }
+  getExtUsersTableURL() {
+    return this.extUsersTableURL;
   }
 }

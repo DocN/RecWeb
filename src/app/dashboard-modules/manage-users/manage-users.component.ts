@@ -15,6 +15,11 @@ export class ManageUsersComponent implements OnInit {
   private route = '0';
   private subRoute = '0';
 
+
+  //validation patterns
+  emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
+  balancePattern = "^(0|[1-9][0-9]*)$";
+
   //internal add account vars
   private intusername = '';
   private intpassword = '';
@@ -51,7 +56,20 @@ export class ManageUsersComponent implements OnInit {
   private changeInternalPWResponse = '';
   private changepasswordStatus = 0;
 
+  //external user variables
+  private externalCreateUser: any = {};
+  private extFormErrors = 0;
+
+  private extUserTable: any = {};
+
   ngOnInit() {
+    this.externalCreateUser.balance = 0;
+    this.extUserTable.UID = [];
+    this.extUserTable.email = [];
+    this.extUserTable.firstname = [];
+    this.extUserTable.lastname = [];
+    this.extUserTable.balance = [];
+    this.extUserTable.active = [];
   }
 
   goToInternal() {
@@ -72,6 +90,16 @@ export class ManageUsersComponent implements OnInit {
     this.route = '2';
     this.subRoute = '0';
   }
+
+  goCreateExternal() {
+    this.subRoute = '1';
+  }
+
+  goEditExternal() {
+    this.getExtUserTable();
+    this.subRoute = '3';
+  }
+
   
   setInterSelectorAccessLevel($val) {
     this.intaccessLevel = $val;
@@ -318,4 +346,114 @@ export class ManageUsersComponent implements OnInit {
         }
     );
   }
+
+  setCredit0() {
+    this.externalCreateUser.balance = 0;
+  }
+  setCredit10() {
+    this.externalCreateUser.balance = 10;
+  }
+  setCredit20() {
+    this.externalCreateUser.balance = 20;
+  }
+
+  registerExternalUser() {
+    //validate form
+    this.validateExtForm();
+    var randomPin = (Math.floor(Math.random() * 10000) + 10000).toString().substring(1);
+    console.log(randomPin);
+    var activeAccount = 1;
+    //no validation issues begin account creation
+    if(this.extFormErrors == 0) {
+      var newEpin = crypto.MD5(randomPin + this.externalCreateUser.email).toString();
+      let data = {'email': this.externalCreateUser.email, 'ePin': newEpin, 'firstname': this.externalCreateUser.firstname, 'lastname': this.externalCreateUser.lastname,'active': activeAccount,  'balance': this.externalCreateUser.balance};
+      this.http.post(this.jsonURL.getRegisterExternalUserURL(), data)
+        .subscribe(
+          (res) => {
+            if(!res) {
+              console.log("failed to register");
+              return;
+            }
+            if(res.toString() != "") {
+              console.log(res["message"]);
+              this.successMessageInternal = res["message"];
+              this.subRoute = '2';
+            }
+          },
+          err => {
+            console.log(err);
+            //finish loading
+          }
+      );
+    }
+  }
+
+  validateExtForm() {
+    this.extFormErrors = 0;
+    this.formErrors = [];
+    if(!this.externalCreateUser.firstname ||this.externalCreateUser.firstname.length < 1) {
+      this.formErrors.push("*Please enter a first name");
+      this.extFormErrors = 1;
+    }
+    if(!this.externalCreateUser.lastname || this.externalCreateUser.lastname.length < 1) {
+      this.formErrors.push("*Please enter a last name");
+      this.extFormErrors = 1;
+    }
+    if(!this.externalCreateUser.email) {
+      this.extFormErrors = 1;
+    }
+    if(!this.externalCreateUser.email || this.externalCreateUser.email.length < 5) {
+      this.formErrors.push("*Please enter a valid email address");
+      this.extFormErrors =1;
+    }
+  }
+
+
+  /*
+
+                this.userIDList.push(res[i].UID);
+              this.usernameList.push(res[i].username);
+              this.firstnameList.push(res[i].firstname);
+              this.lastnameList.push(res[i].lastname);
+              this.authLevelList.push(res[i].authLevel);
+              this.activeList.push(res[i].active);
+  */
+  getExtUserTable() {
+    this.extUserTable.UID = [];
+    this.extUserTable.email = [];
+    this.extUserTable.firstname = [];
+    this.extUserTable.lastname = [];
+    this.extUserTable.balance = [];
+    this.extUserTable.active = [];
+
+    let data = {};
+    this.http.post(this.jsonURL.getExtUsersTableURL(), data)
+      .subscribe(
+        (res) => {
+          if(!res) {
+            return;
+          }
+          if(res.toString() != "") {
+            var count = 0;
+            while(res[count] != null) {
+              count = count +1;
+            }
+            for(let i =0; i < count; i++) {
+              this.extUserTable.UID.push(res[i].UID);
+              this.extUserTable.email.push(res[i].email);
+              this.extUserTable.firstname.push(res[i].firstname);
+              this.extUserTable.lastname.push(res[i].lastname);
+              this.extUserTable.balance.push(res[i].balance);
+              this.extUserTable.active.push(res[i].active);
+            }
+          }
+        },
+        err => {
+          console.log(err);
+          //finish loading
+        }
+    );
+  }
+
+
 }
