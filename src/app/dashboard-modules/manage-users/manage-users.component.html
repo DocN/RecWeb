@@ -275,115 +275,158 @@
   </div>
 </div>
 
-<!-- Account creation External -->
-<div *ngIf="this.route == 2 && this.subRoute == 1">
-  <div class="row">
-    <div class="col-2"></div>
-    <div class="col-8">
-      <div class="card addAccountCard">
-        <h1 class="addAccountTitle">Creating External Account</h1>
-        <div class="errorsTable">
-          {{validusername}}
-          <div *ngIf="extemail.errors?.pattern"> 
-            *Invalid Email
-          </div> 
-          <div *ngIf="extbeginbalance.errors?.pattern"> 
-            *Invalid initial credit balance
-          </div> 
-        </div>
-        <div class="errorsTable" *ngFor="let currentError of formErrors">
-          {{currentError}}
-        </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-6">
-              <div class="addAccountFont">
-                  Email: <br>
-                  <input name="extemail" [(ngModel)]="externalCreateUser.email" #extemail="ngModel" type="email" [pattern]="emailPattern">
-                </div>
-                <div class="namecontain">
-                  <div class="addAccountFont">
-                    First Name: <br>
-                    <input name="extfirstname" [(ngModel)]="externalCreateUser.firstname" #extfirstname="ngModel" type="text">
+  <!-- Account creation External -->
+  <div *ngIf="this.route == 2 && this.subRoute == 1">
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col-8">
+        <div class="card addAccountCard">
+          <h1 class="addAccountTitle">Creating External Account</h1>
+          <div class="errorsTable">
+            {{validusername}}
+            <div *ngIf="extemail.errors?.pattern"> 
+              *Invalid Email
+            </div> 
+            <div *ngIf="extbeginbalance.errors?.pattern"> 
+              *Invalid initial credit balance
+            </div> 
+          </div>
+          <div class="errorsTable" *ngFor="let currentError of formErrors">
+            {{currentError}}
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-6">
+                <div class="addAccountFont">
+                    Email: <br>
+                    <input name="extemail" [(ngModel)]="externalCreateUser.email" #extemail="ngModel" type="email" [pattern]="emailPattern">
                   </div>
-                  <div class="addAccountFont">
-                    Last Name: <br>
-                    <input name="extlastname" [(ngModel)]="externalCreateUser.lastname" #extlastname="ngModel" type="text">
+                  <div class="namecontain">
+                    <div class="addAccountFont">
+                      First Name: <br>
+                      <input name="extfirstname" [(ngModel)]="externalCreateUser.firstname" #extfirstname="ngModel" type="text">
+                    </div>
+                    <div class="addAccountFont">
+                      Last Name: <br>
+                      <input name="extlastname" [(ngModel)]="externalCreateUser.lastname" #extlastname="ngModel" type="text">
+                    </div>
                   </div>
-                </div>
-            </div>
-            <div class="col-6">
-              <div class="addAccountFont">Initial Credits</div>
-              <button type="button" class="leftButton btn btn-primary" (click)="setCredit0()">0 Credits</button>
-              <button type="button" class="btn btn-warning" (click)="setCredit10()">10 Credits</button>
-              <button type="button" class="btn btn-info" (click)="setCredit20()">20 Credits</button>
+              </div>
+              <div class="col-6">
+                <div class="addAccountFont">Initial Credits</div>
+                <button type="button" class="leftButton btn btn-primary" (click)="setCredit0()">0 Credits</button>
+                <button type="button" class="btn btn-warning" (click)="setCredit10()">10 Credits</button>
+                <button type="button" class="btn btn-info" (click)="setCredit20()">20 Credits</button>
 
-              <div class="addAccountFont">
-                <input name="extbeginbalance" [(ngModel)]="externalCreateUser.balance" [pattern]="balancePattern" #extbeginbalance="ngModel" type="number">
+                <div class="addAccountFont">
+                  <input name="extbeginbalance" [(ngModel)]="externalCreateUser.balance" [pattern]="balancePattern" #extbeginbalance="ngModel" type="number">
+                </div>
+              </div>
+            </div>
+
+            <div class="addAccountFont pull-right">
+              <button type="button" class="createButton btn btn-success" (click)="registerExternalUser()">Create Account</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-2"></div>
+    </div>
+  </div>
+
+
+  <!-- Account creation Message after -->
+  <div *ngIf="this.route == 2 && this.subRoute == 2">
+    <div class="container">
+      <div class="row">
+        <div class="topMargin"></div>
+      </div>
+      <div class="row">
+        <div class="greenhighlight">
+          <i class="fa fa-check-square-o fa-fw"></i> {{successMessageInternal}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="returntodashbutton" (click)="goToDashboard()"><i class="fa fa-arrow-left fa-fw"></i>Return to Dashboard</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- External user table -->
+  <div *ngIf="this.route == 2 && this.subRoute == 3">
+  <div class="row">
+      <div class="col-1"></div>
+      <div class="col-10">
+        <div class="card">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">UID</th>
+                <th scope="col">Email</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Balance</th>
+                <th scope="col">Active</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let currentUser of extUserTable.UID;let i = index">
+                <th scope="row">{{currentUser}}</th>
+                <td>{{extUserTable.email[i]}}</td>
+                <td>{{extUserTable.firstname[i]}}</td>
+                <td>{{extUserTable.lastname[i]}}</td>
+                <td>{{extUserTable.balance[i]}}</td>
+                <td>{{extUserTable.active[i]}}</td>
+                <td><div id="editUser{{i}}" class="editUser" (click)="selectExtUser($event)"><i class="fa fa-pencil fa-fw"></i> Edit User</div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-1"></div>
+    </div>
+  </div>
+  <!-- editing an external user page 
+    this.extSelected.userID = this.extUserTable.UID[currentID];
+    this.extSelected.email = this.extUserTable.email[currentID];
+    this.extSelected.firstname = this.extUserTable.firstname[currentID];
+    this.extSelected.lastname = this.extUserTable.lastname[currentID];
+    this.extSelected.balance = this.extUserTable.balance[currentID];
+    this.extSelected.active = this.extUserTable.active[currentID];
+  -->
+  <div *ngIf="this.route == 2 && this.subRoute == 4">
+    <div class="row">
+      <div class="col-1"></div>
+      <div class="col-10">
+        <div class="card editUserCard">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-6">
+                <div class="rowItem"><div class="editcurrentTitle">User ID: </div><input name="extSelectedUserID" [(ngModel)]="extSelected.userID" #extSelectedUserID="ngModel" class="editInputbox" type="text" readonly></div>
+                <div class="rowItem"><div class="editcurrentTitle">Email: </div><input name="extSelectedEmail" [(ngModel)]="extSelected.email" #extSelectedEmail="ngModel" class="editInputbox" type="text" readonly></div>
+                <div class="rowItem"><div class="editcurrentTitle">First Name:</div><input name="extSelectedFirstname" [(ngModel)]="extSelected.firstname" #extSelectedFirstname="ngModel" class="editInputbox" type="text"></div>
+                <div class="rowItem"><div class="editcurrentTitle">Last name:</div><input name="extSelectedLastname" [(ngModel)]="extSelected.lastname" #extSelectedLastname="ngModel" class="editInputbox" type="text"></div>
+              </div>
+              <div class="col-6">
+                <div *ngIf="this.changeInternalPW == 1" class="changePasswordFrame">
+                  <div class="rowItem successColor" *ngIf="this.changepasswordStatus == 1">{{changeInternalPWResponse}}</div>
+                  <div class="rowItem errorColor" *ngIf="this.changepasswordStatus == 0">{{changeInternalPWResponse}}</div>
+                  <div class="rowItem"><div class="editcurrentTitle">New Password: </div><input name="selectedNewPasword" [(ngModel)]="selected.newPassword" #selectedNewPasword="ngModel" class="editInputbox" type="password"></div>
+                  <div class="rowItem"><div class="editcurrentTitle">Re-type New Password: </div><input name="selectedNewRePasword" [(ngModel)]="selected.newRePassword" #selectedNewRePasword="ngModel" class="editInputbox" type="password"></div>
+                  <div class="rowItem"><button type="button" class="btn btn-success changepwButton" (click)="changeUserInternalPassword()">Change Password</button></div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <button type="button" class="btn btn-success changepwButton pull-right" (click)="editUserDetailsApply()">Apply Changes</button>
               </div>
             </div>
           </div>
-
-          <div class="addAccountFont pull-right">
-            <button type="button" class="createButton btn btn-success" (click)="registerExternalUser()">Create Account</button>
-          </div>
         </div>
       </div>
+      <div class="col-1"></div>
     </div>
-    <div class="col-2"></div>
-  </div>
-</div>
-
-
-<!-- Account creation Message after -->
-<div *ngIf="this.route == 2 && this.subRoute == 2">
-  <div class="container">
-    <div class="row">
-      <div class="topMargin"></div>
-    </div>
-    <div class="row">
-      <div class="greenhighlight">
-        <i class="fa fa-check-square-o fa-fw"></i> {{successMessageInternal}}
-      </div>
-    </div>
-    <div class="row">
-      <div class="returntodashbutton" (click)="goToDashboard()"><i class="fa fa-arrow-left fa-fw"></i>Return to Dashboard</div>
-    </div>
-  </div>
-</div>
-
-
-<!-- External user table -->
-<div *ngIf="this.route == 2 && this.subRoute == 3">
-<div class="row">
-    <div class="col-1"></div>
-    <div class="col-10">
-      <div class="card">
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th scope="col">UID</th>
-              <th scope="col">Email</th>
-              <th scope="col">First Name</th>
-              <th scope="col">Last Name</th>
-              <th scope="col">Balance</th>
-              <th scope="col">Active</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let currentUser of extUserTable.UID;let i = index">
-              <th scope="row">{{currentUser}}</th>
-              <td>{{extUserTable.email[i]}}</td>
-              <td>{{extUserTable.firstname[i]}}</td>
-              <td>{{extUserTable.lastname[i]}}</td>
-              <td>{{extUserTable.balance[i]}}</td>
-              <td>{{extUserTable.active[i]}}</td>
-              <td><div id="editUser{{i}}" class="editUser" (click)="selectInternalUser($event)"><i class="fa fa-pencil fa-fw"></i> Edit User</div></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div class="col-1"></div>
   </div>
 </div>

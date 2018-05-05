@@ -61,6 +61,7 @@ export class ManageUsersComponent implements OnInit {
   private extFormErrors = 0;
 
   private extUserTable: any = {};
+  private extSelected: any = {};
 
   ngOnInit() {
     this.externalCreateUser.balance = 0;
@@ -453,6 +454,22 @@ export class ManageUsersComponent implements OnInit {
           //finish loading
         }
     );
+  }
+
+  selectExtUser($event) {
+    var currentID = $event["srcElement"]["id"];
+    currentID = currentID.slice(8);
+    console.log(currentID + "here");
+    this.selectedID = currentID;
+    this.subRoute = '4';
+    this.route = '2';
+
+    this.extSelected.userID = this.extUserTable.UID[currentID];
+    this.extSelected.email = this.extUserTable.email[currentID];
+    this.extSelected.firstname = this.extUserTable.firstname[currentID];
+    this.extSelected.lastname = this.extUserTable.lastname[currentID];
+    this.extSelected.balance = this.extUserTable.balance[currentID];
+    this.extSelected.active = this.extUserTable.active[currentID];
   }
 
 
