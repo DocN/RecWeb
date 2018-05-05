@@ -59,9 +59,12 @@ export class ManageUsersComponent implements OnInit {
   //external user variables
   private externalCreateUser: any = {};
   private extFormErrors = 0;
+  private extTempPin = '';
 
   private extUserTable: any = {};
   private extSelected: any = {};
+  private resetDisplayPin = '';
+  private resetPinStatus = 0;
 
   ngOnInit() {
     this.externalCreateUser.balance = 0;
@@ -363,6 +366,7 @@ export class ManageUsersComponent implements OnInit {
     this.validateExtForm();
     var randomPin = (Math.floor(Math.random() * 10000) + 10000).toString().substring(1);
     console.log(randomPin);
+    this.extTempPin = randomPin;
     var activeAccount = 1;
     //no validation issues begin account creation
     if(this.extFormErrors == 0) {
@@ -472,5 +476,72 @@ export class ManageUsersComponent implements OnInit {
     this.extSelected.active = this.extUserTable.active[currentID];
   }
 
+  resetCurrentExtUserPin() {
+    var randomPin = (Math.floor(Math.random() * 10000) + 10000).toString().substring(1);
+    this.resetDisplayPin = randomPin;
+    this.resetPinStatus = 1;
+
+    var newEpin = crypto.MD5(randomPin + this.extSelected.email).toString();
+
+    let data = {'email': this.extSelected.email, 'userid': this.extSelected.userID, 'newepin': newEpin};
+    this.http.post(this.jsonURL.getResetExtPinURL(), data)
+      .subscribe(
+        (res) => {
+          if(!res) {
+            console.log("failed to make changes");
+            return;
+          }
+          if(res.toString() != "") {
+            if(res['valid'] == '1') {
+              this.changeInternalPWResponse = "Pin Successfully Changed";
+              console.log(this.changeInternalPWResponse);
+              this.changepasswordStatus = 1;
+            }
+            else {
+              
+              this.changeInternalPWResponse = "Pin Change Failed";
+              console.log(this.changeInternalPWResponse);
+              this.changepasswordStatus = 0;
+            }
+          }
+        },
+        err => {
+          console.log(err);
+          //finish loading
+        }
+    );
+  }
+
+  setExtCredit0() {
+    this.extSelected.balance = 0;
+  }
+  setExtCredit10() {
+    this.extSelected.balance = 10;
+  }
+  setExtCredit20() {
+    this.extSelected.balance = 20;
+  }
+
+  editUserExtDetailsApply() {
+    let data = {'email': this.extSelected.email, 'userid': this.extSelected.userID, 'firstname' : this.extSelected.firstname, 'lastname' : this.extSelected.lastname, 'balance': this.extSelected.balance};
+    this.http.post(this.jsonURL.getApplyAccountURL(), data)
+      .subscribe(
+        (res) => {
+          if(!res) {
+            return;
+          }
+          if(res.toString() != "") {
+            if(res['valid'] == '1') {
+              this.successMessageInternal = "Changes Successfully Applied!";
+              this.subRoute = '5';
+            }
+          }
+        },
+        err => {
+          console.log(err);
+          //finish loading
+        }
+    );
+  }
 
 }

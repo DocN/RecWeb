@@ -11,6 +11,8 @@ export class GetJsonService {
   private registerExternalUserURL = 'http://127.0.0.1/bcitrec/external/addExternalUser.php';
   private validateExtuserURL = 'http://127.0.0.1/bcitrec/external/validateExternalUser.php';
   private extUsersTableURL = 'http://127.0.0.1/bcitrec/external/getExternalUsers.php';
+  private resetPin = 'http://127.0.0.1/bcitrec/external/resetExtPin.php';
+  private applyAccountURL = "http://127.0.0.1/bcitrec/external/updateExtUserEdit.php";
   
   constructor() { }
 
@@ -43,5 +45,11 @@ export class GetJsonService {
   }
   getExtUsersTableURL() {
     return this.extUsersTableURL;
+  }
+  getResetExtPinURL() {
+    return this.resetPin;
+  }
+  getApplyAccountURL() {
+    return this.applyAccountURL;
   }
 }

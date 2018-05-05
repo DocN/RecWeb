@@ -347,6 +347,11 @@
         </div>
       </div>
       <div class="row">
+        <div class="greenhighlight">
+          New Temporary Pin Number: {{extTempPin}}
+        </div>
+      </div>
+      <div class="row">
         <div class="returntodashbutton" (click)="goToDashboard()"><i class="fa fa-arrow-left fa-fw"></i>Return to Dashboard</div>
       </div>
     </div>
@@ -409,18 +414,31 @@
                 <div class="rowItem"><div class="editcurrentTitle">Last name:</div><input name="extSelectedLastname" [(ngModel)]="extSelected.lastname" #extSelectedLastname="ngModel" class="editInputbox" type="text"></div>
               </div>
               <div class="col-6">
-                <div *ngIf="this.changeInternalPW == 1" class="changePasswordFrame">
-                  <div class="rowItem successColor" *ngIf="this.changepasswordStatus == 1">{{changeInternalPWResponse}}</div>
-                  <div class="rowItem errorColor" *ngIf="this.changepasswordStatus == 0">{{changeInternalPWResponse}}</div>
-                  <div class="rowItem"><div class="editcurrentTitle">New Password: </div><input name="selectedNewPasword" [(ngModel)]="selected.newPassword" #selectedNewPasword="ngModel" class="editInputbox" type="password"></div>
-                  <div class="rowItem"><div class="editcurrentTitle">Re-type New Password: </div><input name="selectedNewRePasword" [(ngModel)]="selected.newRePassword" #selectedNewRePasword="ngModel" class="editInputbox" type="password"></div>
-                  <div class="rowItem"><button type="button" class="btn btn-success changepwButton" (click)="changeUserInternalPassword()">Change Password</button></div>
+                <div class="row">
+                    <div class="rowItem"><div class="editcurrentTitle centerText">Reset Pin Number</div></div>
+                    <div class="rowItem">
+                      <div *ngIf="this.resetPinStatus == 1">
+                        <div class="greenhighlight">New Temporary Pin {{resetDisplayPin}}</div>
+                      </div>
+                    </div>
+                    <button type="button" class="btn btn-success buttonCenter" (click)="resetCurrentExtUserPin()">Reset Temporary Pin</button>
+                </div>
+                <div class="row">
+                  <div class="rowItem"><div class="editcurrentTitle centerText">Adjust Credits</div></div>
+                </div>
+                <div class="row">
+                  <button type="button" class="leftButton btn btn-primary" (click)="setExtCredit0()">0 Credits</button>
+                  <button type="button" class="btn btn-warning" (click)="setExtCredit10()">10 Credits</button>
+                  <button type="button" class="btn btn-info" (click)="setExtCredit20()">20 Credits</button>
+                </div>
+                <div class="row">
+                  <input name="extbeginbalance" [(ngModel)]="extSelected.balance" [pattern]="balancePattern" #extbeginbalance="ngModel" type="number">
                 </div>
               </div>
             </div>
             <div class="row">
               <div class="col-12">
-                <button type="button" class="btn btn-success changepwButton pull-right" (click)="editUserDetailsApply()">Apply Changes</button>
+                <button type="button" class="btn btn-success changepwButton pull-right" (click)="editUserExtDetailsApply()">Apply Changes</button>
               </div>
             </div>
           </div>
