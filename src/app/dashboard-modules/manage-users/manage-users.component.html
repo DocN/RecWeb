@@ -1,5 +1,4 @@
 <div class="container-fluid">
-
   <div *ngIf="this.route == 0">
     <div class="row">
       <div class="topMargin"></div>
@@ -143,7 +142,12 @@
               <td>{{lastnameList[i]}}</td>
               <td>{{authLevelList[i]}}</td>
               <td>{{activeList[i]}}</td>
+              <div *ngIf="currentUser != '43ce3424-c3a1-466b-819c-e298e9914427'">
               <td><div id="editUser{{i}}" class="editUser" (click)="selectInternalUser($event)"><i class="fa fa-pencil fa-fw"></i> Edit User</div></td>
+              </div>
+              <div *ngIf="currentUser == '43ce3424-c3a1-466b-819c-e298e9914427'">
+              <td><div id="editUser{{i}}" class="editUser"><i class="fa fa-pencil fa-fw"></i> Edit User</div></td>
+              </div>
             </tr>
           </tbody>
         </table>

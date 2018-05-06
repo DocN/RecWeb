@@ -63,13 +63,17 @@ export class DashboardComponent implements OnInit {
   }
 
   goTo($event) {
-    console.log($event);
+    console.log($event);    
     this.dashroute.currentRoute = $event;
+
     if($event == '/') {
       this.dashroute.currentTitle = "Dashboard";
     }
     else if($event == '/users') {
       this.dashroute.currentTitle = "Manage Users";
+    }
+    else if($event == '/instructors') {
+      this.dashroute.currentTitle = "Manage Instructors";
     }
   }
 }

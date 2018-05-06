@@ -27,6 +27,7 @@ import { NavbarComponent } from './dashboard-modules/navbar/navbar.component';
 import { GetJsonService } from './services/get-json.service';
 import { ManageUsersComponent } from './dashboard-modules/manage-users/manage-users.component';
 import { DashrouteService } from './services/dashroute.service';
+import { ManageInstructorsComponent } from './dashboard-modules/manage-instructors/manage-instructors.component';
 
 const appRoutes:Routes = [
   {
@@ -51,6 +52,7 @@ const appRoutes:Routes = [
     LogoutComponent,
     NavbarComponent,
     ManageUsersComponent,
+    ManageInstructorsComponent,
   ],
   imports: [
     BrowserModule,
