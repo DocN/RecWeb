@@ -37,7 +37,7 @@
           <div class="col-6">
             <div class="card selectionCardLeft pull-left" (click)="goEditInternal()">
               <i class="iconSpecsInternal fa fa-user fa-fw"></i>
-              Edit User
+              Edit Users
             </div>         
           </div>    
         </div>
@@ -122,6 +122,23 @@
   <div class="row">
     <div class="col-1"></div>
     <div class="col-10">
+      <div class="searchTitle pull-left">Search By: </div>
+      <select #accessSelector class="mdb-select searchBoxSelectFrame pull-left" (change)="setEditFilter(accessSelector.value)">
+          <option value="1" selected>UID </option>
+          <option value="2">User Name</option>
+          <option value="3">First Name</option>
+          <option value="4">Last Name</option>
+      </select>
+      <input name="filterIntValue" [(ngModel)]="filter.value" #filterIntValue="ngModel" class="searchInputbox pull-left" type="text" (keyup)="applyEditIntFilter()">
+    </div>
+    <div class="col-1"></div>
+  </div>
+  <div class="row">
+    <div class="padSpacing50"></div>
+  </div>
+  <div class="row">
+    <div class="col-1"></div>
+    <div class="col-10">
       <div class="card">
         <table class="table table-hover">
           <thead>
@@ -132,20 +149,22 @@
               <th scope="col">Last Name</th>
               <th scope="col">Access Level</th>
               <th scope="col">Active</th>
+              <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let currentUser of userIDList;let i = index">
-              <th scope="row">{{currentUser}}</th>
-              <td>{{usernameList[i]}}</td>
-              <td>{{firstnameList[i]}}</td>
-              <td>{{lastnameList[i]}}</td>
-              <td>{{authLevelList[i]}}</td>
-              <td>{{activeList[i]}}</td>
-              <div *ngIf="currentUser != '43ce3424-c3a1-466b-819c-e298e9914427'">
+              <th *ngIf="this.filteredList[i] == 1" scope="row">{{currentUser}}</th>
+              <td *ngIf="this.filteredList[i] == 1">{{usernameList[i]}}</td>
+              <td *ngIf="this.filteredList[i] == 1">{{firstnameList[i]}}</td>
+              <td *ngIf="this.filteredList[i] == 1">{{lastnameList[i]}}</td>
+              <td *ngIf="this.filteredList[i] == 1">{{authLevelList[i]}}</td>
+              <td *ngIf="this.filteredList[i] == 1">{{activeList[i]}}</td>
+              <div *ngIf="currentUser != '43ce3424-c3a1-466b-819c-e298e9914427' && this.filteredList[i] == 1">
               <td><div id="editUser{{i}}" class="editUser" (click)="selectInternalUser($event)"><i class="fa fa-pencil fa-fw"></i> Edit User</div></td>
               </div>
-              <div *ngIf="currentUser == '43ce3424-c3a1-466b-819c-e298e9914427'">
+              <!-- disable editing on master account -->
+              <div *ngIf="currentUser == '43ce3424-c3a1-466b-819c-e298e9914427' && this.filteredList[i] == 1">
               <td><div id="editUser{{i}}" class="editUser"><i class="fa fa-pencil fa-fw"></i> Edit User</div></td>
               </div>
             </tr>
@@ -260,7 +279,7 @@
         <div class="col-6">
           <div class="card selectionCardLeft pull-left" (click)="goEditExternal()">
             <i class="iconSpecsExternal fa fa-user fa-fw"></i>
-            Edit User
+            Edit Users
           </div>         
         </div>    
       </div>
@@ -354,7 +373,25 @@
 
   <!-- External user table -->
   <div *ngIf="this.route == 2 && this.subRoute == 3">
-  <div class="row">
+    <div class="row">
+      <div class="col-1"></div>
+      <div class="col-10">
+        <div class="searchTitle pull-left">Search By: </div>
+        <select #accessSelector class="mdb-select searchBoxSelectFrame pull-left" (change)="setEditExtFilter(accessSelector.value)">
+            <option value="1" selected>UID </option>
+            <option value="2">Email</option>
+            <option value="3">First Name</option>
+            <option value="4">Last Name</option>
+            <option value="5">Balance</option>
+        </select>
+        <input name="filterIntValue" [(ngModel)]="extFilter.value" #filterIntValue="ngModel" class="searchInputbox pull-left" type="text" (keyup)="applyEditExtFilter()">
+      </div>
+      <div class="col-1"></div>
+    </div>
+    <div class="row">
+      <div class="padSpacing50"></div>
+    </div>
+    <div class="row">
       <div class="col-1"></div>
       <div class="col-10">
         <div class="card">
@@ -371,13 +408,13 @@
             </thead>
             <tbody>
               <tr *ngFor="let currentUser of extUserTable.UID;let i = index">
-                <th scope="row">{{currentUser}}</th>
-                <td>{{extUserTable.email[i]}}</td>
-                <td>{{extUserTable.firstname[i]}}</td>
-                <td>{{extUserTable.lastname[i]}}</td>
-                <td>{{extUserTable.balance[i]}}</td>
-                <td>{{extUserTable.active[i]}}</td>
-                <td><div id="editUser{{i}}" class="editUser" (click)="selectExtUser($event)"><i class="fa fa-pencil fa-fw"></i> Edit User</div></td>
+                <th scope="row" *ngIf="this.extUserTable.filtered[i] == 1">{{currentUser}}</th>
+                <td *ngIf="this.extUserTable.filtered[i] == 1">{{extUserTable.email[i]}}</td>
+                <td *ngIf="this.extUserTable.filtered[i] == 1">{{extUserTable.firstname[i]}}</td>
+                <td *ngIf="this.extUserTable.filtered[i] == 1">{{extUserTable.lastname[i]}}</td>
+                <td *ngIf="this.extUserTable.filtered[i] == 1">{{extUserTable.balance[i]}}</td>
+                <td *ngIf="this.extUserTable.filtered[i] == 1">{{extUserTable.active[i]}}</td>
+                <td *ngIf="this.extUserTable.filtered[i] == 1"><div id="editUser{{i}}" class="editUser" (click)="selectExtUser($event)"><i class="fa fa-pencil fa-fw"></i> Edit User</div></td>
               </tr>
             </tbody>
           </table>
@@ -386,14 +423,7 @@
       <div class="col-1"></div>
     </div>
   </div>
-  <!-- editing an external user page 
-    this.extSelected.userID = this.extUserTable.UID[currentID];
-    this.extSelected.email = this.extUserTable.email[currentID];
-    this.extSelected.firstname = this.extUserTable.firstname[currentID];
-    this.extSelected.lastname = this.extUserTable.lastname[currentID];
-    this.extSelected.balance = this.extUserTable.balance[currentID];
-    this.extSelected.active = this.extUserTable.active[currentID];
-  -->
+  <!-- editing an external user page -->
   <div *ngIf="this.route == 2 && this.subRoute == 4">
     <div class="row">
       <div class="col-1"></div>

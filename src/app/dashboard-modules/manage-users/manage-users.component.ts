@@ -43,6 +43,10 @@ export class ManageUsersComponent implements OnInit {
   private lastnameList = [];
   private authLevelList = [];
   private activeList = [];
+  private filteredList = [];
+  //filter
+  private editFilter = 1;
+  private filter: any = {};
 
   private selectedID = '0';
   private selected: any = {};
@@ -68,6 +72,10 @@ export class ManageUsersComponent implements OnInit {
 
   private hideDeleteFrame = '1';
 
+  //ext filter
+  private extFilter: any = {};
+  private editExtFilter = 1;
+
   ngOnInit() {
     this.externalCreateUser.balance = 0;
     this.extUserTable.UID = [];
@@ -76,6 +84,7 @@ export class ManageUsersComponent implements OnInit {
     this.extUserTable.lastname = [];
     this.extUserTable.balance = [];
     this.extUserTable.active = [];
+    this.extUserTable.filtered = [];
   }
 
   goToInternal() {
@@ -246,6 +255,7 @@ export class ManageUsersComponent implements OnInit {
               this.lastnameList.push(res[i].lastname);
               this.authLevelList.push(res[i].authLevel);
               this.activeList.push(res[i].active);
+              this.filteredList.push(1);
             }
           }
         },
@@ -452,6 +462,7 @@ export class ManageUsersComponent implements OnInit {
               this.extUserTable.lastname.push(res[i].lastname);
               this.extUserTable.balance.push(res[i].balance);
               this.extUserTable.active.push(res[i].active);
+              this.extUserTable.filtered.push(1);
             }
           }
         },
@@ -577,4 +588,107 @@ export class ManageUsersComponent implements OnInit {
         }
     );
   }
+
+  setEditFilter($val) {
+    //selected filter values
+    this.editFilter = $val;
+    this.applyEditIntFilter();
+  }
+
+  applyEditIntFilter() {
+    this.resetFilter();
+    var filterOption = this.editFilter;
+    var currentFilter = this.filter.value.toString().toLowerCase();
+    for(let i =0; i < this.filteredList.length; i++) {
+      //uid filter
+      if(filterOption == 1) {
+        var currentVal = this.userIDList[i].toString().toLowerCase();
+        if(currentVal.indexOf(currentFilter) == -1) {
+          this.filteredList[i] = 0;
+        }
+      } 
+      //username filter
+      else if(filterOption == 2) {
+        var currentVal = this.usernameList[i].toString().toLowerCase();
+        if(currentVal.indexOf(currentFilter) == -1) {
+          this.filteredList[i] = 0;
+        }
+      }
+      //firstname filter
+      else if(filterOption == 3) {
+        var currentVal = this.firstnameList[i].toString().toLowerCase();
+        if(currentVal.indexOf(currentFilter) == -1) {
+          this.filteredList[i] = 0;
+        }
+      } 
+      //lastname filter
+      else if(filterOption == 4) {
+        var currentVal = this.lastnameList[i].toString().toLowerCase();
+        if(currentVal.indexOf(currentFilter) == -1) {
+          this.filteredList[i] = 0;
+        }
+      }
+    }
+  }
+  
+  resetFilter() {
+    for(let i =0; i < this.filteredList.length; i++) {
+      this.filteredList[i] = 1;
+    }
+  }
+
+  setEditExtFilter($val) {
+    //selected filter values
+    this.editExtFilter = $val;
+    this.applyEditExtFilter();
+  }
+
+  resetExtFilter() {
+    for(let i =0; i < this.extUserTable.filtered.length; i++) {
+      this.extUserTable.filtered[i] = 1;
+    }
+  }
+
+  applyEditExtFilter() {
+    this.resetExtFilter();
+    var filterOption = this.editExtFilter;
+    var currentFilter = this.extFilter.value.toString().toLowerCase();
+    for(let i =0; i < this.extUserTable.filtered.length; i++) {
+      //uid filter
+      if(filterOption == 1) {
+        var currentVal = this.extUserTable.UID[i].toString().toLowerCase();
+        if(currentVal.indexOf(currentFilter) == -1) {
+          this.extUserTable.filtered[i] = 0;
+        }
+      } 
+      //Email filter
+      else if(filterOption == 2) {
+        var currentVal = this.extUserTable.email[i].toString().toLowerCase();
+        if(currentVal.indexOf(currentFilter) == -1) {
+          this.extUserTable.filtered[i] = 0;
+        }
+      }
+      //First filter
+      else if(filterOption == 3) {
+        var currentVal = this.extUserTable.firstname[i].toString().toLowerCase();
+        if(currentVal.indexOf(currentFilter) == -1) {
+          this.extUserTable.filtered[i] = 0;
+        }
+      } 
+      //Last filter
+      else if(filterOption == 4) {
+        var currentVal = this.extUserTable.lastname[i].toString().toLowerCase();
+        if(currentVal.indexOf(currentFilter) == -1) {
+          this.extUserTable.filtered[i] = 0;
+        }
+      }
+      else if(filterOption == 5) {
+        var currentVal = this.extUserTable.balance[i].toString().toLowerCase();
+        if(currentVal.indexOf(currentFilter) == -1) {
+          this.extUserTable.filtered[i] = 0;
+        }
+      }
+    }
+  }
+
 }
