@@ -278,8 +278,8 @@
   <!-- Account creation External -->
   <div *ngIf="this.route == 2 && this.subRoute == 1">
     <div class="row">
-      <div class="col-2"></div>
-      <div class="col-8">
+      <div class="col-1"></div>
+      <div class="col-10">
         <div class="card addAccountCard">
           <h1 class="addAccountTitle">Creating External Account</h1>
           <div class="errorsTable">
@@ -330,7 +330,7 @@
           </div>
         </div>
       </div>
-      <div class="col-2"></div>
+      <div class="col-1"></div>
     </div>
   </div>
 
@@ -412,6 +412,12 @@
                 <div class="rowItem"><div class="editcurrentTitle">Email: </div><input name="extSelectedEmail" [(ngModel)]="extSelected.email" #extSelectedEmail="ngModel" class="editInputbox" type="text" readonly></div>
                 <div class="rowItem"><div class="editcurrentTitle">First Name:</div><input name="extSelectedFirstname" [(ngModel)]="extSelected.firstname" #extSelectedFirstname="ngModel" class="editInputbox" type="text"></div>
                 <div class="rowItem"><div class="editcurrentTitle">Last name:</div><input name="extSelectedLastname" [(ngModel)]="extSelected.lastname" #extSelectedLastname="ngModel" class="editInputbox" type="text"></div>
+                <div class="rowItem"><button type="button" class="btn btn-danger nofluff" (click)="confirmDeleteExt()">Delete Account</button></div>
+                <div *ngIf="this.hideDeleteFrame == 0" class="rowItem">
+                    <div class="editcurrentTitle">Are you sure you want to delete this account?</div>
+                    <button type="button" class="btn btn-warning nofluff" (click)="deleteExtAccount()">Yes </button>
+                    <button type="button" class="btn btn-warning nofluff" (click)="confirmDeleteExt()">No </button>
+                  </div>
               </div>
               <div class="col-6">
                 <div class="row">
@@ -445,6 +451,23 @@
         </div>
       </div>
       <div class="col-1"></div>
+    </div>
+  </div>
+
+  <!-- deleted sucessful message -->
+  <div *ngIf="this.route == 2 && this.subRoute == 5">
+    <div class="container">
+      <div class="row">
+        <div class="topMargin"></div>
+      </div>
+      <div class="row">
+        <div class="redHighlight">
+          <i class="fa fa-check-square-o fa-fw"></i> {{successMessageInternal}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="returntodashbutton" (click)="goToDashboard()"><i class="fa fa-arrow-left fa-fw"></i>Return to Dashboard</div>
+      </div>
     </div>
   </div>
 </div>

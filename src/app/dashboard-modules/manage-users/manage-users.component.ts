@@ -66,6 +66,8 @@ export class ManageUsersComponent implements OnInit {
   private resetDisplayPin = '';
   private resetPinStatus = 0;
 
+  private hideDeleteFrame = '1';
+
   ngOnInit() {
     this.externalCreateUser.balance = 0;
     this.extUserTable.UID = [];
@@ -544,4 +546,35 @@ export class ManageUsersComponent implements OnInit {
     );
   }
 
+  confirmDeleteExt() {
+    if(this.hideDeleteFrame == '0') {
+      this.hideDeleteFrame = '1';
+    }
+    else {
+      this.hideDeleteFrame = '0';
+    }
+    
+  }
+  deleteExtAccount() {
+    let data = {'email': this.extSelected.email, 'userid': this.extSelected.userID};
+    this.http.post(this.jsonURL.getDeleteExtAccountURL(), data)
+      .subscribe(
+        (res) => {
+          if(!res) {
+            return;
+          }
+          if(res.toString() != "") {
+            console.log(res);
+            if(res['valid'] == '1') {
+              this.successMessageInternal = "Account successfully deleted";
+              this.subRoute = '5';
+            }
+          }
+        },
+        err => {
+          console.log(err);
+          //finish loading
+        }
+    );
+  }
 }

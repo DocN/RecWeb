@@ -13,6 +13,7 @@ export class GetJsonService {
   private extUsersTableURL = 'http://127.0.0.1/bcitrec/external/getExternalUsers.php';
   private resetPin = 'http://127.0.0.1/bcitrec/external/resetExtPin.php';
   private applyAccountURL = "http://127.0.0.1/bcitrec/external/updateExtUserEdit.php";
+  private deleteExtAccountURL = 'http://127.0.0.1/bcitrec/external/deleteExtUser.php';
   
   constructor() { }
 
@@ -51,5 +52,8 @@ export class GetJsonService {
   }
   getApplyAccountURL() {
     return this.applyAccountURL;
+  }
+  getDeleteExtAccountURL() {
+    return this.deleteExtAccountURL;
   }
 }
