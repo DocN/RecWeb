@@ -14,7 +14,8 @@ export class GetJsonService {
   private resetPin = 'http://127.0.0.1/bcitrec/external/resetExtPin.php';
   private applyAccountURL = "http://127.0.0.1/bcitrec/external/updateExtUserEdit.php";
   private deleteExtAccountURL = 'http://127.0.0.1/bcitrec/external/deleteExtUser.php';
-  
+  private uploadImageURL = 'http://127.0.0.1/bcitrec/instructor/upload.php';
+  private addInstructorURL = 'http://127.0.0.1/bcitrec/instructor/addInstructor.php';
   constructor() { }
 
   getAdminModulesURL() {
@@ -55,5 +56,12 @@ export class GetJsonService {
   }
   getDeleteExtAccountURL() {
     return this.deleteExtAccountURL;
+  }
+  getUploadImageURL() {
+    return this.uploadImageURL;
+  }
+
+  getAddInstructorURL() {
+    return this.addInstructorURL;
   }
 }

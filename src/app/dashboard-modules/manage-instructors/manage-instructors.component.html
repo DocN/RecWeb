@@ -1,3 +1,89 @@
-<p>
-  manage-instructors works!
-</p>
+<div class="container-fluid">
+  <div *ngIf="this.route == 1 && this.subRoute == 0">
+    <div class="row">
+      <div class="topMargin"></div>
+    </div>
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col-8">
+        <div class="row">
+          <div class="col-6">
+            <div class="card selectionCardRight pull-right" (click)="goCreateInstructor()">
+              <i class="iconSpecsInternal fa fa-id-badge fa-fw"></i>
+              Add Instructor
+          </div>
+          </div>
+
+          <div class="col-6">
+            <div class="card selectionCardLeft pull-left" (click)="goEditInstructor()">
+              <i class="iconSpecsInternal fa fa-address-book fa-fw"></i>
+              Edit Instructors
+            </div>         
+          </div>    
+        </div>
+      </div>
+      <div class="col-2"></div>
+    </div>
+  </div>
+
+  <div *ngIf="this.route == 2 && this.subRoute == 0">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+          <div class="card addAccountCard">
+            <h1 class="addAccountTitle">Adding an Instructor Account</h1>
+            <div class="errorsTable">
+              {{validusername}}
+            </div>
+            <div class="errorsTable" *ngFor="let currentError of formErrors">
+              {{currentError}}
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-6">
+                  <div class="namecontain">
+                    <div class="addAccountFont">
+                      First Name: <br>
+                      <input name="firstname" [(ngModel)]="model.firstname" #firstname="ngModel" type="text">
+                    </div>
+                    <div class="addAccountFont">
+                      Last Name: <br>
+                      <input name="lastname" [(ngModel)]="model.lastname" #lastname="ngModel" type="text">
+                    </div>
+                    <div class="addAccountFont">
+                      Instructor Bio: <br>
+                      <textarea class="bioframe" name="bioframe" [(ngModel)]="model.bioframe" #bioframe="ngModel" name="textarea">
+
+                      </textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="row">
+                    <div class="addAccountFontHeavy">Upload an Instructor Image</div>
+                  </div>
+                  <div class="row">
+                    <div class="imageContainer">
+                      <img class="imageContainer" src="{{currentImage}}">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label class="btn btn-default uploadButton">
+                        Upload an Image <input type="file" hidden (change)="uploadAnImage($event)">
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="padSpacing50"></div>
+              </div>
+              <div class="addAccountFont pull-right">
+                <button type="button" class="createButton btn btn-success" (click)="registerInstructor()">Add Instructor</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-2"></div>
+    </div>
+  </div>
+</div>
