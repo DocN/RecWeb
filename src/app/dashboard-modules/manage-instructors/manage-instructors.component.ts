@@ -58,7 +58,7 @@ export class ManageInstructorsComponent implements OnInit {
       }
     );
   }
-
+  //
   registerInstructor() {
     this.validate = true;
     //validate names
