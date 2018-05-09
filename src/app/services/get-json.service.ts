@@ -16,6 +16,7 @@ export class GetJsonService {
   private deleteExtAccountURL = 'http://127.0.0.1/bcitrec/external/deleteExtUser.php';
   private uploadImageURL = 'http://127.0.0.1/bcitrec/instructor/upload.php';
   private addInstructorURL = 'http://127.0.0.1/bcitrec/instructor/addInstructor.php';
+  private InstructorTableURL = 'http://127.0.0.1/bcitrec/instructor/getInstructors.php';
   constructor() { }
 
   getAdminModulesURL() {
@@ -63,5 +64,8 @@ export class GetJsonService {
 
   getAddInstructorURL() {
     return this.addInstructorURL;
+  }
+  getInstructorTableURL() {
+    return this.InstructorTableURL;
   }
 }

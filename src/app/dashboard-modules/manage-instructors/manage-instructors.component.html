@@ -107,26 +107,24 @@
   <!-- Edit instructor page -->
   <div *ngIf="this.route == 3 && this.subRoute == 0">
     <div class="row">
-      <div class="col-1"></div>
-      <div class="col-10">
+      <div class="col-2"></div>
+      <div class="col-8">
         <div class="searchTitle pull-left">Search By: </div>
-        <select #accessSelector class="mdb-select searchBoxSelectFrame pull-left" (change)="setEditExtFilter(accessSelector.value)">
-            <option value="1" selected>UID </option>
-            <option value="2">Email</option>
-            <option value="3">First Name</option>
-            <option value="4">Last Name</option>
-            <option value="5">Balance</option>
+        <select #accessSelector class="mdb-select searchBoxSelectFrame pull-left" (change)="setEditFilter(accessSelector.value)">
+            <option value="1" selected>Instructor ID </option>
+            <option value="2">First Name</option>
+            <option value="3">Last Name</option>
         </select>
-        <input name="filterIntValue" [(ngModel)]="extFilter.value" #filterIntValue="ngModel" class="searchInputbox pull-left" type="text" (keyup)="applyEditExtFilter()">
+        <input name="filterIntValue" [(ngModel)]="instructFilter.value" #filterIntValue="ngModel" class="searchInputbox pull-left" type="text" (keyup)="applyEditFilter()">
       </div>
-      <div class="col-1"></div>
+      <div class="col-2"></div>
     </div>
     <div class="row">
       <div class="padSpacing50"></div>
     </div>
     <div class="row">
-      <div class="col-1"></div>
-      <div class="col-10">
+      <div class="col-2"></div>
+      <div class="col-8">
         <div class="card">
           <table class="table table-hover">
             <thead>
@@ -137,20 +135,17 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let currentUser of extUserTable.UID;let i = index">
-                <th scope="row" *ngIf="this.extUserTable.filtered[i] == 1">{{currentUser}}</th>
-                <td *ngIf="this.extUserTable.filtered[i] == 1">{{extUserTable.email[i]}}</td>
-                <td *ngIf="this.extUserTable.filtered[i] == 1">{{extUserTable.firstname[i]}}</td>
-                <td *ngIf="this.extUserTable.filtered[i] == 1">{{extUserTable.lastname[i]}}</td>
-                <td *ngIf="this.extUserTable.filtered[i] == 1">{{extUserTable.balance[i]}}</td>
-                <td *ngIf="this.extUserTable.filtered[i] == 1">{{extUserTable.active[i]}}</td>
-                <td *ngIf="this.extUserTable.filtered[i] == 1"><div id="editUser{{i}}" class="editUser" (click)="selectExtUser($event)"><i class="fa fa-pencil fa-fw"></i> Edit User</div></td>
+              <tr *ngFor="let currentUser of instructorTable.instructorID;let i = index">
+                <th scope="row" *ngIf="this.instructorTable.filtered[i] == 1">{{currentUser}}</th>
+                <td *ngIf="this.instructorTable.filtered[i] == 1">{{instructorTable.firstname[i]}}</td>
+                <td *ngIf="this.instructorTable.filtered[i] == 1">{{instructorTable.lastname[i]}}</td>
+                <td *ngIf="this.instructorTable.filtered[i] == 1"><div id="editUser{{i}}" class="editUser" (click)="selectInstructor($event)"><i class="fa fa-pencil fa-fw"></i> Edit User</div></td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
-      <div class="col-1"></div>
+      <div class="col-2"></div>
     </div>
   </div>
 </div>

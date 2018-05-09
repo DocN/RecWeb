@@ -19,10 +19,15 @@ export class ManageInstructorsComponent implements OnInit {
   private formErrors = [];
   private successMessageInternal;
   private instructorTable: any = {};
-
+  private editFilter;
+  private instructFilter: any= {};
+  private instructorSelected: any={};
+  private selectedID;
+  
   constructor(private http: HttpClient, private jsonURL:GetJsonService, private dashroute:DashrouteService) { }
 
   ngOnInit() {
+    this.getInstructorTable();
     this.route = 1;
     this.subRoute = 0;
     this.currentImage = this.stockImage;
@@ -117,28 +122,83 @@ export class ManageInstructorsComponent implements OnInit {
     this.dashroute.currentTitle = "Dashboard";
   }
 
+  setEditFilter($val) {
+    //selected filter values
+    this.editFilter = $val;
+    this.applyEditFilter();
+  }
+  
+  resetExtFilter() {
+    for(let i =0; i < this.instructorTable.filtered.length; i++) {
+      this.instructorTable.filtered[i] = 1;
+    }
+  }
+
+  applyEditFilter() {
+    this.resetExtFilter();
+    var filterOption = this.editFilter;
+    if(!this.instructFilter.value) {
+      return;
+    }
+    var currentFilter = this.instructFilter.value.toString().toLowerCase();
+    for(let i =0; i < this.instructorTable.filtered.length; i++) {
+      //uid filter
+      if(filterOption == 1) {
+        if(!this.instructorTable.instructorID[i]) {
+          return;
+        }
+        var currentVal = this.instructorTable.instructorID[i].toString().toLowerCase();
+        if(currentVal.indexOf(currentFilter) == -1) {
+          this.instructorTable.filtered[i] = 0;
+        }
+      } 
+      //First filter
+      else if(filterOption == 2) {
+        if(!this.instructorTable.firstname[i]) {
+          return;
+        }
+        var currentVal = this.instructorTable.firstname[i].toString().toLowerCase();
+        if(currentVal.indexOf(currentFilter) == -1) {
+          this.instructorTable.filtered[i] = 0;
+        }
+      } 
+      //Last filter
+      else if(filterOption == 3) {
+        if(!this.instructorTable.lastname[i]) {
+          return;
+        }
+        var currentVal = this.instructorTable.lastname[i].toString().toLowerCase();
+        if(currentVal.indexOf(currentFilter) == -1) {
+          this.instructorTable.filtered[i] = 0;
+        }
+      }
+    }
+  }
+
   getInstructorTable() {
-    this.instructorTable.UID = [];
+    this.instructorTable.instructorID = [];
     this.instructorTable.firstname = [];
     this.instructorTable.lastname = [];
     this.instructorTable.photourl = [];
     this.instructorTable.bio = [];
     this.instructorTable.creationTime = [];
+    this.instructorTable.filtered = [];
 
     let data = {};
-    this.http.post(this.jsonURL.getExtUsersTableURL(), data)
+    this.http.post(this.jsonURL.getInstructorTableURL(), data)
       .subscribe(
         (res) => {
           if(!res) {
             return;
           }
           if(res.toString() != "") {
+            console.log(res);
             var count = 0;
             while(res[count] != null) {
               count = count +1;
             }
             for(let i =0; i < count; i++) {
-              this.instructorTable.UID.push(res[i].UID);
+              this.instructorTable.instructorID.push(res[i].instructorID);
               this.instructorTable.firstname.push(res[i].firstname);
               this.instructorTable.lastname.push(res[i].lastname);
               this.instructorTable.photourl.push(res[i].photourl);
@@ -153,6 +213,21 @@ export class ManageInstructorsComponent implements OnInit {
           //finish loading
         }
     );
+  }
+
+  selectInstructor($event) {
+    var currentID = $event["srcElement"]["id"];
+    currentID = currentID.slice(8);
+    this.selectedID = currentID;
+    this.subRoute = '1';
+    this.route = '3';
+
+    this.instructorSelected.instructorID = this.instructorTable.instructorID[currentID];
+    this.instructorSelected.firstname = this.instructorTable.firstname[currentID];
+    this.instructorSelected.lastname = this.instructorTable.lastname[currentID];
+    this.instructorSelected.photourl = this.instructorTable.photourl[currentID];
+    this.instructorSelected.bio = this.instructorTable.bio[currentID];
+    this.instructorSelected.creationTime = this.instructorTable.creationTime[currentID];
   }
 
 
