@@ -23,6 +23,7 @@ export class ManageInstructorsComponent implements OnInit {
   private instructFilter: any= {};
   private instructorSelected: any={};
   private selectedID;
+  private hideDeleteFrame;
   
   constructor(private http: HttpClient, private jsonURL:GetJsonService, private dashroute:DashrouteService) { }
 
@@ -31,6 +32,7 @@ export class ManageInstructorsComponent implements OnInit {
     this.route = 1;
     this.subRoute = 0;
     this.currentImage = this.stockImage;
+    this.editFilter = 1;
   }
   
   goCreateInstructor() {
@@ -201,7 +203,7 @@ export class ManageInstructorsComponent implements OnInit {
               this.instructorTable.instructorID.push(res[i].instructorID);
               this.instructorTable.firstname.push(res[i].firstname);
               this.instructorTable.lastname.push(res[i].lastname);
-              this.instructorTable.photourl.push(res[i].photourl);
+              this.instructorTable.photourl.push(res[i].photoURL);
               this.instructorTable.bio.push(res[i].bio);
               this.instructorTable.creationTime.push(res[i].creationTime);
               this.instructorTable.filtered.push(1);
@@ -223,11 +225,67 @@ export class ManageInstructorsComponent implements OnInit {
     this.route = '3';
 
     this.instructorSelected.instructorID = this.instructorTable.instructorID[currentID];
+    console.log(this.instructorSelected.instructorID);
     this.instructorSelected.firstname = this.instructorTable.firstname[currentID];
     this.instructorSelected.lastname = this.instructorTable.lastname[currentID];
     this.instructorSelected.photourl = this.instructorTable.photourl[currentID];
     this.instructorSelected.bio = this.instructorTable.bio[currentID];
     this.instructorSelected.creationTime = this.instructorTable.creationTime[currentID];
+    this.currentImage = this.instructorSelected.photourl;
+  }
+
+  confirmDeleteInstructor() {
+    if(this.hideDeleteFrame == '0') {
+      this.hideDeleteFrame = '1';
+    }
+    else {
+      this.hideDeleteFrame = '0';
+    }
+  }
+
+  deleteInstructor() {
+    let data = {'instructorID': this.instructorSelected.instructorID};
+    this.http.post(this.jsonURL.getDeleteInstructorURL(), data)
+      .subscribe(
+        (res) => {
+          if(!res) {
+            return;
+          }
+          if(res.toString() != "") {
+            console.log();
+            if(res['valid'] == '1') {
+              this.successMessageInternal = "Account successfully deleted";
+              this.subRoute = '2';
+            }
+          }
+        },
+        err => {
+          console.log(err);
+          //finish loading
+        }
+    );
+  }
+
+  editInstructorApply() {
+    let data = {'instructorID': this.instructorSelected.instructorID, 'firstname': this.instructorSelected.firstname, 'lastname': this.instructorSelected.lastname, 'photourl' : this.instructorSelected.photourl};
+    this.http.post(this.jsonURL.getUpdateInstructorURL(), data)
+      .subscribe(
+        (res) => {
+          if(!res) {
+            return;
+          }
+          if(res.toString() != "") {
+            if(res['valid'] == '1') {
+              this.successMessageInternal = "Changes Successfully Applied!";
+              this.subRoute = '3';
+            }
+          }
+        },
+        err => {
+          console.log(err);
+          //finish loading
+        }
+    );
   }
 
 

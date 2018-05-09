@@ -29,62 +29,60 @@
   <!-- Adding instructor -->
   <div *ngIf="this.route == 2 && this.subRoute == 0">
     <div class="row">
-        <div class="col-2"></div>
-        <div class="col-8">
-          <div class="card addAccountCard">
-            <h1 class="addAccountTitle">Adding an Instructor Account</h1>
-            <div class="errorsTable">
-              {{validusername}}
-            </div>
-            <div class="errorsTable" *ngFor="let currentError of formErrors">
-              {{currentError}}
-            </div>
-            <div class="card-body">
-              <div class="row">
-                <div class="col-6">
-                  <div class="namecontain">
-                    <div class="addAccountFont">
-                      First Name: <br>
-                      <input name="firstname" [(ngModel)]="model.firstname" #firstname="ngModel" type="text">
-                    </div>
-                    <div class="addAccountFont">
-                      Last Name: <br>
-                      <input name="lastname" [(ngModel)]="model.lastname" #lastname="ngModel" type="text">
-                    </div>
-                    <div class="addAccountFont">
-                      Instructor Bio: <br>
-                      <textarea class="bioframe" name="bioframe" [(ngModel)]="model.bioframe" #bioframe="ngModel" name="textarea">
-
-                      </textarea>
-                    </div>
+      <div class="col-1"></div>
+      <div class="col-10">
+        <div class="card addAccountCard">
+          <h1 class="addAccountTitle">Adding an Instructor Account</h1>
+          <div class="errorsTable">
+            {{validusername}}
+          </div>
+          <div class="errorsTable" *ngFor="let currentError of formErrors">
+            {{currentError}}
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-6">
+                <div class="namecontain">
+                  <div class="addAccountFont">
+                    First Name: <br>
+                    <input name="firstname" [(ngModel)]="model.firstname" #firstname="ngModel" type="text">
                   </div>
-                </div>
-                <div class="col-6">
-                  <div class="row">
-                    <div class="addAccountFontHeavy">Upload an Instructor Image</div>
+                  <div class="addAccountFont">
+                    Last Name: <br>
+                    <input name="lastname" [(ngModel)]="model.lastname" #lastname="ngModel" type="text">
                   </div>
-                  <div class="row">
-                    <div class="imageContainer">
-                      <img class="imageContainer" src="{{currentImage}}">
-                    </div>
-                  </div>
-                  <div class="row">
-                    <label class="btn btn-default uploadButton">
-                        Upload an Image <input type="file" hidden (change)="uploadAnImage($event)">
-                    </label>
+                  <div class="addAccountFont">
+                    Instructor Bio: <br>
+                    <textarea class="bioframe" name="bioframe" [(ngModel)]="model.bioframe" #bioframe="ngModel" name="textarea"></textarea>
                   </div>
                 </div>
               </div>
-              <div class="row">
-                <div class="padSpacing50"></div>
+              <div class="col-6">
+                <div class="row">
+                  <div class="addAccountFontHeavy">Upload an Instructor Image</div>
+                </div>
+                <div class="row">
+                  <div class="imageContainer">
+                    <img class="imageContainer" src="{{currentImage}}">
+                  </div>
+                </div>
+                <div class="row">
+                  <label class="btn btn-default uploadButton">
+                      Upload an Image <input type="file" hidden (change)="uploadAnImage($event)">
+                  </label>
+                </div>
               </div>
-              <div class="addAccountFont pull-right">
-                <button type="button" class="createButton btn btn-success" (click)="registerInstructor()">Add Instructor</button>
-              </div>
+            </div>
+            <div class="row">
+              <div class="padSpacing50"></div>
+            </div>
+            <div class="addAccountFont pull-right">
+              <button type="button" class="createButton btn btn-success" (click)="registerInstructor()">Add Instructor</button>
             </div>
           </div>
         </div>
-        <div class="col-2"></div>
+      </div>
+      <div class="col-1"></div>
     </div>
   </div>
   <!-- Added instructor message -->
@@ -132,6 +130,7 @@
                 <th scope="col">Instructor ID</th>
                 <th scope="col">First Name</th>
                 <th scope="col">Last Name</th>
+                <th scope="col">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -146,6 +145,89 @@
         </div>
       </div>
       <div class="col-2"></div>
+    </div>
+  </div>
+
+  <!-- editing selected instructor-->
+  <div *ngIf="this.route == 3 && this.subRoute == 1">
+    <div class="row">
+      <div class="col-1"></div>
+      <div class="col-10">
+        <div class="card editUserCard">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-6">
+                <div class="rowItem"><div class="editcurrentTitle">Instructor ID: </div><input name="instructorSelectedInstructorID" [(ngModel)]="instructorSelected.instructorID" #extSelectedUserID="ngModel" class="editInputbox" type="text" readonly></div>
+                <div class="rowItem"><div class="editcurrentTitle">First Name:</div><input name="instructorSelectedFirstname" [(ngModel)]="instructorSelected.firstname" #extSelectedFirstname="ngModel" class="editInputbox" type="text"></div>
+                <div class="rowItem"><div class="editcurrentTitle">Last name:</div><input name="instructorSelectedLastname" [(ngModel)]="instructorSelected.lastname" #extSelectedLastname="ngModel" class="editInputbox" type="text"></div>
+                <div class="rowItem"><div class="editcurrentTitle">Instructor Bio:</div><textarea class="bioframe" name="bioframe" [(ngModel)]="instructorSelected.bio" #bioframe="ngModel" name="textarea"></textarea></div>
+                <div class="rowItem"><div class="padSpacing25"></div></div>
+                <div class="rowItem"><button type="button" class="btn btn-danger nofluff" (click)="confirmDeleteInstructor()">Delete Instructor</button></div>
+                <div *ngIf="this.hideDeleteFrame == 0" class="rowItem">
+                  <div class="editcurrentTitle">Are you sure you want to delete this account?</div>
+                  <button type="button" class="btn btn-warning nofluff" (click)="deleteInstructor()">Yes </button>
+                  <button type="button" class="btn btn-warning nofluff" (click)="confirmDeleteInstructor()">No </button>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="row">
+                  <div class="addAccountFontHeavy">Upload an Instructor Image</div>
+                </div>
+                <div class="row">
+                  <div class="imageContainer">
+                    <img class="imageContainer" src="{{currentImage}}">
+                  </div>
+                </div>
+                <div class="row">
+                  <label class="btn btn-default uploadButton">
+                      Upload an Image <input type="file" hidden (change)="uploadAnImage($event)">
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <button type="button" class="btn btn-success changepwButton pull-right" (click)="editInstructorApply()">Apply Changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-1"></div>
+    </div>
+  </div>
+
+  <!--  confirmation message after delete instructor -->
+  <div *ngIf="this.route == 3 && this.subRoute == 2">
+    <div class="container">
+      <div class="row">
+        <div class="topMargin"></div>
+      </div>
+      <div class="row">
+        <div class="redHighlight">
+          <i class="fa fa-check-square-o fa-fw"></i> {{successMessageInternal}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="returntodashbutton" (click)="goToDashboard()"><i class="fa fa-arrow-left fa-fw"></i>Return to Dashboard</div>
+      </div>
+    </div>
+  </div>
+
+  <!--  confirmation message after edit instructor -->
+  <div *ngIf="this.route == 3 && this.subRoute == 3">
+    <div class="container">
+      <div class="row">
+        <div class="topMargin"></div>
+      </div>
+      <div class="row">
+        <div class="greenhighlight">
+          <i class="fa fa-check-square-o fa-fw"></i> {{successMessageInternal}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="returntodashbutton" (click)="goToDashboard()"><i class="fa fa-arrow-left fa-fw"></i>Return to Dashboard</div>
+      </div>
     </div>
   </div>
 </div>

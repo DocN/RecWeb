@@ -17,6 +17,8 @@ export class GetJsonService {
   private uploadImageURL = 'http://127.0.0.1/bcitrec/instructor/upload.php';
   private addInstructorURL = 'http://127.0.0.1/bcitrec/instructor/addInstructor.php';
   private InstructorTableURL = 'http://127.0.0.1/bcitrec/instructor/getInstructors.php';
+  private deleteInstructorURL = 'http://127.0.0.1/bcitrec/instructor/deleteInstructor.php';
+  private updateInstructorURL = 'http://127.0.0.1/bcitrec/instructor/updateInstructor.php';
   constructor() { }
 
   getAdminModulesURL() {
@@ -67,5 +69,13 @@ export class GetJsonService {
   }
   getInstructorTableURL() {
     return this.InstructorTableURL;
+  }
+
+  getDeleteInstructorURL() {
+    return this.deleteInstructorURL;
+  }
+
+  getUpdateInstructorURL() {
+    return this.updateInstructorURL;
   }
 }
