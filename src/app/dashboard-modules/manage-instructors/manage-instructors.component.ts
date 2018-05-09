@@ -18,6 +18,7 @@ export class ManageInstructorsComponent implements OnInit {
   private validate = true;
   private formErrors = [];
   private successMessageInternal;
+  private instructorTable: any = {};
 
   constructor(private http: HttpClient, private jsonURL:GetJsonService, private dashroute:DashrouteService) { }
 
@@ -32,7 +33,7 @@ export class ManageInstructorsComponent implements OnInit {
     this.subRoute = 0;
   }
 
-  goEditInstructor() {
+  goToEditInstructor() {
     this.route = 3;
     this.subRoute = 0;
   }
@@ -88,7 +89,7 @@ export class ManageInstructorsComponent implements OnInit {
             if(res.toString() != "") {
               console.log(res["message"]);
               this.successMessageInternal = res["message"];
-              this.subRoute = '2';
+              this.subRoute = '1';
             }
           },
           err => {
@@ -110,5 +111,49 @@ export class ManageInstructorsComponent implements OnInit {
   capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
+
+  goToDashboard() {
+    this.dashroute.currentRoute = '/';
+    this.dashroute.currentTitle = "Dashboard";
+  }
+
+  getInstructorTable() {
+    this.instructorTable.UID = [];
+    this.instructorTable.firstname = [];
+    this.instructorTable.lastname = [];
+    this.instructorTable.photourl = [];
+    this.instructorTable.bio = [];
+    this.instructorTable.creationTime = [];
+
+    let data = {};
+    this.http.post(this.jsonURL.getExtUsersTableURL(), data)
+      .subscribe(
+        (res) => {
+          if(!res) {
+            return;
+          }
+          if(res.toString() != "") {
+            var count = 0;
+            while(res[count] != null) {
+              count = count +1;
+            }
+            for(let i =0; i < count; i++) {
+              this.instructorTable.UID.push(res[i].UID);
+              this.instructorTable.firstname.push(res[i].firstname);
+              this.instructorTable.lastname.push(res[i].lastname);
+              this.instructorTable.photourl.push(res[i].photourl);
+              this.instructorTable.bio.push(res[i].bio);
+              this.instructorTable.creationTime.push(res[i].creationTime);
+              this.instructorTable.filtered.push(1);
+            }
+          }
+        },
+        err => {
+          console.log(err);
+          //finish loading
+        }
+    );
+  }
+
 
 }
