@@ -60,20 +60,21 @@
                   </div>
                   <div class="row">
                     <div class="col-6">
-                      <div class="addAccountFont rowPadding pull-left">
+                      <div class="addAccountFont rowPadding">
                         Begin Date: <br>
                             <input [owlDateTimeTrigger]="dt6" [owlDateTime]="dt6">
                             <owl-date-time [pickerType]="'calendar'" [startView]="'month'" #dt6></owl-date-time>
                       </div>
                     </div>
                     <div class="col-6">
-                      <div class="addAccountFont rowPadding pull-right">
+                      <div class="addAccountFont rowPadding">
                         End Date: <br>
                             <input [owlDateTimeTrigger]="dt7" [owlDateTime]="dt7">
                             <owl-date-time [pickerType]="'calendar'" [startView]="'month'" #dt7></owl-date-time>
                       </div>
                     </div>
                   </div>
+
                   <div class="addAccountFont rowPadding">
                     Day of the Week 
                     <select #accessSelector class="mdb-select" (change)="setInterSelectorAccessLevel(accessSelector.value)">
