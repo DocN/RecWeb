@@ -11,10 +11,19 @@ import * as crypto from 'crypto-js';
   styleUrls: ['./manage-classes.component.scss']
 })
 export class ManageClassesComponent implements OnInit {
-
+  private route;
+  private subRoute;
+  private addClass: any={};
   constructor(private http: HttpClient, private jsonURL:GetJsonService, private dashroute:DashrouteService) { }
 
   ngOnInit() {
+    this.route = '1';
+    this.subRoute = '0';
+  }
+
+  goCreateClass() {
+    this.route = '2';
+    this.subRoute = '0';
   }
 
 }

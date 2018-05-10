@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 
@@ -29,6 +30,7 @@ import { ManageUsersComponent } from './dashboard-modules/manage-users/manage-us
 import { DashrouteService } from './services/dashroute.service';
 import { ManageInstructorsComponent } from './dashboard-modules/manage-instructors/manage-instructors.component';
 import { ManageClassesComponent } from './dashboard-modules/manage-classes/manage-classes.component';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 const appRoutes:Routes = [
   {
@@ -58,11 +60,15 @@ const appRoutes:Routes = [
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     MDBBootstrapModule.forRoot(),
     RouterModule.forRoot(appRoutes, {useHash: true}),
     HttpClientModule,
     HttpModule, 
     FormsModule,
+    ReactiveFormsModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
   providers: [
