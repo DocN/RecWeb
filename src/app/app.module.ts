@@ -28,6 +28,7 @@ import { GetJsonService } from './services/get-json.service';
 import { ManageUsersComponent } from './dashboard-modules/manage-users/manage-users.component';
 import { DashrouteService } from './services/dashroute.service';
 import { ManageInstructorsComponent } from './dashboard-modules/manage-instructors/manage-instructors.component';
+import { ManageClassesComponent } from './dashboard-modules/manage-classes/manage-classes.component';
 
 const appRoutes:Routes = [
   {
@@ -53,6 +54,7 @@ const appRoutes:Routes = [
     NavbarComponent,
     ManageUsersComponent,
     ManageInstructorsComponent,
+    ManageClassesComponent,
   ],
   imports: [
     BrowserModule,

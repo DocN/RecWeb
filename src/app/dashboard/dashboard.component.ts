@@ -75,5 +75,8 @@ export class DashboardComponent implements OnInit {
     else if($event == '/instructors') {
       this.dashroute.currentTitle = "Manage Instructors";
     }
+    else if($event == '/classes') {
+      this.dashroute.currentTitle = "Manage Classes";
+    }
   }
 }
