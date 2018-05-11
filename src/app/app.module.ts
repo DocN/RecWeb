@@ -31,6 +31,7 @@ import { DashrouteService } from './services/dashroute.service';
 import { ManageInstructorsComponent } from './dashboard-modules/manage-instructors/manage-instructors.component';
 import { ManageClassesComponent } from './dashboard-modules/manage-classes/manage-classes.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { ManageClasscategoriesComponent } from './dashboard-modules/manage-classcategories/manage-classcategories.component';
 
 const appRoutes:Routes = [
   {
@@ -57,6 +58,7 @@ const appRoutes:Routes = [
     ManageUsersComponent,
     ManageInstructorsComponent,
     ManageClassesComponent,
+    ManageClasscategoriesComponent,
   ],
   imports: [
     BrowserModule,
