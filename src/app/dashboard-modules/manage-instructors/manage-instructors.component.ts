@@ -267,7 +267,7 @@ export class ManageInstructorsComponent implements OnInit {
   }
 
   editInstructorApply() {
-    let data = {'instructorID': this.instructorSelected.instructorID, 'firstname': this.instructorSelected.firstname, 'lastname': this.instructorSelected.lastname, 'photourl' : this.instructorSelected.photourl};
+    let data = {'instructorID': this.instructorSelected.instructorID, 'firstname': this.instructorSelected.firstname, 'lastname': this.instructorSelected.lastname, 'photourl' : this.currentImage};
     this.http.post(this.jsonURL.getUpdateInstructorURL(), data)
       .subscribe(
         (res) => {
@@ -287,6 +287,4 @@ export class ManageInstructorsComponent implements OnInit {
         }
     );
   }
-
-
 }

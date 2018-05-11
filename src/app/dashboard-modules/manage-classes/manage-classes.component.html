@@ -44,14 +44,16 @@
                 <div class="namecontain">
                   <div class="addAccountFont">
                     Class Name: <br>
-                    <input name="classname" [(ngModel)]="addClass.classname" #classname="ngModel" type="text">
+                    <input name="classname" [(ngModel)]="addClass.className" #classname="ngModel" type="text" (keyup)="printTester()">
+                  </div>
+                  <div class="addAccountFont rowPadding">
+                    Class Location: <br>
+                    <input name="classLocation" [(ngModel)]="addClass.classLocation" #classLocation="ngModel" type="text" (keyup)="printTester()">
                   </div>
                   <div class="addAccountFont rowPadding">
                     Select an Instructor: <br>
-                    <select #accessSelector class="mdb-select" (change)="setInterSelectorAccessLevel(accessSelector.value)">
-                        <option value="1">Bruce Wayne </option>
-                        <option value="2">weh </option>
-                        <option value="3">Level 3 - Instructor </option>
+                    <select #instructorSelector class="mdb-select" (change)="setClassInstructor(instructorSelector.value)">
+                        <option value="{{i}}" *ngFor="let currentInstructor of instructorTable.instructorID;let i = index">{{instructorTable.firstname[i]}} {{instructorTable.lastname[i]}} </option>
                     </select>
                   </div>
                   <div class="addAccountFont rowPadding">
@@ -62,14 +64,14 @@
                     <div class="col-6">
                       <div class="addAccountFont rowPadding">
                         Begin Date: <br>
-                            <input [owlDateTimeTrigger]="dt6" [owlDateTime]="dt6">
+                            <input [(ngModel)]="addBeginDate" [owlDateTimeTrigger]="dt6" [owlDateTime]="dt6">
                             <owl-date-time [pickerType]="'calendar'" [startView]="'month'" #dt6></owl-date-time>
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="addAccountFont rowPadding">
                         End Date: <br>
-                            <input [owlDateTimeTrigger]="dt7" [owlDateTime]="dt7">
+                            <input [(ngModel)]="addEndDate" [owlDateTimeTrigger]="dt7" [owlDateTime]="dt7">
                             <owl-date-time [pickerType]="'calendar'" [startView]="'month'" #dt7></owl-date-time>
                       </div>
                     </div>
@@ -77,7 +79,7 @@
 
                   <div class="addAccountFont rowPadding">
                     Day of the Week 
-                    <select #accessSelector class="mdb-select" (change)="setInterSelectorAccessLevel(accessSelector.value)">
+                    <select #daySelector class="mdb-select" (change)="setInterSelectorAccessLevel(daySelector.value)">
                         <option value="1">Monday</option>
                         <option value="2">Tuesday</option>
                         <option value="3">Wednesday</option>
@@ -91,14 +93,14 @@
                     <div class="col-6">
                       <div class="addAccountFont rowPadding">
                         Class Begin Time: <br>
-                        <input [owlDateTimeTrigger]="beginTime" [owlDateTime]="beginTime">
+                        <input [(ngModel)]="addBeginTime" [owlDateTimeTrigger]="beginTime" [owlDateTime]="beginTime">
                         <owl-date-time [pickerType]="'timer'" #beginTime></owl-date-time>
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="addAccountFont rowPadding">
                         Class End Time: <br>
-                        <input [owlDateTimeTrigger]="endTime" [owlDateTime]="endTime">
+                        <input [(ngModel)]="addEndTime" [owlDateTimeTrigger]="endTime" [owlDateTime]="endTime">
                         <owl-date-time [pickerType]="'timer'" #endTime></owl-date-time>
                       </div>
                     </div>
@@ -107,7 +109,10 @@
               </div>
               <div class="col-6">
                 <div class="row">
-                  <div class="addAccountFontHeavy">Instructor</div>
+                  <div class="addAccountFontHeavy">Selected Instructor</div>
+                </div>
+                <div class="row">
+                  <div class="addAccountFont centerText">{{currentInstructorName}}</div>
                 </div>
                 <div class="row">
                   <div class="imageContainer">

@@ -366,11 +366,11 @@ export class ManageUsersComponent implements OnInit {
   setCredit0() {
     this.externalCreateUser.balance = 0;
   }
-  setCredit10() {
+  setCredit1() {
     this.externalCreateUser.balance = 10;
   }
-  setCredit20() {
-    this.externalCreateUser.balance = 20;
+  setCredit2() {
+    this.externalCreateUser.balance = 12;
   }
 
   registerExternalUser() {
