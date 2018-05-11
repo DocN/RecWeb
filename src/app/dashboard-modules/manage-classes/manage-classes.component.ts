@@ -22,8 +22,9 @@ export class ManageClassesComponent implements OnInit {
   private addEndDate = new Date();
   private addBeginTime = new Date();
   private addEndTime = new Date();
-  private addClassImage;
+  private addClassImage = '../../../assets/images/gym.jpg';
   private successMessageInternal;
+  private errorMessages = [];
 
   constructor(private http: HttpClient, private jsonURL:GetJsonService, private dashroute:DashrouteService) { }
 
@@ -123,6 +124,9 @@ export class ManageClassesComponent implements OnInit {
   createClass() {
     this.convertToUnix();
 
+    if(!this.validateAddClassForm()) {
+      return;
+    }
     let data = {'instructorID': this.instructorTable.instructorID[this.selectedInstructor], 'className': this.addClass.className, 'classLocation': this.addClass.classLocation, 'reservedSlots': this.addClass.reservedSlot, 'availableSlots': this.addClass.maxSlot, 'beginDate': this.addClass.UnixBeginDate, 'endDate': this.addClass.UnixEndDate, 'beginHour': this.addBeginTime.getHours(), 'beginMin': this.addBeginTime.getMinutes(), 
     'endHour': this.addEndTime.getHours(), 'endMin': this.addEndTime.getMinutes(), 'dayOfWeek': this.addClass.dayOfWeek, 'classDescription': this.addClass.classDescription, 'classImageURL': this.addClassImage};
     this.http.post(this.jsonURL.getAddClassURL(), data)
@@ -157,4 +161,77 @@ export class ManageClassesComponent implements OnInit {
     this.addClass.UnixEndDate = this.addEndDate.getTime()/1000;
   }
 
+  validateAddClassForm() {
+    this.errorMessages = [];
+    var validate = true;
+    if(!this.addClass.className || this.addClass.className.length < 1) {
+      this.errorMessages.push("*Please enter a class name");
+      validate = false;
+    }
+    if(!this.addClass.classLocation || this.addClass.classLocation.length < 1) {
+      this.errorMessages.push("*Please enter a class location");
+      validate = false;
+    }
+    if(!this.addClass.reservedSlot) {
+      this.errorMessages.push("*No reserved slots specified");
+      validate = false;
+    }
+    else {
+      if(this.addClass.reservedSlot < 0) {
+        this.errorMessages.push("*Please enter a valid number of reserved slots");
+        validate = false;
+      }
+    }
+    if(!this.addClass.maxSlot) {
+      this.errorMessages.push("*Please enter valid maximum number of slots");
+      validate = false;
+    }
+    else {
+      if(this.addClass.maxSlot < 0) {
+        this.errorMessages.push("*Please enter a valid maximum number of slots");
+        validate = false;
+      }
+      else if(this.addClass.maxSlot < this.addClass.reservedSlot) {
+        this.errorMessages.push("*Please enter a maximum number of slots greater than the number of reserved slots");
+        validate = false;
+      }
+    }
+    if(!this.addClass.classDescription || this.addClass.classDescription.length < 0) {
+      this.errorMessages.push("*Please enter a class description");
+      validate = false;
+    }
+    if(this.compareClassTime() == false) {
+      this.errorMessages.push("*Class start time can not be equal to or earlier than class end time!");
+      validate = false;
+    }
+    if(this.compareDates() == false) {
+      this.errorMessages.push("*Class begin date can not be earlier than class end date!");
+      validate = false;
+    }
+    return validate;
+  }
+
+  compareClassTime() {
+    var beginHours = this.addBeginTime.getHours();
+    var beginMins = this.addBeginTime.getMinutes();
+
+    var endHours = this.addEndTime.getHours();
+    var endMins = this.addEndTime.getMinutes();
+    if(beginHours > endHours) {
+      return false;
+    }
+    else if(beginHours == endHours) {
+      if(beginMins >= endMins) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  compareDates() {
+    if(this.addBeginDate.getTime() > this.addEndDate.getTime()) {
+      return false;
+    }
+    return true;
+  }
 }

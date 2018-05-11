@@ -1,4 +1,6 @@
+
 <div class="container-fluid">
+  <!-- class management selection-->
   <div *ngIf="this.route == 1 && this.subRoute == 0">
     <div class="row">
       <div class="topMargin"></div>
@@ -25,7 +27,7 @@
       <div class="col-2"></div>
     </div>
   </div>
-
+  <!-- class creation form-->
   <div *ngIf="this.route == 2 && this.subRoute == 0">
     <div class="row">
       <div class="col-1"></div>
@@ -35,7 +37,7 @@
           <div class="errorsTable">
             {{validusername}}
           </div>
-          <div class="errorsTable" *ngFor="let currentError of formErrors">
+          <div class="errorsTable" *ngFor="let currentError of errorMessages">
             {{currentError}}
           </div>
           <div class="card-body">
