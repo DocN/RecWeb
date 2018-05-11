@@ -87,10 +87,21 @@
                         <option value="7">Sunday</option>
                     </select>
                   </div>
-                  <div class="addAccountFont rowPadding">
-                    Class Time: <br>
-                    <input [owlDateTimeTrigger]="dt4" [owlDateTime]="dt4">
-                    <owl-date-time [pickerType]="'timer'" #dt4></owl-date-time>
+                  <div class="row">
+                    <div class="col-6">
+                      <div class="addAccountFont rowPadding">
+                        Class Begin Time: <br>
+                        <input [owlDateTimeTrigger]="beginTime" [owlDateTime]="beginTime">
+                        <owl-date-time [pickerType]="'timer'" #beginTime></owl-date-time>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="addAccountFont rowPadding">
+                        Class End Time: <br>
+                        <input [owlDateTimeTrigger]="endTime" [owlDateTime]="endTime">
+                        <owl-date-time [pickerType]="'timer'" #endTime></owl-date-time>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
