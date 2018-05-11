@@ -12,7 +12,7 @@
         </div>
       </div>
       <div class="col-6">
-        <div class="card selectionCardLeft pull-left" (click)="goToEditInstructor()">
+        <div class="card selectionCardLeft pull-left" (click)="goEditClassCategory()">
           <i class="iconSpecsClassCategories fa fa-star-o fa-fw"></i>
           Edit Class Categories 
         </div>         
@@ -22,8 +22,6 @@
   <!-- Main menu End -->
 
   <!-- Add Class Categories-->
-
-  <!-- Adding instructor -->
   <div *ngIf="this.route == 1 && this.subRoute == 0">
     <div class="row">
       <div class="col-1"></div>
@@ -68,4 +66,23 @@
     </div>
   </div>
   <!-- Add Class Categories end -->
+
+  <!-- Add Class response-->
+  <div *ngIf="this.route == 1 && this.subRoute == 1">
+    <div class="container">
+      <div class="row">
+        <div class="topMargin"></div>
+      </div>
+      <div class="row">
+        <div class="greenhighlight">
+          <i class="fa fa-check-square-o fa-fw"></i> {{successMessageInternal}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="returntodashbutton" (click)="goToDashboard()"><i class="fa fa-arrow-left fa-fw"></i>Return to Dashboard</div>
+      </div>
+    </div>
+  </div>
+  <!-- Add Class response END-->
+
 </div>

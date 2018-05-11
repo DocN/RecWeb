@@ -30,6 +30,17 @@ export class ManageClasscategoriesComponent implements OnInit {
     this.subRoute = 0;
   }
 
+  goEditClassCategory() {
+    this.route = 2;
+    this.subRoute = 0;
+  }
+
+  goToDashboard() {
+    this.dashroute.currentRoute = '/';
+    this.dashroute.currentTitle = "Dashboard";
+  }
+  
+
   onChangeColor($event) {
     this.addClassCategory.hexColor = $event;
   }
@@ -37,7 +48,7 @@ export class ManageClasscategoriesComponent implements OnInit {
     if(this.validateCreateCategoryForm() == false) {
       return;
     }
-    
+
     let data = {'categoryName': this.addClassCategory.cCategoryName, 'hexColor': this.addClassCategory.hexColor};
     this.http.post(this.jsonURL.getCreateClassCategoryURL(), data)
       .subscribe(
