@@ -21,6 +21,7 @@ export class GetJsonService {
   private updateInstructorURL = 'http://127.0.0.1/bcitrec/instructor/updateInstructor.php';
   private uploadClassImageURL = 'http://127.0.0.1/bcitrec/classes/upload.php';
   private addClassURL = 'http://127.0.0.1/bcitrec/classes/addClass.php';
+  private classCategoriesURL = 'http://127.0.0.1/bcitrec/classes/getClassCategory.php';
 
   constructor() { }
 
@@ -88,5 +89,9 @@ export class GetJsonService {
 
   getAddClassURL() {
     return this.addClassURL;
+  }
+
+  getClassCategoriesURL() {
+    return this.classCategoriesURL;
   }
 }

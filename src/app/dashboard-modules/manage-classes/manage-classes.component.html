@@ -53,6 +53,12 @@
                     <input name="classLocation" [(ngModel)]="addClass.classLocation" #classLocation="ngModel" type="text" (keyup)="printTester()">
                   </div>
                   <div class="addAccountFont rowPadding">
+                    Select a Class Category: <br>
+                    <select #selectClassCategory class="mdb-select" (change)="setClassCategory(selectClassCategory.value)">
+                        <option value="{{i}}" *ngFor="let currentCategory of classCategorytable.categoryID;let i = index">{{classCategorytable.categoryName[i]}} </option>
+                    </select>
+                  </div>
+                  <div class="addAccountFont rowPadding">
                     Select an Instructor: <br>
                     <select #instructorSelector class="mdb-select" (change)="setClassInstructor(instructorSelector.value)">
                         <option value="{{i}}" *ngFor="let currentInstructor of instructorTable.instructorID;let i = index">{{instructorTable.firstname[i]}} {{instructorTable.lastname[i]}} </option>

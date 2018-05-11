@@ -15,6 +15,7 @@ export class ManageClassesComponent implements OnInit {
   private subRoute;
   private addClass: any={};
   private instructorTable: any={};
+  private classCategorytable: any={};
   private selectedInstructor;
   private currentImage;
   private currentInstructorName;
@@ -24,7 +25,8 @@ export class ManageClassesComponent implements OnInit {
   private addEndTime = new Date();
   private addClassImage = '../../../assets/images/gym.jpg';
   private successMessageInternal;
-  private errorMessages = [];
+  private errorMessages = []; 
+  private selectedCategory;
 
   constructor(private http: HttpClient, private jsonURL:GetJsonService, private dashroute:DashrouteService) { }
 
@@ -32,10 +34,10 @@ export class ManageClassesComponent implements OnInit {
     this.route = '1';
     this.subRoute = '0';
     this.selectedInstructor = 0;
+    this.selectedCategory = 0;
     this.addClass.dayOfWeek = 1;
     this.getInstructorTable();
-
-    this.addClass.beginDate = new Date();
+    this.getClassCategories();
   }
 
   goCreateClass() {
@@ -76,6 +78,39 @@ export class ManageClassesComponent implements OnInit {
             }
             this.selectedInstructor = 0;
             this.loadInstructor();
+          }
+        },
+        err => {
+          console.log(err);
+          //finish loading
+        }
+    );
+  }
+
+  getClassCategories() {
+    this.classCategorytable.categoryID = [];
+    this.classCategorytable.categoryName = [];
+    this.classCategorytable.hexColor = [];
+
+    let data = {};
+    this.http.post(this.jsonURL.getClassCategoriesURL(), data)
+      .subscribe(
+        (res) => {
+          if(!res) {
+            return;
+          }
+          if(res.toString() != "") {
+            console.log(res);
+            var count = 0;
+            while(res[count] != null) {
+              count = count +1;
+            }
+            for(let i =0; i < count; i++) {
+              this.classCategorytable.categoryID.push(res[i].categoryID);
+              this.classCategorytable.categoryName.push(res[i].categoryName);
+              this.classCategorytable.hexColor.push(res[i].hexColor);
+            }
+            this.selectedCategory = 0;
           }
         },
         err => {
@@ -127,7 +162,7 @@ export class ManageClassesComponent implements OnInit {
     if(!this.validateAddClassForm()) {
       return;
     }
-    let data = {'instructorID': this.instructorTable.instructorID[this.selectedInstructor], 'className': this.addClass.className, 'classLocation': this.addClass.classLocation, 'reservedSlots': this.addClass.reservedSlot, 'availableSlots': this.addClass.maxSlot, 'beginDate': this.addClass.UnixBeginDate, 'endDate': this.addClass.UnixEndDate, 'beginHour': this.addBeginTime.getHours(), 'beginMin': this.addBeginTime.getMinutes(), 
+    let data = {'categoryID': this.classCategorytable.categoryID[this.selectedCategory], 'instructorID': this.instructorTable.instructorID[this.selectedInstructor], 'className': this.addClass.className, 'classLocation': this.addClass.classLocation, 'reservedSlots': this.addClass.reservedSlot, 'availableSlots': this.addClass.maxSlot, 'beginDate': this.addClass.UnixBeginDate, 'endDate': this.addClass.UnixEndDate, 'beginHour': this.addBeginTime.getHours(), 'beginMin': this.addBeginTime.getMinutes(), 
     'endHour': this.addEndTime.getHours(), 'endMin': this.addEndTime.getMinutes(), 'dayOfWeek': this.addClass.dayOfWeek, 'classDescription': this.addClass.classDescription, 'classImageURL': this.addClassImage};
     this.http.post(this.jsonURL.getAddClassURL(), data)
       .subscribe(
@@ -234,4 +269,9 @@ export class ManageClassesComponent implements OnInit {
     }
     return true;
   }
+
+  setClassCategory($event) {
+    this.selectedCategory = $event;
+  }
+
 }
