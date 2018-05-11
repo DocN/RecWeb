@@ -13,11 +13,61 @@ import * as crypto from 'crypto-js';
 export class ManageClasscategoriesComponent implements OnInit {
   private route;
   private subRoute;
+  private addClassCategory:any={};
+  private successMessageInternal;
+  private formErrors;
+
   constructor(private http: HttpClient, private jsonURL:GetJsonService, private dashroute:DashrouteService) { }
 
   ngOnInit() {
     this.route = 0;
     this.subRoute = 0;
+    this.addClassCategory.hexColor = "#000000";
+  }
+
+  goCreateCategory() {
+    this.route = 1;
+    this.subRoute = 0;
+  }
+
+  onChangeColor($event) {
+    this.addClassCategory.hexColor = $event;
+  }
+  createCategoryButton() {
+    if(this.validateCreateCategoryForm() == false) {
+      return;
+    }
+    
+    let data = {'categoryName': this.addClassCategory.cCategoryName, 'hexColor': this.addClassCategory.hexColor};
+    this.http.post(this.jsonURL.getCreateClassCategoryURL(), data)
+      .subscribe(
+        (res) => {
+          if(!res) {
+            console.log("failed to create class category");
+            return;
+          }
+          if(res.toString() != "") {
+            console.log(res["message"]);
+            this.successMessageInternal = res["message"];
+            this.subRoute = '1';
+          }
+        },
+        err => {
+          console.log(err);
+          //finish loading
+        }
+    );
+  }
+
+  validateCreateCategoryForm() {
+    this.formErrors = [];
+    var validate = true;
+    //validate category name
+    if(!this.addClassCategory.cCategoryName || this.addClassCategory.cCategoryName.length < 1) {
+      this.formErrors.push("* Please enter a Class Category Name");
+      validate = false;
+    }
+    return validate;
   }
 
 }

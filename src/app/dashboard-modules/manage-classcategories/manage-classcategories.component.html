@@ -1,15 +1,16 @@
 <div class="container-fluid">
+  <!-- Main menu for management class-->
+  <div *ngIf="this.route == 0 && this.subRoute == 0">
     <div class="row">
       <div class="topMargin"></div>
     </div>
     <div class="row">
       <div class="col-6">
-        <div class="card selectionCardRight pull-right" (click)="goCreateClass()">
+        <div class="card selectionCardRight pull-right" (click)="goCreateCategory()">
           <i class="iconSpecsClassCategories fa fa-star fa-fw"></i>
           Add Class Categories
         </div>
       </div>
-
       <div class="col-6">
         <div class="card selectionCardLeft pull-left" (click)="goToEditInstructor()">
           <i class="iconSpecsClassCategories fa fa-star-o fa-fw"></i>
@@ -17,4 +18,54 @@
         </div>         
       </div>    
     </div>
+  </div>
+  <!-- Main menu End -->
+
+  <!-- Add Class Categories-->
+
+  <!-- Adding instructor -->
+  <div *ngIf="this.route == 1 && this.subRoute == 0">
+    <div class="row">
+      <div class="col-1"></div>
+      <div class="col-10">
+        <div class="card addAccountCard">
+          <h1 class="addAccountTitle">Create a Class Category</h1>
+          <div class="errorsTable">
+            {{validusername}}
+          </div>
+          <div class="errorsTable" *ngFor="let currentError of formErrors">
+            {{currentError}}
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-6">
+                <div class="namecontain">
+                  <div class="addAccountFont">
+                    Class Category Name: <br>
+                    <input name="cCategoryName" [(ngModel)]="addClassCategory.cCategoryName" #cCategoryName="ngModel" type="text">
+                  </div>
+                  <div class="addAccountFont">
+                    Select a Category Color: <br>
+                    <input [style.background]="color"
+                    [colorPicker]="color"
+                    (colorPickerChange)="cmykColor=onChangeColor($event);color=$event"/> 
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">      
+              </div>
+            </div>
+            <div class="row">
+              <div class="padSpacing50"></div>
+            </div>
+            <div class="addAccountFont pull-right">
+              <button type="button" class="createButton btn btn-success" (click)="createCategoryButton()">Create Category</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-1"></div>
+    </div>
+  </div>
+  <!-- Add Class Categories end -->
 </div>

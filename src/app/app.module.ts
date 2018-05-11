@@ -33,6 +33,9 @@ import { ManageClassesComponent } from './dashboard-modules/manage-classes/manag
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { ManageClasscategoriesComponent } from './dashboard-modules/manage-classcategories/manage-classcategories.component';
 
+//color picker
+import { ColorPickerModule } from 'ngx-color-picker';
+
 const appRoutes:Routes = [
   {
     path: 'login',
@@ -71,6 +74,7 @@ const appRoutes:Routes = [
     ReactiveFormsModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
+    ColorPickerModule,
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
   providers: [
