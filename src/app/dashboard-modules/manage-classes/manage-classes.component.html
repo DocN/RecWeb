@@ -79,7 +79,7 @@
 
                   <div class="addAccountFont rowPadding">
                     Day of the Week 
-                    <select #daySelector class="mdb-select" (change)="setInterSelectorAccessLevel(daySelector.value)">
+                    <select #daySelector class="mdb-select" (change)="setDayOfWeek(daySelector.value)">
                         <option value="1">Monday</option>
                         <option value="2">Tuesday</option>
                         <option value="3">Wednesday</option>
@@ -105,6 +105,10 @@
                       </div>
                     </div>
                   </div>
+                  <div class="addAccountFont">
+                    Class Description: <br>
+                    <textarea class="bioframe" name="classDescription" [(ngModel)]="addClass.classDescription" #classDescription="ngModel" name="textarea"></textarea>
+                  </div>
                 </div>
               </div>
               <div class="col-6">
@@ -119,13 +123,29 @@
                     <img class="imageContainer" src="{{currentImage}}">
                   </div>
                 </div>
+                <div class="row">
+                  <div class="padSpacing50"></div>
+                </div>
+                <div class="row">
+                  <div class="addAccountFontHeavy">Class Image</div>
+                </div>
+                <div class="row">
+                  <div class="classImageContainer">
+                    <img class="classImageContainer" src="{{addClassImage}}">
+                  </div>
+                </div>
+                <div class="row">
+                  <label class="btn btn-default uploadButton">
+                      Upload an Image <input type="file" hidden (change)="uploadAnImage($event)">
+                  </label>
+                </div>
               </div>
             </div>
             <div class="row">
               <div class="padSpacing50"></div>
             </div>
             <div class="addAccountFont pull-right">
-              <button type="button" class="createButton btn btn-success" (click)="registerInstructor()">Create Class</button>
+              <button type="button" class="createButton btn btn-success" (click)="createClass()">Create Class</button>
             </div>
           </div>
         </div>

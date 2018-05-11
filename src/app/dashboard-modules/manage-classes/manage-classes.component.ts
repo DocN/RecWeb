@@ -22,6 +22,8 @@ export class ManageClassesComponent implements OnInit {
   private addEndDate = new Date();
   private addBeginTime = new Date();
   private addEndTime = new Date();
+  private addClassImage;
+  private successMessageInternal;
 
   constructor(private http: HttpClient, private jsonURL:GetJsonService, private dashroute:DashrouteService) { }
 
@@ -29,6 +31,7 @@ export class ManageClassesComponent implements OnInit {
     this.route = '1';
     this.subRoute = '0';
     this.selectedInstructor = 0;
+    this.addClass.dayOfWeek = 1;
     this.getInstructorTable();
 
     this.addClass.beginDate = new Date();
@@ -92,9 +95,66 @@ export class ManageClassesComponent implements OnInit {
   }
 
   
+  uploadAnImage($event) {
+    var file = $event.target.files[0];
+    let formData = new FormData();
+      formData.append('file', file);
+    
+    this.http.post(this.jsonURL.getUploadClassImageURL(), formData)
+    .subscribe(
+      (res) => {
+        if(res.toString() != "") {
+          console.log(res);
+          if(res['result'] == true) {
+            this.addClassImage = res['url'];
+          }
+        }
+      },
+      err => {
+        console.log(err);
+        //finish loading
+      }
+    );
+  }
+
+  setDayOfWeek($val) {
+    this.addClass.dayOfWeek = $val;
+  }
+  createClass() {
+    this.convertToUnix();
+
+    let data = {'instructorID': this.instructorTable.instructorID[this.selectedInstructor], 'className': this.addClass.className, 'classLocation': this.addClass.classLocation, 'reservedSlots': this.addClass.reservedSlot, 'availableSlots': this.addClass.maxSlot, 'beginDate': this.addClass.UnixBeginDate, 'endDate': this.addClass.UnixEndDate, 'beginHour': this.addBeginTime.getHours(), 'beginMin': this.addBeginTime.getMinutes(), 
+    'endHour': this.addEndTime.getHours(), 'endMin': this.addEndTime.getMinutes(), 'dayOfWeek': this.addClass.dayOfWeek, 'classDescription': this.addClass.classDescription, 'classImageURL': this.addClassImage};
+    this.http.post(this.jsonURL.getAddClassURL(), data)
+      .subscribe(
+        (res) => {
+          if(!res) {
+            console.log("failed to register");
+            return;
+          }
+          if(res.toString() != "") {
+            console.log(res["message"]);
+            this.successMessageInternal = res["message"];
+            this.subRoute = '1';
+          }
+        },
+        err => {
+          console.log(err);
+          //finish loading
+        }
+    );
+  }
+
   printTester() {
+    //unix time
     //console.log((this.addBeginDate.getTime()/1000));
     console.log(this.addBeginTime.getHours());
+    console.log(this.addBeginTime.getMinutes());
+  }
+
+  convertToUnix() {
+    this.addClass.UnixBeginDate = this.addBeginDate.getTime()/1000;
+    this.addClass.UnixEndDate = this.addEndDate.getTime()/1000;
   }
 
 }
