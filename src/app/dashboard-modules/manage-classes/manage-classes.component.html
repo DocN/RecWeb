@@ -163,4 +163,21 @@
   </div>
   <!-- class creation form END-->
 
+  <!--  confirmation message after edit classes -->
+  <div *ngIf="this.route == 2 && this.subRoute == 1">
+      <div class="container">
+        <div class="row">
+          <div class="topMargin"></div>
+        </div>
+        <div class="row">
+          <div class="greenhighlight">
+            <i class="fa fa-check-square-o fa-fw"></i> {{successMessageInternal}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="returntodashbutton" (click)="goToDashboard()"><i class="fa fa-arrow-left fa-fw"></i>Return to Dashboard</div>
+        </div>
+      </div>
+    </div>
+  <!--  confirmation message after edit classes  END -->
 </div>

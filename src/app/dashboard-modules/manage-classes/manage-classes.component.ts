@@ -45,6 +45,11 @@ export class ManageClassesComponent implements OnInit {
     this.subRoute = '0';
   }
 
+  goToDashboard() {
+    this.dashroute.currentRoute = '/';
+    this.dashroute.currentTitle = "Dashboard";
+  }
+
   getInstructorTable() {
     this.instructorTable.instructorID = [];
     this.instructorTable.firstname = [];
@@ -161,6 +166,7 @@ export class ManageClassesComponent implements OnInit {
     }
     let data = {'categoryID': this.classCategorytable.categoryID[this.selectedCategory], 'instructorID': this.instructorTable.instructorID[this.selectedInstructor], 'className': this.addClass.className, 'classLocation': this.addClass.classLocation, 'reservedSlots': this.addClass.reservedSlot, 'availableSlots': this.addClass.maxSlot, 'beginDate': this.addClass.UnixBeginDate, 'endDate': this.addClass.UnixEndDate, 'beginHour': this.addBeginTime.getHours(), 'beginMin': this.addBeginTime.getMinutes(), 
     'endHour': this.addEndTime.getHours(), 'endMin': this.addEndTime.getMinutes(), 'dayOfWeek': this.addClass.dayOfWeek, 'classDescription': this.addClass.classDescription, 'classImageURL': this.addClassImage};
+    console.log(data);
     this.http.post(this.jsonURL.getAddClassURL(), data)
       .subscribe(
         (res) => {
@@ -189,8 +195,8 @@ export class ManageClassesComponent implements OnInit {
   }
 
   convertToUnix() {
-    this.addClass.UnixBeginDate = this.addBeginDate.getTime()/1000;
-    this.addClass.UnixEndDate = this.addEndDate.getTime()/1000;
+    this.addClass.UnixBeginDate = Math.round(this.addBeginDate.getTime()/1000);
+    this.addClass.UnixEndDate = Math.round(this.addEndDate.getTime()/1000);
   }
 
   validateAddClassForm() {
