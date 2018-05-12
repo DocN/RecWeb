@@ -7,8 +7,17 @@
     </div>
     <div class="col-6">
       <div class="pull-right">
-        <img class="avatar pull-left" src="../../../assets/images/avatars/boy.png">
-        <div class="userWelcome pull-left">Welcome {{fullname}} </div>
+        <div class="dropdown">
+          <div class="dropbtn">
+            <img class="avatar pull-left" src="../../../assets/images/avatars/boy.png">
+            <div class="userWelcome pull-left">Welcome {{fullname}} </div>
+          </div>
+          <div class="dropdown-content">
+            <a href="#"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a>
+            <a href="#/logout"><i class="fa fa-power-off" aria-hidden="true"></i> Logout</a>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
