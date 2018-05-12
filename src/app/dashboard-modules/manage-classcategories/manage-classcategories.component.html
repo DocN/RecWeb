@@ -67,7 +67,7 @@
   </div>
   <!-- Add Class Categories end -->
 
-  <!-- Add Class response-->
+  <!-- Add Class categories response-->
   <div *ngIf="this.route == 1 && this.subRoute == 1">
     <div class="container">
       <div class="row">
@@ -85,4 +85,50 @@
   </div>
   <!-- Add Class response END-->
 
+  <!-- Edit class category table page -->
+  <div *ngIf="this.route == 2 && this.subRoute == 0">
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col-8">
+        <div class="searchTitle pull-left">Search By: </div>
+        <select #categoryFilterType class="mdb-select searchBoxSelectFrame pull-left" (change)="setCategoryFilter(categoryFilterType.value)">
+          <option value="1" selected>Category ID </option>
+          <option value="2">Category Name</option>
+          <option value="3">Hex Color</option>
+        </select>
+        <input name="filterIntValue" [(ngModel)]="editCategoryFilter.value" #filterIntValue="ngModel" class="searchInputbox pull-left" type="text" (keyup)="applyCategoryFilter()">
+      </div>
+      <div class="col-2"></div>
+    </div>
+    <div class="row">
+      <div class="padSpacing50"></div>
+    </div>
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col-8">
+        <div class="card">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Category ID</th>
+                <th scope="col">Category Name</th>
+                <th scope="col">Hex Color</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let currentUser of editCategoryTable.categoryID;let i = index">
+                <th scope="row" *ngIf="this.editCategoryTable.filtered[i] == 1">{{currentUser}}</th>
+                <td *ngIf="this.editCategoryTable.filtered[i] == 1">{{editCategoryTable.categoryName[i]}}</td>
+                <td *ngIf="this.editCategoryTable.filtered[i] == 1">{{editCategoryTable.hexColor[i]}}</td>
+                <td *ngIf="this.editCategoryTable.filtered[i] == 1"><div id="editUser{{i}}" class="editUser" (click)="selectCategory($event)"><i class="fa fa-pencil fa-fw"></i> Edit Category</div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-2"></div>
+    </div>
+  </div>
+  <!-- Edit class table page END -->
 </div>
