@@ -182,6 +182,7 @@
     </div>
   <!--  confirmation message after edit classes  END -->
 
+  <!-- Edit classes table begin-->
   <div *ngIf="this.route == 3 && this.subRoute == 0">
     <div class="row">
       <div class="col-1"></div>
@@ -227,7 +228,7 @@
                 <td *ngIf="this.editClassTable.filtered[i] == 1">{{editClassTable.categoryName[i]}}</td>
                 <td *ngIf="this.editClassTable.filtered[i] == 1">{{editClassTable.reservedSlots[i]}}</td>
                 <td *ngIf="this.editClassTable.filtered[i] == 1">{{editClassTable.availableSlots[i]}}</td>
-                <td *ngIf="this.editClassTable.filtered[i] == 1"><div id="editUser{{i}}" class="editUser" (click)="selectInternalUser($event)"><i class="fa fa-pencil fa-fw"></i> Edit User</div></td>
+                <td *ngIf="this.editClassTable.filtered[i] == 1"><div id="editUser{{i}}" class="editUser" (click)="selectClass($event)"><i class="fa fa-pencil fa-fw"></i> Edit User</div></td>
               </tr>
             </tbody>
           </table>
@@ -236,4 +237,67 @@
       <div class="col-1"></div>
     </div>
   </div>
+  <!-- Edit classes table END-->
+
+  <!-- Selected Class Edit -->
+  <div *ngIf="this.route == 3 && this.subRoute == 1">
+    <div class="row">
+      <div class="col-1"></div>
+      <div class="col-10">
+        <div class="card editUserCard">
+          <div class="card-body">
+            <div class="row">
+              <!--   
+    this.selectedClassData.classID = this.editClassTable.classID[currentID];
+    this.selectedClassData.className = this.editClassTable.className[currentID];
+    this.selectedClassData.classLocation = this.editClassTable.classLocation[currentID];
+    this.selectedClassData.instructorID = this.editClassTable.instructorID[currentID];
+    this.selectedClassData.categoryID = this.editClassTable.categoryID[currentID];
+    this.selectedClassData.reservedSlots = this.editClassTable.reservedSlots[currentID];
+    this.selectedClassData.availableSlots = this.editClassTable.availableSlots[currentID];
+    this.selectedClassData.beginDate = this.editClassTable.beginDate[currentID];
+    this.selectedClassData.endDate = this.editClassTable.endDate[currentID];
+    this.selectedClassData.beginHour = this.editClassTable.beginHour[currentID];
+    this.selectedClassData.beginMin = this.editClassTable.beginMin[currentID];
+    this.selectedClassData.endHour = this.editClassTable.endHour[currentID];
+    this.selectedClassData.endMin = this.editClassTable.endMin[currentID];
+    this.selectedClassData.dayOfWeek = this.editClassTable.dayOfWeek[currentID];
+    this.selectedClassData.classDescription = this.editClassTable.classDescription[currentID];
+    this.selectedClassData.classImageURL = this.editClassTable.classImageURL[currentID];
+    this.selectedClassData.categoryName = this.editClassTable.categoryName[currentID];
+    this.selectedClassData.hexColor = this.editClassTable.hexColor[currentID];
+    this.selectedClassData.firstname = this.editClassTable.firstname[currentID];
+    this.selectedClassData.lastname = this.editClassTable.lastname[currentID];
+    this.selectedClassData.photoURL = this.editClassTable.photoURL[currentID];-->
+              <div class="col-6">
+                <div class="rowItem"><div class="editcurrentTitle">Class ID: </div><input name="selectedClassID" [(ngModel)]="selectedClassData.classID" #selectedClassID="ngModel" class="editInputbox" type="text" readonly></div>
+                <div class="rowItem"><div class="editcurrentTitle">Class Name: </div><input name="selectedClassName" [(ngModel)]="selectedClassData.className" #selectedClassName="ngModel" class="editInputbox" type="text" readonly></div>
+                <div class="rowItem"><div class="editcurrentTitle">Class Location:</div><input name="selectedClassLocation" [(ngModel)]="selectedClassData.classLocation" #selectedClassLocation="ngModel" class="editInputbox" type="text"></div>
+                <div class="addAccountFont rowPadding">
+                  Current Instructor: {{selectedClassData.firstname}}  {{selectedClassData.lastname}} <br>
+                  <button type="button" class="btn btn-warning" (click)="enableChangeInstructor()">Change Instructor</button> <br>
+                  <div *ngIf="this.changeInstructor == 1">
+                    Select a New Instructor: <br>
+                    <select #instructorSelector class="mdb-select" (change)="setClassInstructor(instructorSelector.value)">
+                        <option value="{{i}}" *ngFor="let currentInstructor of instructorTable.instructorID;let i = index">{{instructorTable.firstname[i]}} {{instructorTable.lastname[i]}} </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <button type="button" class="btn btn-success changepwButton pull-right" (click)="editUserDetailsApply()">Apply Changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-1"></div>
+    </div>
+  </div>
+   <!-- Selected Class Edit END-->
 </div>

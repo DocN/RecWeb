@@ -32,6 +32,9 @@ export class ManageClassesComponent implements OnInit {
   private editClassTable: any= {};
   private filter: any= {};
   private optionFilter;
+  private selectedClass; 
+  private selectedClassData: any= {};
+  private changeInstructor;
 
   constructor(private http: HttpClient, private jsonURL:GetJsonService, private dashroute:DashrouteService) { }
 
@@ -44,6 +47,7 @@ export class ManageClassesComponent implements OnInit {
     this.getInstructorTable();
     this.getClassCategories();
     this.getEditClassTable();
+    this.changeInstructor = 0;
     this.optionFilter = 1;
   }
 
@@ -406,13 +410,51 @@ export class ManageClassesComponent implements OnInit {
       }
       //category name filter
       else if(filterOption == 5) {
-        var currentVal = this.editClassTable.Category[i].toString().toLowerCase();
+        var currentVal = this.editClassTable.categoryName[i].toString().toLowerCase();
         if(currentVal.indexOf(currentFilter) == -1) {
           this.editClassTable.filtered[i] = 0;
         }
       }
     }
   }
+  
+  selectClass($event) {
+    var currentID = $event["srcElement"]["id"];
+    currentID = currentID.slice(8);
+    this.selectedClass = currentID;
+    this.subRoute = '1';
+    this.route = '3';
 
+    this.selectedClassData.classID = this.editClassTable.classID[currentID];
+    this.selectedClassData.className = this.editClassTable.className[currentID];
+    this.selectedClassData.classLocation = this.editClassTable.classLocation[currentID];
+    this.selectedClassData.instructorID = this.editClassTable.instructorID[currentID];
+    this.selectedClassData.categoryID = this.editClassTable.categoryID[currentID];
+    this.selectedClassData.reservedSlots = this.editClassTable.reservedSlots[currentID];
+    this.selectedClassData.availableSlots = this.editClassTable.availableSlots[currentID];
+    this.selectedClassData.beginDate = this.editClassTable.beginDate[currentID];
+    this.selectedClassData.endDate = this.editClassTable.endDate[currentID];
+    this.selectedClassData.beginHour = this.editClassTable.beginHour[currentID];
+    this.selectedClassData.beginMin = this.editClassTable.beginMin[currentID];
+    this.selectedClassData.endHour = this.editClassTable.endHour[currentID];
+    this.selectedClassData.endMin = this.editClassTable.endMin[currentID];
+    this.selectedClassData.dayOfWeek = this.editClassTable.dayOfWeek[currentID];
+    this.selectedClassData.classDescription = this.editClassTable.classDescription[currentID];
+    this.selectedClassData.classImageURL = this.editClassTable.classImageURL[currentID];
+    this.selectedClassData.categoryName = this.editClassTable.categoryName[currentID];
+    this.selectedClassData.hexColor = this.editClassTable.hexColor[currentID];
+    this.selectedClassData.firstname = this.editClassTable.firstname[currentID];
+    this.selectedClassData.lastname = this.editClassTable.lastname[currentID];
+    this.selectedClassData.photoURL = this.editClassTable.photoURL[currentID];
+  }
 
+  enableChangeInstructor() {
+    console.log("wtf");
+    if(this.changeInstructor == 0) {
+      this.changeInstructor = 1;
+    }
+    else {
+      this.changeInstructor = 0;
+    }
+  }
 }
