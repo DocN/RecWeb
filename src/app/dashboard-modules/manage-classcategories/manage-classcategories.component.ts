@@ -22,9 +22,11 @@ export class ManageClasscategoriesComponent implements OnInit {
   private editCategoryTable: any={};
   private categoryTypeFilter = 1;
   private editCategoryFilter: any={};
+  private editCategoryTableSelected: any={};
 
   //select category
   private selectedID;
+  private hideDeleteFrame = '1';
 
 
   constructor(private http: HttpClient, private jsonURL:GetJsonService, private dashroute:DashrouteService) { }
@@ -184,10 +186,70 @@ export class ManageClasscategoriesComponent implements OnInit {
     this.selectedID = currentID;
     this.route = '2';
     this.subRoute = '1';
-    
-    this.editCategoryTable.categoryID = this.editCategoryTable.categoryID[currentID];
-    this.editCategoryTable.categoryName = this.editCategoryTable.categoryName[currentID];
-    this.editCategoryTable.hexColor = this.editCategoryTable.hexColor[currentID];
+
+    this.editCategoryTableSelected.categoryID = this.editCategoryTable.categoryID[currentID];
+    this.editCategoryTableSelected.categoryName = this.editCategoryTable.categoryName[currentID];
+    this.editCategoryTableSelected.hexColor = this.editCategoryTable.hexColor[currentID];
+  }
+
+  onChangeSelectedColor($val) {
+    this.editCategoryTableSelected.hexColor = $val;
+  }
+
+  confirmDeleteCategory() {
+    if(this.hideDeleteFrame == '0') {
+      this.hideDeleteFrame = '1';
+    }
+    else {
+      this.hideDeleteFrame = '0';
+    }
+  }
+
+  deleteCategory() {
+    let data = {'categoryID': this.editCategoryTableSelected.categoryID};
+    this.http.post(this.jsonURL.getDeleteCategoryURL(), data)
+      .subscribe(
+        (res) => {
+          if(!res) {
+            return;
+          }
+          if(res.toString() != "") {
+            console.log();
+            if(res['valid'] == '1') {
+              this.successMessageInternal = "Account successfully deleted";
+              this.subRoute = '2';
+            }
+          }
+        },
+        err => {
+          console.log(err);
+          //finish loading
+        }
+    );
+  }
+
+  editClassCategoryApply() {
+    let data = {'categoryID': this.editCategoryTableSelected.categoryID, 'categoryName': this.editCategoryTableSelected.categoryName, 'hexColor': this.editCategoryTableSelected.hexColor};
+    this.http.post(this.jsonURL.getUpdateClassCategoryURL(), data)
+      .subscribe(
+        (res) => {
+          if(!res) {
+            console.log("wtf");
+            return;
+          }
+          if(res.toString() != "") {
+            console.log(res);
+            if(res['valid'] == '1') {
+              this.successMessageInternal = "Changes Successfully Applied!";
+              this.subRoute = '3';
+            }
+          }
+        },
+        err => {
+          console.log(err);
+          //finish loading
+        }
+    );
   }
 
 }

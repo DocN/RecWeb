@@ -62,7 +62,6 @@ export class ManageClassesComponent implements OnInit {
             return;
           }
           if(res.toString() != "") {
-            console.log(res);
             var count = 0;
             while(res[count] != null) {
               count = count +1;
@@ -100,7 +99,6 @@ export class ManageClassesComponent implements OnInit {
             return;
           }
           if(res.toString() != "") {
-            console.log(res);
             var count = 0;
             while(res[count] != null) {
               count = count +1;
@@ -140,7 +138,6 @@ export class ManageClassesComponent implements OnInit {
     .subscribe(
       (res) => {
         if(res.toString() != "") {
-          console.log(res);
           if(res['result'] == true) {
             this.addClassImage = res['url'];
           }
