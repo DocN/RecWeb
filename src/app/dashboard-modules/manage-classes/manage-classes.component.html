@@ -17,7 +17,7 @@
           </div>
 
           <div class="col-6">
-            <div class="card selectionCardLeft pull-left" (click)="goToEditInstructor()">
+            <div class="card selectionCardLeft pull-left" (click)="goToEditClasses()">
               <i class="iconSpecsClasses fa fa-pencil-square-o fa-fw"></i>
               Edit Classes
             </div>         
@@ -27,6 +27,7 @@
       <div class="col-2"></div>
     </div>
   </div>
+
   <!-- class creation form-->
   <div *ngIf="this.route == 2 && this.subRoute == 0">
     <div class="row">
@@ -180,4 +181,59 @@
       </div>
     </div>
   <!--  confirmation message after edit classes  END -->
+
+  <div *ngIf="this.route == 3 && this.subRoute == 0">
+    <div class="row">
+      <div class="col-1"></div>
+      <div class="col-10">
+        <div class="searchTitle pull-left">Search By: </div>
+        <select #filterSelector class="mdb-select searchBoxSelectFrame pull-left" (change)="setOptionFilter(filterSelector.value)">
+            <option value="1" selected>Class ID</option>
+            <option value="2">Class Name</option>
+            <option value="3">Class Location</option>
+            <option value="4">Instructor Name</option>
+            <option value="5">Category</option>
+        </select>
+        <input name="filterIntValue" [(ngModel)]="filter.value" #filterIntValue="ngModel" class="searchInputbox pull-left" type="text" (keyup)="applyClassFilter()">
+      </div>
+      <div class="col-1"></div>
+    </div>
+    <div class="row">
+      <div class="padSpacing50"></div>
+    </div>
+    <div class="row">
+      <div class="col-1"></div>
+      <div class="col-10">
+        <div class="card">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Class ID</th>
+                <th scope="col">Class Name</th>
+                <th scope="col">Class Location</th>
+                <th scope="col">Instructor Name</th>
+                <th scope="col">Category</th>
+                <th scope="col">Reserved Slots</th>
+                <th scope="col">Total Slots</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let currentUser of editClassTable.classID;let i = index">
+                <th *ngIf="this.editClassTable.filtered[i] == 1" scope="row">{{currentUser}}</th>
+                <td *ngIf="this.editClassTable.filtered[i] == 1">{{editClassTable.className[i]}}</td>
+                <td *ngIf="this.editClassTable.filtered[i] == 1">{{editClassTable.classLocation[i]}}</td>
+                <td *ngIf="this.editClassTable.filtered[i] == 1">{{editClassTable.firstname[i]}} {{editClassTable.lastname[i]}}</td>
+                <td *ngIf="this.editClassTable.filtered[i] == 1">{{editClassTable.categoryName[i]}}</td>
+                <td *ngIf="this.editClassTable.filtered[i] == 1">{{editClassTable.reservedSlots[i]}}</td>
+                <td *ngIf="this.editClassTable.filtered[i] == 1">{{editClassTable.availableSlots[i]}}</td>
+                <td *ngIf="this.editClassTable.filtered[i] == 1"><div id="editUser{{i}}" class="editUser" (click)="selectInternalUser($event)"><i class="fa fa-pencil fa-fw"></i> Edit User</div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-1"></div>
+    </div>
+  </div>
 </div>

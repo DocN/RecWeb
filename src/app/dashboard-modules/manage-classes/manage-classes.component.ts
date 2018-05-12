@@ -28,6 +28,11 @@ export class ManageClassesComponent implements OnInit {
   private errorMessages = []; 
   private selectedCategory;
 
+  //edit class table
+  private editClassTable: any= {};
+  private filter: any= {};
+  private optionFilter;
+
   constructor(private http: HttpClient, private jsonURL:GetJsonService, private dashroute:DashrouteService) { }
 
   ngOnInit() {
@@ -38,6 +43,8 @@ export class ManageClassesComponent implements OnInit {
     this.addClass.dayOfWeek = 1;
     this.getInstructorTable();
     this.getClassCategories();
+    this.getEditClassTable();
+    this.optionFilter = 1;
   }
 
   goCreateClass() {
@@ -276,5 +283,136 @@ export class ManageClassesComponent implements OnInit {
   setClassCategory($event) {
     this.selectedCategory = $event;
   }
+
+  goToEditClasses() {
+    this.route = 3;
+    this.subRoute = 0;
+  }
+
+  getEditClassTable() {
+    this.editClassTable.classID = [];
+    this.editClassTable.className = [];
+    this.editClassTable.classLocation = [];
+    this.editClassTable.instructorID = [];
+    this.editClassTable.categoryID = [];
+    this.editClassTable.reservedSlots = [];
+    this.editClassTable.availableSlots = [];
+    this.editClassTable.beginDate = [];
+    this.editClassTable.endDate = [];
+    this.editClassTable.beginHour = [];
+    this.editClassTable.beginMin = [];
+    this.editClassTable.endHour = [];
+    this.editClassTable.endMin = [];
+    this.editClassTable.dayOfWeek = [];
+    this.editClassTable.classDescription = [];
+    this.editClassTable.classImageURL = [];
+    this.editClassTable.categoryName = [];
+    this.editClassTable.hexColor = [];
+    this.editClassTable.firstname = [];
+    this.editClassTable.lastname = [];
+    this.editClassTable.photoURL = [];
+    this.editClassTable.filtered = [];
+    let data = {};
+    this.http.post(this.jsonURL.getClassTableURL(), data)
+      .subscribe(
+        (res) => {
+          if(!res) {
+            return;
+          }
+          if(res.toString() != "") {
+            var count = 0;
+            while(res[count] != null) {
+              count = count +1;
+            }
+            
+            for(let i =0; i < count; i++) {
+              this.editClassTable.classID.push(res[i].classID);
+              this.editClassTable.className.push(res[i].className);
+              this.editClassTable.classLocation.push(res[i].classLocation);
+              this.editClassTable.instructorID.push(res[i].instructorID);
+              this.editClassTable.categoryID.push(res[i].categoryID);
+              this.editClassTable.reservedSlots.push(res[i].reservedSlots);
+              this.editClassTable.availableSlots.push(res[i].availableSlots);
+              this.editClassTable.beginDate.push(res[i].beginDate);
+              this.editClassTable.endDate.push(res[i].endDate);
+              this.editClassTable.beginHour.push(res[i].beginHour);
+              this.editClassTable.beginMin.push(res[i].beginMin);
+              this.editClassTable.endHour.push(res[i].endHour);
+              this.editClassTable.endMin.push(res[i].endMin);
+              this.editClassTable.dayOfWeek.push(res[i].dayOfWeek);
+              this.editClassTable.classDescription.push(res[i].classDescription);
+              this.editClassTable.classImageURL.push(res[i].classImageURL);
+              this.editClassTable.categoryName.push(res[i].categoryName);
+              this.editClassTable.hexColor.push(res[i].hexColor);
+              this.editClassTable.firstname.push(res[i].firstname);
+              this.editClassTable.lastname.push(res[i].lastname);
+              this.editClassTable.photoURL.push(res[i].photoURL);
+              this.editClassTable.filtered.push(1);
+            }
+            this.selectedInstructor = 0;
+          }
+        },
+        err => {
+          console.log(err);
+          //finish loading
+        }
+    );
+  }
+
+  resetFilter() {
+    for(let i =0; i < this.editClassTable.filtered.length; i++) {
+      this.editClassTable.filtered[i] = 1;
+    }
+  }
+
+  setOptionFilter($val) {
+    //selected filter values
+    this.optionFilter = $val;
+    this.applyClassFilter();
+  }
+
+  applyClassFilter() {
+    this.resetFilter();
+    var filterOption = this.optionFilter;
+    var currentFilter = this.filter.value.toString().toLowerCase();
+    for(let i =0; i < this.editClassTable.filtered.length; i++) {
+      //classid filter
+      if(filterOption == 1) {
+        var currentVal = this.editClassTable.classID[i].toString().toLowerCase();
+        if(currentVal.indexOf(currentFilter) == -1) {
+          this.editClassTable.filtered[i] = 0;
+        }
+      } 
+      //className filter
+      else if(filterOption == 2) {
+        var currentVal = this.editClassTable.className[i].toString().toLowerCase();
+        if(currentVal.indexOf(currentFilter) == -1) {
+          this.editClassTable.filtered[i] = 0;
+        }
+      }
+      //class Location filter
+      else if(filterOption == 3) {
+        var currentVal = this.editClassTable.classLocation[i].toString().toLowerCase();
+        if(currentVal.indexOf(currentFilter) == -1) {
+          this.editClassTable.filtered[i] = 0;
+        }
+      } 
+      //Instructor name filter
+      else if(filterOption == 4) {
+        var currentVal = this.editClassTable.firstname[i].toString().toLowerCase() +  this.editClassTable.lastname[i].toString().toLowerCase();
+        if(currentVal.indexOf(currentFilter) == -1) {
+          this.editClassTable.filtered[i] = 0;
+        }
+      }
+      //category name filter
+      else if(filterOption == 5) {
+        var currentVal = this.editClassTable.Category[i].toString().toLowerCase();
+        if(currentVal.indexOf(currentFilter) == -1) {
+          this.editClassTable.filtered[i] = 0;
+        }
+      }
+    }
+  }
+
 
 }

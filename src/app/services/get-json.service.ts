@@ -25,7 +25,7 @@ export class GetJsonService {
   private createClassCategoryURL = 'http://127.0.0.1/bcitrec/classes/createClassCategory.php';
   private deleteCategoryURL = 'http://127.0.0.1/bcitrec/classes/deleteClass.php';
   private updateClassCategoryURL = 'http://127.0.0.1/bcitrec/classes/updateClassCategory.php';
-  
+  private ClassTableURL = 'http://127.0.0.1/bcitrec/classes/getClassesTable.php';
   constructor() { }
 
   getAdminModulesURL() {
@@ -107,5 +107,8 @@ export class GetJsonService {
 
   getUpdateClassCategoryURL() {
     return this.updateClassCategoryURL;
+  }
+  getClassTableURL() {
+    return this.ClassTableURL;
   }
 }
