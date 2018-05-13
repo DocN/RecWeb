@@ -28,6 +28,7 @@ export class GetJsonService {
   private ClassTableURL = 'http://127.0.0.1/bcitrec/classes/getClassesTable.php';
   private reservedSlotURL = 'http://127.0.0.1/bcitrec/classes/getReservedSlots.php';
   private updateReservedSlotURL = 'http://127.0.0.1/bcitrec/classes/updateReservedSlot.php';
+  private classEventsURL = 'http://127.0.0.1/bcitrec/classes/getClassEvents.php'
   constructor() { }
 
   getAdminModulesURL() {
@@ -119,5 +120,9 @@ export class GetJsonService {
   }
   getUpdateReservedSlotURL() {
     return this.updateReservedSlotURL;
+  }
+
+  getClassEventsURL() {
+    return this.classEventsURL;
   }
 }

@@ -41,6 +41,7 @@ export class ManageClassesComponent implements OnInit {
   private reservedList = [];
   private changeReservedMessage;
   private changeReservedMessageBad;
+  private selectedEventData: any= {};
   //validation patterns
   emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
 
@@ -462,6 +463,7 @@ export class ManageClassesComponent implements OnInit {
     this.selectedClassData.lastname = this.editClassTable.lastname[currentID];
     this.selectedClassData.photoURL = this.editClassTable.photoURL[currentID];
     this.loadReservedSlots();
+    this.loadSelectedClassEvents();
   }
 
   loadReservedSlots() {
@@ -555,5 +557,42 @@ export class ManageClassesComponent implements OnInit {
   switchToEvents() {
     this.route = 3;
     this.subRoute = 3;
+  }
+
+  loadSelectedClassEvents() {
+    this.selectedEventData.eventID = [];
+    this.selectedEventData.eventDay = [];
+    this.selectedEventData.usedSlots = [];
+    this.selectedEventData.maxSlots = [];
+    this.selectedEventData.active = [];
+    this.selectedEventData.weekNumber = []; 
+
+    let data = {'classID': this.selectedClassData.classID};
+    this.http.post(this.jsonURL.getClassEventsURL(), data)
+      .subscribe(
+        (res) => {
+          if(!res) {
+            return;
+          }
+          if(res.toString() != "") {
+            var count = 0;
+            while(res[count] != null) {
+              count = count +1;
+            }
+            for(let i =0; i < count; i++) {
+              this.selectedEventData.eventID.push(res[i].eventID);
+              this.selectedEventData.eventDay.push(res[i].eventDay);
+              this.selectedEventData.usedSlots.push(res[i].usedSlots);
+              this.selectedEventData.maxSlots.push(res[i].maxSlots);
+              this.selectedEventData.active.push(res[i].active);
+              this.selectedEventData.weekNumber.push(i+1);
+            }
+          }
+        },
+        err => {
+          console.log(err);
+          //finish loading
+        }
+    );
   }
 }
