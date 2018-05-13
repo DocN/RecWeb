@@ -551,4 +551,9 @@ export class ManageClassesComponent implements OnInit {
       this.showSlots = 0;
     }
   }
+
+  switchToEvents() {
+    this.route = 3;
+    this.subRoute = 3;
+  }
 }
