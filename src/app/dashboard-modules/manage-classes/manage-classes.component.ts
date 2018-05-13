@@ -40,6 +40,9 @@ export class ManageClassesComponent implements OnInit {
   private selectedReserveSlotTable: any = {};
   private reservedList = [];
   private changeReservedMessage;
+  private changeReservedMessageBad;
+  //validation patterns
+  emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
 
 
   constructor(private http: HttpClient, private jsonURL:GetJsonService, private dashroute:DashrouteService) { }
@@ -459,8 +462,6 @@ export class ManageClassesComponent implements OnInit {
     this.selectedClassData.lastname = this.editClassTable.lastname[currentID];
     this.selectedClassData.photoURL = this.editClassTable.photoURL[currentID];
     this.loadReservedSlots();
-    this.reservedList[0] = 50;
-
   }
 
   loadReservedSlots() {
@@ -496,6 +497,14 @@ export class ManageClassesComponent implements OnInit {
     currentID = currentID.slice(5);
     console.log(currentID);
     var newEmail = this.selectedReserveSlotTable.email[currentID];
+    //validate email input
+    if(newEmail.toString().search(this.emailPattern) == -1) {
+      this.changeReservedMessageBad = "*Invalid Email address!";
+      return;
+    }
+    else {
+      this.changeReservedMessageBad = "";
+    }
     var currentSlot = this.selectedReserveSlotTable.slotNumber[currentID];
     let data = {'classID': this.selectedClassData.classID, 'email': newEmail, 'slotNumber': currentSlot};
     this.http.post(this.jsonURL.getUpdateReservedSlotURL(), data)

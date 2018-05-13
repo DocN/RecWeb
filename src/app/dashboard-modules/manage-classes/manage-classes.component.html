@@ -279,13 +279,16 @@
                       <div class="responseMessage">
                         {{changeReservedMessage}}
                       </div>
+                      <div class="responseMessageBad">
+                        {{changeReservedMessageBad}}
+                      </div>
                     <div class="reservedSlots" *ngFor="let current of selectedClassData.reservedSlotIterator;let i = index">
                       <div class="row">
                         <div class="col-3">
                           Email {{i+1}}:
                         </div>
                         <div class="col-9">
-                          <input name="reservedSlot{{i}}" [(ngModel)]="selectedReserveSlotTable.email[i]" #classname="ngModel" type="text"><i id="apply{{i}}" class="fa fa-check clickablething" (click)="applyReservedSlotChange($event)"></i>                   
+                          <input name="reservedSlot{{i}}" [(ngModel)]="selectedReserveSlotTable.email[i]" #classname="ngModel" type="email"><i id="apply{{i}}" class="fa fa-check clickablething" (click)="applyReservedSlotChange($event)" [pattern]="emailPattern" required></i>                   
                         </div>
                       </div>
                     </div>
