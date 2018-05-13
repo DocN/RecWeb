@@ -35,6 +35,12 @@ export class ManageClassesComponent implements OnInit {
   private selectedClass; 
   private selectedClassData: any= {};
   private changeInstructor;
+  private changeClassCategory;
+  private showSlots;
+  private selectedReserveSlotTable: any = {};
+  private reservedList = [];
+  private changeReservedMessage;
+
 
   constructor(private http: HttpClient, private jsonURL:GetJsonService, private dashroute:DashrouteService) { }
 
@@ -48,6 +54,8 @@ export class ManageClassesComponent implements OnInit {
     this.getClassCategories();
     this.getEditClassTable();
     this.changeInstructor = 0;
+    this.changeClassCategory = 0;
+    this.showSlots = 0;
     this.optionFilter = 1;
   }
 
@@ -431,6 +439,10 @@ export class ManageClassesComponent implements OnInit {
     this.selectedClassData.instructorID = this.editClassTable.instructorID[currentID];
     this.selectedClassData.categoryID = this.editClassTable.categoryID[currentID];
     this.selectedClassData.reservedSlots = this.editClassTable.reservedSlots[currentID];
+    this.selectedClassData.reservedSlotIterator = []; 
+    for(let i =0; i < this.selectedClassData.reservedSlots; i++) {
+      this.selectedClassData.reservedSlotIterator.push('1');
+    }
     this.selectedClassData.availableSlots = this.editClassTable.availableSlots[currentID];
     this.selectedClassData.beginDate = this.editClassTable.beginDate[currentID];
     this.selectedClassData.endDate = this.editClassTable.endDate[currentID];
@@ -446,15 +458,88 @@ export class ManageClassesComponent implements OnInit {
     this.selectedClassData.firstname = this.editClassTable.firstname[currentID];
     this.selectedClassData.lastname = this.editClassTable.lastname[currentID];
     this.selectedClassData.photoURL = this.editClassTable.photoURL[currentID];
+    this.loadReservedSlots();
+    this.reservedList[0] = 50;
+
+  }
+
+  loadReservedSlots() {
+    this.selectedReserveSlotTable.email = [];
+    this.selectedReserveSlotTable.slotNumber = [];
+    let data = {'classID': this.selectedClassData.classID};
+    this.http.post(this.jsonURL.getReservedSlotURL(), data)
+      .subscribe(
+        (res) => {
+          if(!res) {
+            return;
+          }
+          if(res.toString() != "") {
+            var count = 0;
+            while(res[count] != null) {
+              count = count +1;
+            }
+            for(let i =0; i < count; i++) {
+              this.selectedReserveSlotTable.email.push(res[i].email);
+              this.selectedReserveSlotTable.slotNumber.push(res[i].slotNumber);
+            }
+          }
+        },
+        err => {
+          console.log(err);
+          //finish loading
+        }
+    );
+  }
+
+  applyReservedSlotChange($event) {
+    var currentID = $event["srcElement"]["id"];
+    currentID = currentID.slice(5);
+    console.log(currentID);
+    var newEmail = this.selectedReserveSlotTable.email[currentID];
+    var currentSlot = this.selectedReserveSlotTable.slotNumber[currentID];
+    let data = {'classID': this.selectedClassData.classID, 'email': newEmail, 'slotNumber': currentSlot};
+    this.http.post(this.jsonURL.getUpdateReservedSlotURL(), data)
+      .subscribe(
+        (res) => {
+          if(!res) {
+            return;
+          }
+          if(res.toString() != "") {
+            console.log(res["message"]);
+            this.changeReservedMessage = res["message"];
+          }
+        },
+        err => {
+          console.log(err);
+          //finish loading
+        }
+    );
   }
 
   enableChangeInstructor() {
-    console.log("wtf");
     if(this.changeInstructor == 0) {
       this.changeInstructor = 1;
     }
     else {
       this.changeInstructor = 0;
+    }
+  }
+
+  enableChangeClassCategory() {
+    if(this.changeClassCategory == 0) {
+      this.changeClassCategory = 1;
+    }
+    else {
+      this.changeClassCategory = 0;
+    }
+  }
+
+  enableShowSlots() {
+    if(this.showSlots == 0) {
+      this.showSlots = 1;
+    }
+    else {
+      this.showSlots = 0;
     }
   }
 }

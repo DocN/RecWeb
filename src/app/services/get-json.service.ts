@@ -26,6 +26,8 @@ export class GetJsonService {
   private deleteCategoryURL = 'http://127.0.0.1/bcitrec/classes/deleteClass.php';
   private updateClassCategoryURL = 'http://127.0.0.1/bcitrec/classes/updateClassCategory.php';
   private ClassTableURL = 'http://127.0.0.1/bcitrec/classes/getClassesTable.php';
+  private reservedSlotURL = 'http://127.0.0.1/bcitrec/classes/getReservedSlots.php';
+  private updateReservedSlotURL = 'http://127.0.0.1/bcitrec/classes/updateReservedSlot.php';
   constructor() { }
 
   getAdminModulesURL() {
@@ -110,5 +112,12 @@ export class GetJsonService {
   }
   getClassTableURL() {
     return this.ClassTableURL;
+  }
+
+  getReservedSlotURL() {
+    return this.reservedSlotURL;
+  }
+  getUpdateReservedSlotURL() {
+    return this.updateReservedSlotURL;
   }
 }

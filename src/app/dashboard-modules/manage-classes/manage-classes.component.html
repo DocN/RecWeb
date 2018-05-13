@@ -271,9 +271,29 @@
     this.selectedClassData.photoURL = this.editClassTable.photoURL[currentID];-->
               <div class="col-6">
                 <div class="rowItem"><div class="editcurrentTitle">Class ID: </div><input name="selectedClassID" [(ngModel)]="selectedClassData.classID" #selectedClassID="ngModel" class="editInputbox" type="text" readonly></div>
-                <div class="rowItem"><div class="editcurrentTitle">Class Name: </div><input name="selectedClassName" [(ngModel)]="selectedClassData.className" #selectedClassName="ngModel" class="editInputbox" type="text" readonly></div>
+                <div class="rowItem"><div class="editcurrentTitle">Class Name: </div><input name="selectedClassName" [(ngModel)]="selectedClassData.className" #selectedClassName="ngModel" class="editInputbox" type="text"></div>
                 <div class="rowItem"><div class="editcurrentTitle">Class Location:</div><input name="selectedClassLocation" [(ngModel)]="selectedClassData.classLocation" #selectedClassLocation="ngModel" class="editInputbox" type="text"></div>
-                <div class="addAccountFont rowPadding">
+                <div class="addAccountFont frameIt rowPadding">
+                  Manage Reserved Slots <button type="button" class="btn btn-info" (click)="enableShowSlots()">Show Slots</button> <br>
+                  <div *ngIf="this.showSlots == 1">
+                      <div class="responseMessage">
+                        {{changeReservedMessage}}
+                      </div>
+                    <div class="reservedSlots" *ngFor="let current of selectedClassData.reservedSlotIterator;let i = index">
+                      <div class="row">
+                        <div class="col-3">
+                          Email {{i+1}}:
+                        </div>
+                        <div class="col-9">
+                          <input name="reservedSlot{{i}}" [(ngModel)]="selectedReserveSlotTable.email[i]" #classname="ngModel" type="text"><i id="apply{{i}}" class="fa fa-check clickablething" (click)="applyReservedSlotChange($event)"></i>                   
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="addAccountFont frameIt rowPadding">
                   Current Instructor: {{selectedClassData.firstname}}  {{selectedClassData.lastname}} <br>
                   <button type="button" class="btn btn-warning" (click)="enableChangeInstructor()">Change Instructor</button> <br>
                   <div *ngIf="this.changeInstructor == 1">
@@ -283,9 +303,16 @@
                     </select>
                   </div>
                 </div>
-              </div>
-              <div class="col-6">
-
+                <div class="addAccountFont frameIt rowPadding">
+                  Current Category: {{selectedClassData.categoryName}} <br>
+                  <button type="button" class="btn btn-info" (click)="enableChangeClassCategory()">Change Class Category</button> <br>
+                  <div *ngIf="this.changeClassCategory == 1">
+                    Select a New Class Category: <br>
+                    <select #selectClassCategory class="mdb-select" (change)="setClassCategory(selectClassCategory.value)">
+                      <option value="{{i}}" *ngFor="let currentCategory of classCategorytable.categoryID;let i = index">{{classCategorytable.categoryName[i]}} </option>
+                    </select>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="row">
