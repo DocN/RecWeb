@@ -138,7 +138,7 @@
                 <th scope="row" *ngIf="this.instructorTable.filtered[i] == 1">{{currentUser}}</th>
                 <td *ngIf="this.instructorTable.filtered[i] == 1">{{instructorTable.firstname[i]}}</td>
                 <td *ngIf="this.instructorTable.filtered[i] == 1">{{instructorTable.lastname[i]}}</td>
-                <td *ngIf="this.instructorTable.filtered[i] == 1"><div id="editUser{{i}}" class="editUser" (click)="selectInstructor($event)"><i class="fa fa-pencil fa-fw"></i> Edit User</div></td>
+                <td *ngIf="this.instructorTable.filtered[i] == 1"><div id="editUser{{i}}" class="editUser" (click)="selectInstructor($event)"><i class="fa fa-pencil fa-fw"></i> Edit Instructor</div></td>
               </tr>
             </tbody>
           </table>
