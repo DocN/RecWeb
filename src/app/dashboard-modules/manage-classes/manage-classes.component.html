@@ -302,12 +302,6 @@
                 <div class="addAccountFont frameIt rowPadding">
                   Manage Weekly Classes: <br>
                   <button type="button" class="btn btn-primary" (click)="switchToEvents()">View Weekly Classes</button> <br>
-                  <div *ngIf="this.changeInstructor == 1">
-                    Select a New Instructor: <br>
-                    <select #instructorSelector class="mdb-select" (change)="setClassInstructor(instructorSelector.value)">
-                        <option value="{{i}}" *ngFor="let currentInstructor of instructorTable.instructorID;let i = index">{{instructorTable.firstname[i]}} {{instructorTable.lastname[i]}} </option>
-                    </select>
-                  </div>
                 </div>
                 <div class="addAccountFont frameIt rowPadding">
                   Current Instructor: {{selectedClassData.firstname}}  {{selectedClassData.lastname}} <br>
@@ -358,10 +352,32 @@
             <div class="row" *ngFor="let currentEvent of selectedEventData.eventID;let i = index">
               <div class="col-12">
                 <div class="weekEventFrame">
-                  Week - {{selectedEventData.weekNumber[i]}} {{selectedEventData.eventDay[i] * 1000 | date:'MMMM-dd-yyyy'}} {{selectedEventData.usedSlots[i]}}/{{selectedEventData.maxSlots[i]}}
+                  {{selectedEventData.eventID[i]}} Week - {{selectedEventData.weekNumber[i]}} {{selectedEventData.eventDay[i] * 1000 | date:'EEEE MMMM-dd-yyyy'}}
                   <div class="row">
-                    <div class="col-12">
-                      <button type="button" class="btn btn-secondary">Manage Slots</button>
+                    <div class="col-4">
+                      <button id="showDropinSlots{{i}}" type="button" class="btn btn-secondary" (click)="enableShowDropinSlot($event)">{{selectedEventData.usedSlots[i]}}/{{selectedEventData.maxSlots[i]}} Manage Drop-in Slots</button>
+                    </div>
+                  </div>
+                  <div class="row" *ngIf="this.selectedEventData.displayEditSlots[i] == 1">
+                      
+                    <div class="col-12" >
+                      <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let currentEvent of this.eventUserData.UID[i];let j = index">
+                              <th scope="col">{{j+1}}</th>
+                            <td>{{this.eventUserData.firstName[i][j]}} {{this.eventUserData.lastName[i][j]}}</td>
+                            <td>{{this.eventUserData.email[i][j]}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                        
                     </div>
                   </div>
                 </div>

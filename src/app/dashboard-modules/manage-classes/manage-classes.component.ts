@@ -42,6 +42,8 @@ export class ManageClassesComponent implements OnInit {
   private changeReservedMessage;
   private changeReservedMessageBad;
   private selectedEventData: any= {};
+  private eventUserData: any= {};
+
   //validation patterns
   emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
 
@@ -566,6 +568,12 @@ export class ManageClassesComponent implements OnInit {
     this.selectedEventData.maxSlots = [];
     this.selectedEventData.active = [];
     this.selectedEventData.weekNumber = []; 
+    this.selectedEventData.displayEditSlots = [];
+    //load spaces for event user data
+    this.eventUserData.UID = [];
+    this.eventUserData.firstName = [];
+    this.eventUserData.lastName = [];
+    this.eventUserData.email = [];
 
     let data = {'classID': this.selectedClassData.classID};
     this.http.post(this.jsonURL.getClassEventsURL(), data)
@@ -586,6 +594,7 @@ export class ManageClassesComponent implements OnInit {
               this.selectedEventData.maxSlots.push(res[i].maxSlots);
               this.selectedEventData.active.push(res[i].active);
               this.selectedEventData.weekNumber.push(i+1);
+              this.selectedEventData.displayEditSlots.push(0);
             }
           }
         },
@@ -595,4 +604,49 @@ export class ManageClassesComponent implements OnInit {
         }
     );
   }
+
+  enableShowDropinSlot($event) {
+    var currentID = $event["srcElement"]["id"];
+    currentID = currentID.slice(15);
+    this.selectedEventData.displayEditSlots[currentID] = 1;
+    this.loadEventUsers(currentID);
+  }
+
+  loadEventUsers($currentID) {    
+    this.eventUserData.UID[$currentID] = [];
+    this.eventUserData.UID[$currentID] = [];
+    this.eventUserData.firstName[$currentID] = []; 
+    this.eventUserData.lastName[$currentID] =  [];
+    this.eventUserData.email[$currentID] =  [];
+    console.log(this.selectedEventData.eventID[$currentID]);
+    let data = {'eventID': this.selectedEventData.eventID[$currentID]};
+    this.http.post(this.jsonURL.getEventUsersURL(), data)
+      .subscribe(
+        (res) => {
+          if(!res) {
+            console.log("heasdasdre");
+            return;
+          }
+          if(res.toString() != "") {
+            console.log("heasdasdre");
+            var count = 0;
+            while(res[count] != null) {
+              console.log("here");
+              count = count +1;
+            }
+            for(let i =0; i < count; i++) {
+              this.eventUserData.UID[$currentID].push(res[i].UID);
+              this.eventUserData.firstName[$currentID].push(res[i].firstName);
+              this.eventUserData.lastName[$currentID].push(res[i].lastName);     
+              this.eventUserData.email[$currentID].push(res[i].email);        
+            }
+          }
+        },
+        err => {
+          console.log(err);
+          //finish loading
+        }
+    );
+  }
+
 }
