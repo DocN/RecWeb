@@ -354,19 +354,21 @@
                 <div class="weekEventFrame">
                   {{selectedEventData.eventID[i]}} Week - {{selectedEventData.weekNumber[i]}} {{selectedEventData.eventDay[i] * 1000 | date:'EEEE MMMM-dd-yyyy'}}
                   <div class="row">
-                    <div class="col-4">
-                      <button id="showDropinSlots{{i}}" type="button" class="btn btn-secondary" (click)="enableShowDropinSlot($event)">{{selectedEventData.usedSlots[i]}}/{{selectedEventData.maxSlots[i]}} Manage Drop-in Slots</button>
+                    <div class="col-12">
+                      <button id="showDropinSlots{{i}}" type="button" class="btn btn-secondary pull-left" (click)="enableShowDropinSlot($event)">{{selectedEventData.usedSlots[i]}}/{{selectedEventData.maxSlots[i]}} Manage Drop-in Slots</button>
+                      <button id="registerDropinSlot{{i}}" type="button" class="btn btn-info pull-left" (click)="enableShowRegisterDropinSlot($event)">Register User</button>
                     </div>
                   </div>
+                  <!-- display table of users registered in drop in-->
                   <div class="row" *ngIf="this.selectedEventData.displayEditSlots[i] == 1">
-                      
                     <div class="col-12" >
                       <table class="table table-bordered">
                         <thead>
                           <tr>
-                            <th scope="col">#</th>
+                            <th scope="col">Slot#</th>
                             <th scope="col">Name</th>
                             <th scope="col">Email</th>
+                            <th scope="col">Action</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -374,10 +376,33 @@
                               <th scope="col">{{j+1}}</th>
                             <td>{{this.eventUserData.firstName[i][j]}} {{this.eventUserData.lastName[i][j]}}</td>
                             <td>{{this.eventUserData.email[i][j]}}</td>
+                            <td>
+                              <div class="cancelbtnFrame"><i class="fa fa-times cancelIcon pull-left"></i> <div class="actionFont pull-left">Cancel Reservation</div></div>
+                            </td>
                           </tr>
                         </tbody>
                       </table>
-                        
+                    </div>
+                  </div>
+                  
+                  <!-- display registeration form -->
+                  <div class="row" *ngIf="this.selectedEventData.displayRegisterSlot[i] == 1">
+                    <div class="col-12">
+                        <div class="card editUserCard">
+                          <div class="card-body">
+                            Email:
+                            <form class="example-form">
+                              <mat-form-field class="example-full-width">
+                                <input [(ngModel)]="selectedEventData.registerEmail[i]" type="text" aria-label="Number" matInput [formControl]="registerFormControl" [matAutocomplete]="auto">
+                                <mat-autocomplete #auto="matAutocomplete">
+                                  <mat-option *ngFor="let option of registerFilteredOptions | async" [value]="option">
+                                    {{ option }}
+                                  </mat-option>
+                                </mat-autocomplete>
+                              </mat-form-field>
+                            </form>
+                          </div>
+                        </div>
                     </div>
                   </div>
                 </div>

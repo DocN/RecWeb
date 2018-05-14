@@ -3,6 +3,10 @@ import { DashrouteService } from '../../services/dashroute.service';
 import { HttpClient } from '@angular/common/http';
 import { GetJsonService } from '../../services/get-json.service';
 import * as crypto from 'crypto-js';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {FormControl} from '@angular/forms';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 
 @Component({
@@ -44,6 +48,12 @@ export class ManageClassesComponent implements OnInit {
   private selectedEventData: any= {};
   private eventUserData: any= {};
 
+  //register 
+  registerFormControl: FormControl = new FormControl();
+  private registerUserDropin: any= {};
+  private extUserEmailList = [];
+  registerFilteredOptions: Observable<string[]>;
+
   //validation patterns
   emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
 
@@ -63,6 +73,12 @@ export class ManageClassesComponent implements OnInit {
     this.changeClassCategory = 0;
     this.showSlots = 0;
     this.optionFilter = 1;
+
+    this.registerFilteredOptions = this.registerFormControl.valueChanges
+    .pipe(
+      startWith(''),
+      map(val => this.registerExtfilter(val))
+    );
   }
 
   goCreateClass() {
@@ -569,6 +585,9 @@ export class ManageClassesComponent implements OnInit {
     this.selectedEventData.active = [];
     this.selectedEventData.weekNumber = []; 
     this.selectedEventData.displayEditSlots = [];
+    this.selectedEventData.displayRegisterSlot = [];
+    this.selectedEventData.registerEmail = [];
+
     //load spaces for event user data
     this.eventUserData.UID = [];
     this.eventUserData.firstName = [];
@@ -595,6 +614,12 @@ export class ManageClassesComponent implements OnInit {
               this.selectedEventData.active.push(res[i].active);
               this.selectedEventData.weekNumber.push(i+1);
               this.selectedEventData.displayEditSlots.push(0);
+              this.selectedEventData.displayRegisterSlot.push(0);
+              this.registerFilteredOptions = this.registerFormControl.valueChanges
+              .pipe(
+                startWith(''),
+                map(val => this.registerExtfilter(val))
+              );
             }
           }
         },
@@ -608,8 +633,31 @@ export class ManageClassesComponent implements OnInit {
   enableShowDropinSlot($event) {
     var currentID = $event["srcElement"]["id"];
     currentID = currentID.slice(15);
-    this.selectedEventData.displayEditSlots[currentID] = 1;
+    if(this.selectedEventData.displayEditSlots[currentID] == 1) {
+      this.selectedEventData.displayEditSlots[currentID] = 0;
+      return;
+    }
+    else {
+      this.selectedEventData.displayEditSlots[currentID] = 1;
+    }
+    
     this.loadEventUsers(currentID);
+  }
+
+  enableShowRegisterDropinSlot($event) {
+    var currentID = $event["srcElement"]["id"];
+    currentID = currentID.slice(18);
+    console.log(currentID);
+
+    if(this.selectedEventData.displayRegisterSlot[currentID] == 1) {
+      this.selectedEventData.displayRegisterSlot[currentID] = 0;
+      return;
+    }
+    else {
+      this.resetRegistersFrames();
+      this.selectedEventData.displayRegisterSlot[currentID] = 1;
+    }
+    this.loadExtUserList();
   }
 
   loadEventUsers($currentID) {    
@@ -648,5 +696,43 @@ export class ManageClassesComponent implements OnInit {
         }
     );
   }
+
+  loadExtUserList() {    
+    this.extUserEmailList = [];
+    let data = {};
+    this.http.post(this.jsonURL.getExtUserEmailsURL(), data)
+      .subscribe(
+        (res) => {
+          if(!res) {
+            return;
+          }
+          if(res.toString() != "") {
+            var count = 0;
+            while(res[count] != null) {
+              count = count +1;
+            }
+            for(let i =0; i < count; i++) {
+              this.extUserEmailList.push(res[i].email);
+            }
+          }
+        },
+        err => {
+          console.log(err);
+          //finish loading
+        }
+    );
+  }
+
+  resetRegistersFrames() {
+    for(let i =0; i < this.selectedEventData.displayRegisterSlot.length; i++) {
+      this.selectedEventData.displayRegisterSlot[i] = 0;
+    }
+  }
+  
+  registerExtfilter(val: string): string[] {
+    return this.extUserEmailList.filter(option =>
+      option.toLowerCase().includes(val.toLowerCase()));
+  }
+
 
 }

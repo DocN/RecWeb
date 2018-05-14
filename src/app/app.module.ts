@@ -36,6 +36,9 @@ import { ManageClasscategoriesComponent } from './dashboard-modules/manage-class
 //color picker
 import { ColorPickerModule } from 'ngx-color-picker';
 
+//material angular
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+
 const appRoutes:Routes = [
   {
     path: 'login',
@@ -75,6 +78,7 @@ const appRoutes:Routes = [
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     ColorPickerModule,
+    MatAutocompleteModule,
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
   providers: [
