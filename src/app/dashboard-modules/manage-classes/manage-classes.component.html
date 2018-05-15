@@ -393,7 +393,8 @@
                           <div class="row">
                             <div class="col-12">
                               <h1>Weekly Course Registration</h1>
-                              Email:
+                              <div class="errorMessage">{{registerErrorMessage[i]}}</div>
+                              <h3>Email:</h3>
                               <form class="example-form">
                                 <mat-form-field class="example-full-width">
                                   <input [(ngModel)]="selectedEventData.registerEmail[i]" type="text" aria-label="Number" matInput [formControl]="registerFormControl" [matAutocomplete]="auto">
@@ -407,14 +408,24 @@
                             </div>
                           </div>
                           <div class="row">
+                            <div class="padSpacing10"></div>
+                          </div>
+                          <div class="row">
+                            <div class="col-12">
+                              <div class="checkbox">
+                                <label><input type="checkbox" value="" (change)="deductCredit()" checked> Deduct Credit?</label>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
                             <div class="col-12">
                               <button id="registerEventBtn{{i}}" type="button" class="btn btn-success pull-right" (click)="registerForEvent($event)">Register User</button>
                             </div>
                           </div>
                         </div>
                         <div class="card-body" *ngIf="this.selectedEventData.displayRegisterSlotResponse[i] == 1">
-                          {{this.registerResponse[i]}}
-                          <div class=""><i class="fa fa-check"> </i>Register Another User</div>
+                          <div class="successregisterMessage"><i class="fa fa-check"> </i> {{this.registerResponse[i]}}</div>
+                          <button id="goBackRegister{{i}}" type="button" class="btn btn-primary" (click)="goRegisterAnotherUser($event)">Register Another User</button>
                         </div>
                       </div>
                     </div>

@@ -56,6 +56,8 @@ export class ManageClassesComponent implements OnInit {
   registerFilteredOptions: Observable<string[]>;
   private regErrors = [];
   private registerResponse = [];
+  private registerErrorMessage = [];
+  private deductCreditsVal = 1;
 
   //validation patterns
   emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
@@ -695,8 +697,9 @@ export class ManageClassesComponent implements OnInit {
               this.eventUserData.UID[$currentID].push(res[i].UID);
               this.eventUserData.firstName[$currentID].push(res[i].firstName);
               this.eventUserData.lastName[$currentID].push(res[i].lastName);     
-              this.eventUserData.email[$currentID].push(res[i].email);        
+              this.eventUserData.email[$currentID].push(res[i].email);
             }
+            this.selectedEventData.usedSlots[$currentID] = count;
           }
         },
         err => {
@@ -752,6 +755,7 @@ export class ManageClassesComponent implements OnInit {
 
     var currentEmail = this.selectedEventData.registerEmail[currentID];
     var currentIndex = this.getListIndex(currentEmail);
+    this.registerErrorMessage[currentID] = '';
     //check if we found the email in the system
     if(currentIndex == -1) {
       this.regErrors.push("*Error Invalid email address, please enter an email associated with a user");
@@ -763,7 +767,7 @@ export class ManageClassesComponent implements OnInit {
       return;
     }
 
-    let data = {'eventID': this.selectedEventData.eventID[currentID], 'UID': currentUID};
+    let data = {'eventID': this.selectedEventData.eventID[currentID], 'UID': currentUID, 'deductCredits': this.deductCreditsVal};
     this.http.post(this.jsonURL.getRegisterForEventURL(), data)
       .subscribe(
         (res) => {
@@ -771,11 +775,16 @@ export class ManageClassesComponent implements OnInit {
             return;
           }
           if(res.toString() != "") {
-            this.registerResponse[currentID] = res["message"];
+
             if(res["valid"] == 1) {
+              this.registerResponse[currentID] = res["message"];
               this.selectedEventData.displayRegisterSlotResponse[currentID] = 1;
               console.log(this.selectedEventData.usedSlots[currentID]);
               this.selectedEventData.usedSlots[currentID] = Number(this.selectedEventData.usedSlots[currentID]) +1; 
+              this.loadEventUsers(currentID);
+            }
+            else {
+              this.registerErrorMessage[currentID] = res["message"];
             }
           }
         },
@@ -797,5 +806,20 @@ export class ManageClassesComponent implements OnInit {
     return -1;
   }
 
+  goRegisterAnotherUser($event) {
+    var currentID = $event["srcElement"]["id"];
+    currentID = currentID.slice(14);
+    console.log(currentID);
+    this.selectedEventData.displayRegisterSlotResponse[currentID] = 0;
+    this.selectedEventData.registerEmail[currentID] = '';
+  }
 
+  deductCredit() {
+    if(this.deductCreditsVal == 1) {
+      this.deductCreditsVal = 0;
+    }
+    else {
+      this.deductCreditsVal = 1;
+    }
+  }
 }

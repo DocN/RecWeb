@@ -212,6 +212,11 @@
     width:100%;
 }
 
+.padSpacing10 {
+    margin-top:10px;
+    width:100%;
+}
+
 .padSpacing25 {
     margin-top:25px;
     width:100%;
@@ -319,4 +324,14 @@
 
 .cancelbtnFrame {
     cursor: pointer;
+}
+
+.successregisterMessage {
+    font-weight:500;
+    font-size:20px;
+    color:green;
+}
+
+.errorMessage {
+    color:red;
 }
