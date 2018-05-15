@@ -52,7 +52,10 @@ export class ManageClassesComponent implements OnInit {
   registerFormControl: FormControl = new FormControl();
   private registerUserDropin: any= {};
   private extUserEmailList = [];
+  private extUserIDList = [];
   registerFilteredOptions: Observable<string[]>;
+  private regErrors = [];
+  private registerResponse = [];
 
   //validation patterns
   emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
@@ -412,6 +415,9 @@ export class ManageClassesComponent implements OnInit {
     for(let i =0; i < this.editClassTable.filtered.length; i++) {
       //classid filter
       if(filterOption == 1) {
+        if(!this.editClassTable.classID[i]) {
+          return;
+        }
         var currentVal = this.editClassTable.classID[i].toString().toLowerCase();
         if(currentVal.indexOf(currentFilter) == -1) {
           this.editClassTable.filtered[i] = 0;
@@ -419,6 +425,9 @@ export class ManageClassesComponent implements OnInit {
       } 
       //className filter
       else if(filterOption == 2) {
+        if(!this.editClassTable.className[i]) {
+          return;
+        }
         var currentVal = this.editClassTable.className[i].toString().toLowerCase();
         if(currentVal.indexOf(currentFilter) == -1) {
           this.editClassTable.filtered[i] = 0;
@@ -426,6 +435,9 @@ export class ManageClassesComponent implements OnInit {
       }
       //class Location filter
       else if(filterOption == 3) {
+        if(!this.editClassTable.classLocation[i]) {
+          return;
+        }
         var currentVal = this.editClassTable.classLocation[i].toString().toLowerCase();
         if(currentVal.indexOf(currentFilter) == -1) {
           this.editClassTable.filtered[i] = 0;
@@ -440,6 +452,9 @@ export class ManageClassesComponent implements OnInit {
       }
       //category name filter
       else if(filterOption == 5) {
+        if(!this.editClassTable.className[i]) {
+          return;
+        }
         var currentVal = this.editClassTable.categoryName[i].toString().toLowerCase();
         if(currentVal.indexOf(currentFilter) == -1) {
           this.editClassTable.filtered[i] = 0;
@@ -586,6 +601,7 @@ export class ManageClassesComponent implements OnInit {
     this.selectedEventData.weekNumber = []; 
     this.selectedEventData.displayEditSlots = [];
     this.selectedEventData.displayRegisterSlot = [];
+    this.selectedEventData.displayRegisterSlotResponse = [];
     this.selectedEventData.registerEmail = [];
 
     //load spaces for event user data
@@ -615,11 +631,7 @@ export class ManageClassesComponent implements OnInit {
               this.selectedEventData.weekNumber.push(i+1);
               this.selectedEventData.displayEditSlots.push(0);
               this.selectedEventData.displayRegisterSlot.push(0);
-              this.registerFilteredOptions = this.registerFormControl.valueChanges
-              .pipe(
-                startWith(''),
-                map(val => this.registerExtfilter(val))
-              );
+              this.selectedEventData.displayRegisterSlotResponse.push(0);
             }
           }
         },
@@ -672,14 +684,11 @@ export class ManageClassesComponent implements OnInit {
       .subscribe(
         (res) => {
           if(!res) {
-            console.log("heasdasdre");
             return;
           }
           if(res.toString() != "") {
-            console.log("heasdasdre");
             var count = 0;
             while(res[count] != null) {
-              console.log("here");
               count = count +1;
             }
             for(let i =0; i < count; i++) {
@@ -713,6 +722,7 @@ export class ManageClassesComponent implements OnInit {
             }
             for(let i =0; i < count; i++) {
               this.extUserEmailList.push(res[i].email);
+              this.extUserIDList.push(res[i].UID);
             }
           }
         },
@@ -728,10 +738,63 @@ export class ManageClassesComponent implements OnInit {
       this.selectedEventData.displayRegisterSlot[i] = 0;
     }
   }
-  
+
   registerExtfilter(val: string): string[] {
     return this.extUserEmailList.filter(option =>
       option.toLowerCase().includes(val.toLowerCase()));
+  }
+
+  registerForEvent($event) {
+    var validation = true;
+    var currentID = $event["srcElement"]["id"];
+    currentID = currentID.slice(16);
+    this.regErrors = [];
+
+    var currentEmail = this.selectedEventData.registerEmail[currentID];
+    var currentIndex = this.getListIndex(currentEmail);
+    //check if we found the email in the system
+    if(currentIndex == -1) {
+      this.regErrors.push("*Error Invalid email address, please enter an email associated with a user");
+      validation = false;
+    }
+
+    var currentUID = this.extUserIDList[currentIndex];
+    if(validation == false) {
+      return;
+    }
+
+    let data = {'eventID': this.selectedEventData.eventID[currentID], 'UID': currentUID};
+    this.http.post(this.jsonURL.getRegisterForEventURL(), data)
+      .subscribe(
+        (res) => {
+          if(!res) {
+            return;
+          }
+          if(res.toString() != "") {
+            this.registerResponse[currentID] = res["message"];
+            if(res["valid"] == 1) {
+              this.selectedEventData.displayRegisterSlotResponse[currentID] = 1;
+              console.log(this.selectedEventData.usedSlots[currentID]);
+              this.selectedEventData.usedSlots[currentID] = Number(this.selectedEventData.usedSlots[currentID]) +1; 
+            }
+          }
+        },
+        err => {
+          console.log(err);
+          //finish loading
+        }
+    );
+
+
+  }
+
+  getListIndex($currentEmail) {
+    for(let i =0; i < this.extUserEmailList.length; i++) {
+      if(this.extUserEmailList[i] == $currentEmail) {
+        return i;
+      }
+    }
+    return -1;
   }
 
 

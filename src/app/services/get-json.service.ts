@@ -31,6 +31,7 @@ export class GetJsonService {
   private classEventsURL = 'http://127.0.0.1/bcitrec/classes/getClassEvents.php';
   private eventUsersURL = 'http://127.0.0.1/bcitrec/classes/getEventUsers.php';
   private extUserEmailsURL = 'http://127.0.0.1/bcitrec/classes/getExtUserEmails.php';
+  private registerForEventURL = 'http://127.0.0.1/bcitrec/classes/registerForEvent.php';
   
   constructor() { }
 
@@ -135,5 +136,9 @@ export class GetJsonService {
 
   getExtUserEmailsURL() {
     return this.extUserEmailsURL;
+  }
+
+  getRegisterForEventURL() {
+    return this.registerForEventURL;
   }
 }
