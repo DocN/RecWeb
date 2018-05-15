@@ -352,7 +352,7 @@
             <div class="row" *ngFor="let currentEvent of selectedEventData.eventID;let i = index">
               <div class="col-12">
                 <div class="weekEventFrame">
-                  {{selectedEventData.eventID[i]}} Week - {{selectedEventData.weekNumber[i]}} {{selectedEventData.eventDay[i] * 1000 | date:'EEEE MMMM-dd-yyyy'}}
+                  {{selectedEventData.eventID[i]}} Week - {{selectedEventData.weekNumber[i]}} {{selectedEventData.eventDay[i] * 1000 | date:'EEEE MMMM-dd-yyyy'}} {{selectedEventData.eventDay[i]}}
                   <div class="row">
                     <div class="col-12">
                       <button id="showDropinSlots{{i}}" type="button" class="btn btn-secondary pull-left" (click)="enableShowDropinSlot($event)">{{selectedEventData.usedSlots[i]}}/{{selectedEventData.maxSlots[i]}} Manage Drop-in Slots</button>
@@ -414,6 +414,7 @@
                         </div>
                         <div class="card-body" *ngIf="this.selectedEventData.displayRegisterSlotResponse[i] == 1">
                           {{this.registerResponse[i]}}
+                          <div class=""><i class="fa fa-check"> </i>Register Another User</div>
                         </div>
                       </div>
                     </div>
