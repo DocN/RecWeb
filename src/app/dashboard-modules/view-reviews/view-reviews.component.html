@@ -4,6 +4,25 @@
       <div class="row">
         <div class="col-1"></div>
         <div class="col-10">
+          <div class="filterFrame">
+              Filter Dates From: 
+                  <input [(ngModel)]="filterBeginDate" [owlDateTimeTrigger]="dt6" [owlDateTime]="dt6" (keyup)="updateTime()">
+                  <owl-date-time [pickerType]="'calendar'" [startView]="'month'" #dt6></owl-date-time>
+
+                  <input [(ngModel)]="filterEndDate" [owlDateTimeTrigger]="dt7" [owlDateTime]="dt7">
+                  <owl-date-time [pickerType]="'calendar'" [startView]="'month'" #dt7></owl-date-time>
+
+                  <button type="button" class="btn btn-success marginTopButtonReview" (click)="updateTime()">Apply Filter</button>
+            </div>
+        </div>
+        <div class="col-1"></div>
+      </div>
+      <div class="row">
+        <div class="padSpacing50"></div>
+      </div>
+      <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
           <div class="card">
             <div class="card-body">
               <table class="table table-hover">
@@ -16,8 +35,8 @@
                     <th scope="col">Review Stars</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr *ngFor="let currentTimestamp of reviewDataTable.timeStamp;let i = index">
+                <tbody *ngFor="let currentTimestamp of reviewDataTable.timeStamp;let i = index">
+                  <tr *ngIf="currentTimestamp >= this.filterBeginUnix && currentTimestamp <= this.filterEndUnix">
                     <td>{{currentTimestamp * 1000 | date:'EEEE MMMM-dd-yyyy'}}</td>
                     <td>{{this.reviewDataTable.className[i]}}</td>
                     <td>{{this.reviewDataTable.firstname[i]}} {{this.reviewDataTable.lastname[i]}}</td>
@@ -32,7 +51,6 @@
               </table>
             </div>
           </div>
-          
         </div>
         <div class="col-1"></div>
       </div>
