@@ -531,7 +531,10 @@
                     <td>{{this.registeredEvents.eventDay[i] * 1000 | date:'EEEE MMMM-dd-yyyy'}}</td>
                     <td>
                       <div class="cancelbtnFrame" (click)="showReservationCancelConfirm(i)"><i class="fa fa-times cancelIcon"></i> Cancel Reservation</div> <br>
-                      <div class="cancelPromptFrame" *ngIf="this.registeredEvents.showCancel[i] == 1"><div class="confirmYesIcon pull-left" (click)="cancelReservation(i)"><i class="fa fa-check confirmYesIcon"></i>Yes</div> <div class="confirmNoIcon pull-left" (click)="showReservationCancelConfirm(i)"><i class="fa fa-times"></i>No</div></div>
+                      <div class="cancelPromptFrame" *ngIf="this.registeredEvents.showCancel[i] == 1">
+                        <button type="button" class="btn btn-success" (click)="cancelReservation(i)">Yes</button>
+                        <button type="button" class="btn btn-danger" (click)="showReservationCancelConfirm(i)">No</button>
+                      </div>
                     </td>
                   </tr>
                 </tbody>

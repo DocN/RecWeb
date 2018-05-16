@@ -1,0 +1,40 @@
+<div class="container-fluid">
+    <!-- class management selection-->
+    <div *ngIf="this.route == 1 && this.subRoute == 0">
+      <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+          <div class="card">
+            <div class="card-body">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Review Date</th>
+                    <th scope="col">Class Name</th>
+                    <th scope="col">Instructor Name</th>
+                    <th scope="col">Review Comments</th>
+                    <th scope="col">Review Stars</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let currentTimestamp of reviewDataTable.timeStamp;let i = index">
+                    <td>{{currentTimestamp * 1000 | date:'EEEE MMMM-dd-yyyy'}}</td>
+                    <td>{{this.reviewDataTable.className[i]}}</td>
+                    <td>{{this.reviewDataTable.firstname[i]}} {{this.reviewDataTable.lastname[i]}}</td>
+                    <td>{{this.reviewDataTable.reviewText[i]}}</td>
+                    <td>
+                      <span class="stars alignleft">
+                          <span [ngStyle]="{'width':this.reviewDataTable.starRatingDisplay[i]}"></span>
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          
+        </div>
+        <div class="col-1"></div>
+      </div>
+    </div>
+</div>

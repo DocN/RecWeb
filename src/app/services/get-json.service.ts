@@ -36,6 +36,7 @@ export class GetJsonService {
   private updateClassDetailsURL = 'http://127.0.0.1/bcitrec/classes/updateClassDetails.php';
   private userRegisteredEventsURL = 'http://127.0.0.1/bcitrec/external/getUserRegisteredEvents.php';
   private cancelClassURL = 'http://127.0.0.1/bcitrec/classes/cancelClass.php';
+  private reviewTableURL = 'http://127.0.0.1/bcitrec/reviews/getReviewsTable.php';
   
   constructor() { }
 
@@ -159,4 +160,9 @@ export class GetJsonService {
   getCancelClassURL() {
     return this.cancelClassURL;
   }
+  getReviewTableURL() {
+    return this.reviewTableURL
+  }
+
+  
 }
