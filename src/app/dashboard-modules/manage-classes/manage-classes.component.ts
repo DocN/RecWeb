@@ -47,6 +47,7 @@ export class ManageClassesComponent implements OnInit {
   private changeReservedMessageBad;
   private selectedEventData: any= {};
   private eventUserData: any= {};
+  private editClassVal: any= {};
 
   //register 
   registerFormControl: FormControl = new FormControl();
@@ -171,7 +172,9 @@ export class ManageClassesComponent implements OnInit {
 
   setClassInstructor($event) {
     this.selectedInstructor = $event;
-    this.loadInstructor();
+    this.editClassVal.instructorID = this.instructorTable.instructorID[$event];
+    console.log(this.editClassVal.instructorID);
+    //this.loadInstructor();
   }
 
   loadInstructor() {
@@ -321,6 +324,8 @@ export class ManageClassesComponent implements OnInit {
 
   setClassCategory($event) {
     this.selectedCategory = $event;
+    this.editClassVal.categoryID = this.classCategorytable.categoryID[$event];
+    console.log(this.editClassVal.categoryID);
   }
 
   goToEditClasses() {
@@ -478,6 +483,8 @@ export class ManageClassesComponent implements OnInit {
     this.selectedClassData.instructorID = this.editClassTable.instructorID[currentID];
     this.selectedClassData.categoryID = this.editClassTable.categoryID[currentID];
     this.selectedClassData.reservedSlots = this.editClassTable.reservedSlots[currentID];
+    this.editClassVal.instructorID = this.selectedClassData.instructorID;
+    this.editClassVal.categoryID = this.selectedClassData.categoryID;
     this.selectedClassData.reservedSlotIterator = []; 
     for(let i =0; i < this.selectedClassData.reservedSlots; i++) {
       this.selectedClassData.reservedSlotIterator.push('1');
@@ -497,6 +504,7 @@ export class ManageClassesComponent implements OnInit {
     this.selectedClassData.firstname = this.editClassTable.firstname[currentID];
     this.selectedClassData.lastname = this.editClassTable.lastname[currentID];
     this.selectedClassData.photoURL = this.editClassTable.photoURL[currentID];
+    this.addClassImage = this.selectedClassData.classImageURL;
     this.loadReservedSlots();
     this.loadSelectedClassEvents();
   }
@@ -793,8 +801,6 @@ export class ManageClassesComponent implements OnInit {
           //finish loading
         }
     );
-
-
   }
 
   getListIndex($currentEmail) {
@@ -821,5 +827,69 @@ export class ManageClassesComponent implements OnInit {
     else {
       this.deductCreditsVal = 1;
     }
+  }
+
+  cancelReservation($UID, $i, $j) {
+    //var currentUID = $event["srcElement"]["id"];
+    let data = {'UID': $UID, 'eventID': this.selectedEventData.eventID[$i]};
+    this.http.post(this.jsonURL.getCancelReservationURL(), data)
+    .subscribe(
+      (res) => {
+        if(!res) {
+          return;
+        }
+        if(res.toString() != "") {
+          if(res["valid"] == 1) {
+            this.selectedEventData.usedSlots[$i] = this.selectedEventData.usedSlots[$i] -1;
+            this.loadEventUsers($i);
+          }
+          else {
+          }
+        }
+      },
+      err => {
+        console.log(err);
+        //finish loading
+      }
+    );
+  }
+
+  selectEditInstructor($val) {
+    console.log($val);
+  }
+
+  editClassDetailsApply() {
+    var instructorID = this.selectedClassData.instructorID;
+    var categoryID = this.selectedClassData.categoryID;
+
+    if(this.changeInstructor == 1) {
+      instructorID = this.editClassVal.instructorID;
+    }
+    if(this.changeClassCategory == 1) {
+      categoryID = this.editClassVal.categoryID;
+    }
+
+    let data = {'classID': this.selectedClassData.classID, 'className': this.selectedClassData.className, 'classLocation': this.selectedClassData.classLocation, 'instructorID': instructorID, 'categoryID': categoryID, 'classImage': this.addClassImage};
+    this.http.post(this.jsonURL.getUpdateClassDetailsURL(), data)
+    .subscribe(
+      (res) => {
+        if(!res) {
+          console.log("here");
+          return;
+        }
+        if(res.toString() != "") {
+          if(res["valid"] == 1) {
+            this.successMessageInternal = res["message"];
+            this.subRoute = 2;
+          }
+          else {
+          }
+        }
+      },
+      err => {
+        console.log(err);
+        //finish loading
+      }
+    );
   }
 }

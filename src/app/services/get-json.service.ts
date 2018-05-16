@@ -32,7 +32,8 @@ export class GetJsonService {
   private eventUsersURL = 'http://127.0.0.1/bcitrec/classes/getEventUsers.php';
   private extUserEmailsURL = 'http://127.0.0.1/bcitrec/classes/getExtUserEmails.php';
   private registerForEventURL = 'http://127.0.0.1/bcitrec/classes/registerForEvent.php';
-  
+  private cancelReservationURL = 'http://127.0.0.1/bcitrec/classes/cancelReservation.php';
+  private updateClassDetailsURL = 'http://127.0.0.1/bcitrec/classes/updateClassDetails.php';
   constructor() { }
 
   getAdminModulesURL() {
@@ -140,5 +141,12 @@ export class GetJsonService {
 
   getRegisterForEventURL() {
     return this.registerForEventURL;
+  }
+  getCancelReservationURL() {
+    return this.cancelReservationURL
+  }
+
+  getUpdateClassDetailsURL() {
+    return this.updateClassDetailsURL;
   }
 }

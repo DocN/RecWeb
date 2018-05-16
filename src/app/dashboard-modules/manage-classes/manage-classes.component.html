@@ -166,20 +166,20 @@
 
   <!--  confirmation message after edit classes -->
   <div *ngIf="this.route == 2 && this.subRoute == 1">
-      <div class="container">
-        <div class="row">
-          <div class="topMargin"></div>
-        </div>
-        <div class="row">
-          <div class="greenhighlight">
-            <i class="fa fa-check-square-o fa-fw"></i> {{successMessageInternal}}
-          </div>
-        </div>
-        <div class="row">
-          <div class="returntodashbutton" (click)="goToDashboard()"><i class="fa fa-arrow-left fa-fw"></i>Return to Dashboard</div>
+    <div class="container">
+      <div class="row">
+        <div class="topMargin"></div>
+      </div>
+      <div class="row">
+        <div class="greenhighlight">
+          <i class="fa fa-check-square-o fa-fw"></i> {{successMessageInternal}}
         </div>
       </div>
+      <div class="row">
+        <div class="returntodashbutton" (click)="goToDashboard()"><i class="fa fa-arrow-left fa-fw"></i>Return to Dashboard</div>
+      </div>
     </div>
+  </div>
   <!--  confirmation message after edit classes  END -->
 
   <!-- Edit classes table begin-->
@@ -297,6 +297,22 @@
                     </div>
                   </div>
                 </div>
+                <div class="row">
+                  <div class="padSpacing50"></div>
+                </div>
+                <div class="row">
+                  <div class="addAccountFontHeavy">Class Image</div>
+                </div>
+                <div class="row">
+                  <div class="classImageContainer">
+                    <img class="classImageContainer" src="{{addClassImage}}">
+                  </div>
+                </div>
+                <div class="row">
+                  <label class="btn btn-default uploadButton">
+                      Upload an Image <input type="file" hidden (change)="uploadAnImage($event)">
+                  </label>
+                </div>
               </div>
               <div class="col-6">
                 <div class="addAccountFont frameIt rowPadding">
@@ -327,7 +343,7 @@
             </div>
             <div class="row">
               <div class="col-12">
-                <button type="button" class="btn btn-success changepwButton pull-right" (click)="editUserDetailsApply()">Apply Changes</button>
+                <button type="button" class="btn btn-success changepwButton pull-right" (click)="editClassDetailsApply()">Apply Changes</button>
               </div>
             </div>
           </div>
@@ -340,6 +356,21 @@
     </div>
   </div>
    <!-- Selected Class Edit END-->
+  <div *ngIf="this.route == 3 && this.subRoute == 2">
+    <div class="container">
+      <div class="row">
+        <div class="topMargin"></div>
+      </div>
+      <div class="row">
+        <div class="greenhighlight">
+          <i class="fa fa-check-square-o fa-fw"></i> {{successMessageInternal}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="returntodashbutton" (click)="goToDashboard()"><i class="fa fa-arrow-left fa-fw"></i>Return to Dashboard</div>
+      </div>
+    </div>
+  </div>
 
    <!-- Manage individual events BEGIn-->
    <div *ngIf="this.route == 3 && this.subRoute == 3">
@@ -377,7 +408,7 @@
                             <td>{{this.eventUserData.firstName[i][j]}} {{this.eventUserData.lastName[i][j]}}</td>
                             <td>{{this.eventUserData.email[i][j]}}</td>
                             <td>
-                              <div class="cancelbtnFrame"><i class="fa fa-times cancelIcon pull-left"></i> <div class="actionFont pull-left">Cancel Reservation</div></div>
+                              <div class="cancelbtnFrame" (click)="cancelReservation(this.eventUserData.UID[i][j], i, j)"><i class="fa fa-times cancelIcon pull-left"></i> Cancel Reservation</div>
                             </td>
                           </tr>
                         </tbody>
