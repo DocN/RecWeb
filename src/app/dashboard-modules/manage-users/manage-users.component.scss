@@ -197,3 +197,33 @@
 .padSpacing50 {
     margin-top:50px;
 }
+
+.cancelbtnFrame {
+    cursor: pointer;
+}
+
+.cancelIcon {
+    color:red;
+    margin-top:3px;
+}
+
+.confirmYesIcon {
+    color:green;
+    margin-top:3px;
+}
+
+.confirmNoIcon {
+    margin-left:5px;
+    color:red;
+    margin-top:3px;
+}
+
+.cancelPromptFrame {
+    cursor: pointer;
+}
+
+.transactionMessage {
+    color:green;
+    text-align:center;
+    font-size:20px;
+}

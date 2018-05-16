@@ -161,7 +161,9 @@
               <td *ngIf="this.filteredList[i] == 1">{{authLevelList[i]}}</td>
               <td *ngIf="this.filteredList[i] == 1">{{activeList[i]}}</td>
               <div *ngIf="currentUser != '43ce3424-c3a1-466b-819c-e298e9914427' && this.filteredList[i] == 1">
-              <td><div id="editUser{{i}}" class="editUser" (click)="selectInternalUser($event)"><i class="fa fa-pencil fa-fw"></i> Edit User</div></td>
+              <td>
+                <div id="editUser{{i}}" class="editUser" (click)="selectInternalUser($event)"><i class="fa fa-pencil fa-fw"></i> Edit User</div> 
+              </td>
               </div>
               <!-- disable editing on master account -->
               <div *ngIf="currentUser == '43ce3424-c3a1-466b-819c-e298e9914427' && this.filteredList[i] == 1">
@@ -261,7 +263,6 @@
 
 <!-- External User Management -->
 <div *ngIf="this.route == 2 && this.subRoute == 0">
-  external
   <div class="row">
     <div class="topMargin"></div>
   </div>
@@ -404,6 +405,7 @@
                 <th scope="col">Last Name</th>
                 <th scope="col">Balance</th>
                 <th scope="col">Active</th>
+                <th scope="col">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -414,7 +416,11 @@
                 <td *ngIf="this.extUserTable.filtered[i] == 1">{{extUserTable.lastname[i]}}</td>
                 <td *ngIf="this.extUserTable.filtered[i] == 1">{{extUserTable.balance[i]}}</td>
                 <td *ngIf="this.extUserTable.filtered[i] == 1">{{extUserTable.active[i]}}</td>
-                <td *ngIf="this.extUserTable.filtered[i] == 1"><div id="editUser{{i}}" class="editUser" (click)="selectExtUser($event)"><i class="fa fa-pencil fa-fw"></i> Edit User</div></td>
+                <td *ngIf="this.extUserTable.filtered[i] == 1">
+                  <div id="editUser{{i}}" class="editUser" (click)="selectExtUser($event)"><i class="fa fa-pencil fa-fw"></i> Edit User</div>
+                  <br>
+                  <div id="editUser{{i}}" class="editUser" (click)="selectRegisteredEvents($event)"><i class="fa fa-heart fa-fw"></i> View Classes</div>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -494,4 +500,48 @@
       </div>
     </div>
   </div>
+
+  <div *ngIf="this.route == 3 && this.subRoute == 1">
+      <div class="row">
+        <div class="col-12">
+          <div class="transactionMessage">{{successMessageInternal}}</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+          <div class="card editUserCard">
+            <div class="card-body">
+              <!--Table-->
+              <table class="table table-hover">
+                <!--Table head-->
+                <thead>
+                  <tr>
+                    <th>Class Name</th>
+                    <th>Day of Class</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <!--Table head-->
+
+                <!--Table body-->
+                <tbody>
+                  <tr *ngFor="let currentEvent of registeredEvents.eventID;let i = index">
+                    <td>{{this.registeredEvents.className[i]}}</td>
+                    <td>{{this.registeredEvents.eventDay[i] * 1000 | date:'EEEE MMMM-dd-yyyy'}}</td>
+                    <td>
+                      <div class="cancelbtnFrame" (click)="showReservationCancelConfirm(i)"><i class="fa fa-times cancelIcon"></i> Cancel Reservation</div> <br>
+                      <div class="cancelPromptFrame" *ngIf="this.registeredEvents.showCancel[i] == 1"><div class="confirmYesIcon pull-left" (click)="cancelReservation(i)"><i class="fa fa-check confirmYesIcon"></i>Yes</div> <div class="confirmNoIcon pull-left" (click)="showReservationCancelConfirm(i)"><i class="fa fa-times"></i>No</div></div>
+                    </td>
+                  </tr>
+                </tbody>
+                <!--Table body-->
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-1"></div>
+      </div>
+  </div>
+
 </div>

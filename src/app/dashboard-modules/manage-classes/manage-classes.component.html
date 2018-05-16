@@ -313,6 +313,17 @@
                       Upload an Image <input type="file" hidden (change)="uploadAnImage($event)">
                   </label>
                 </div>
+                <div class="row">
+                  <div class="padSpacing50"></div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="addAccountFont">
+                      Class Description: <br>
+                      <textarea class="bioframe" name="classDescription" [(ngModel)]="editClassVal.classDescription" #classDescription="ngModel" name="textarea"></textarea>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="col-6">
                 <div class="addAccountFont frameIt rowPadding">
@@ -388,6 +399,7 @@
                     <div class="col-12">
                       <button id="showDropinSlots{{i}}" type="button" class="btn btn-secondary pull-left" (click)="enableShowDropinSlot($event)">{{selectedEventData.usedSlots[i]}}/{{selectedEventData.maxSlots[i]}} Manage Drop-in Slots</button>
                       <button id="registerDropinSlot{{i}}" type="button" class="btn btn-info pull-left" (click)="enableShowRegisterDropinSlot($event)">Register User</button>
+                      <button id="registerDropinSlot{{i}}" type="button" class="btn btn-danger pull-left" (click)="enableShowCancelClassConfirm($event)">Cancel Class</button>
                     </div>
                   </div>
                   <!-- display table of users registered in drop in-->
@@ -462,6 +474,24 @@
                     </div>
                   </div>
                   <!--display registration form END-->
+
+                  <!--Display class cancellation frame -->
+                  <div class="row" *ngIf="this.selectedEventData.displayCancelClassFrame[i] == 1">
+                    <div class="col-12">
+                      <div class="card editUserCard">
+                        <div class="card-body" *ngIf="this.selectedEventData.cancelledClass[i] == 1">
+                          <h3>Are you sure you want to cancel this class?</h3>
+                          <button type="button" class="btn btn-success" (click)="cancelClass(i)">Yes</button>
+                          <button type="button" class="btn btn-danger" (click)="cancelClassNo(i)">No</button>
+                        </div>
+                        <div class="card-body" *ngIf="this.selectedEventData.cancelledClass[i] == 0">
+                          <div class="cancelClassMessage">{{this.cancelClassMessage[i] }}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--Display class cancellation END -->
+
                 </div>
               </div>
             </div>

@@ -76,6 +76,11 @@ export class ManageUsersComponent implements OnInit {
   private extFilter: any = {};
   private editExtFilter = 1;
 
+  //registeredEvents
+  private registeredEvents: any = {};
+
+  //cancelreserv
+  showCancelReservation: any = {};
   ngOnInit() {
     this.externalCreateUser.balance = 0;
     this.extUserTable.UID = [];
@@ -282,6 +287,23 @@ export class ManageUsersComponent implements OnInit {
     this.selected.active = this.activeList[currentID];
   }
   
+  selectRegisteredEvents($event) {
+    var currentID = $event["srcElement"]["id"];
+    currentID = currentID.slice(8);
+    console.log(currentID + "here");
+    this.selectedID = currentID;
+    this.subRoute = '1';
+    this.route = '3';
+
+    this.extSelected.userID = this.extUserTable.UID[currentID];
+    this.extSelected.email = this.extUserTable.email[currentID];
+    this.extSelected.firstname = this.extUserTable.firstname[currentID];
+    this.extSelected.lastname = this.extUserTable.lastname[currentID];
+    this.extSelected.balance = this.extUserTable.balance[currentID];
+    this.extSelected.active = this.extUserTable.active[currentID];
+    this.getUserRegisteredEvents();
+  }
+
   editAuthLevel($val) {
     console.log("here " + $val);
     this.selected.authLevel = $val;
@@ -689,6 +711,73 @@ export class ManageUsersComponent implements OnInit {
         }
       }
     }
+  }
+
+  getUserRegisteredEvents() {
+    this.registeredEvents.eventID = [];
+    this.registeredEvents.classID = [];
+    this.registeredEvents.className = [];
+    this.registeredEvents.eventDay = [];
+    this.registeredEvents.showCancel = []; 
+
+    let data = {'UID': this.extSelected.userID};
+    this.http.post(this.jsonURL.getUserRegisteredEventsURL(), data)
+      .subscribe(
+        (res) => {
+          if(!res) {
+            return;
+          }
+          if(res.toString() != "") {
+            console.log(res);
+            var count = 0;
+            while(res[count] != null) {
+              count = count +1;
+            }
+            for(let i =0; i < count; i++) {
+              this.registeredEvents.eventID.push(res[i].eventID);
+              this.registeredEvents.classID.push(res[i].classID);
+              this.registeredEvents.className.push(res[i].className);
+              this.registeredEvents.eventDay.push(res[i].eventDay);
+              this.registeredEvents.showCancel.push(0);
+            }
+          }
+        },
+        err => {
+          console.log(err);
+          //finish loading
+        }
+    );
+  }
+  showReservationCancelConfirm($i) {
+    if(this.registeredEvents.showCancel[$i] == 1) {
+      this.registeredEvents.showCancel[$i] = 0;
+    }
+    else {
+      this.registeredEvents.showCancel[$i] = 1;
+    }
+  }
+
+  cancelReservation($i) {
+    var currentEvent = this.registeredEvents.eventID[$i];
+    var currentUserID =this.extSelected.userID;
+    let data = {'UID': currentUserID, 'eventID': currentEvent};
+    this.http.post(this.jsonURL.getCancelReservationURL(), data)
+    .subscribe(
+      (res) => {
+        if(!res) {
+          return;
+        }
+        if(res.toString() != "") {
+          console.log(res);
+          this.successMessageInternal = res["message"];
+          this.getUserRegisteredEvents();
+        }
+      },
+      err => {
+        console.log(err);
+        //finish loading
+      }
+    );
   }
 
 }

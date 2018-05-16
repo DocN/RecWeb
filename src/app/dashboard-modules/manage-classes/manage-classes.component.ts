@@ -60,6 +60,8 @@ export class ManageClassesComponent implements OnInit {
   private registerErrorMessage = [];
   private deductCreditsVal = 1;
 
+  //cancel class
+  private cancelClassMessage = [];
   //validation patterns
   emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
 
@@ -498,6 +500,7 @@ export class ManageClassesComponent implements OnInit {
     this.selectedClassData.endMin = this.editClassTable.endMin[currentID];
     this.selectedClassData.dayOfWeek = this.editClassTable.dayOfWeek[currentID];
     this.selectedClassData.classDescription = this.editClassTable.classDescription[currentID];
+    this.editClassVal.classDescription = this.selectedClassData.classDescription;
     this.selectedClassData.classImageURL = this.editClassTable.classImageURL[currentID];
     this.selectedClassData.categoryName = this.editClassTable.categoryName[currentID];
     this.selectedClassData.hexColor = this.editClassTable.hexColor[currentID];
@@ -612,7 +615,10 @@ export class ManageClassesComponent implements OnInit {
     this.selectedEventData.displayEditSlots = [];
     this.selectedEventData.displayRegisterSlot = [];
     this.selectedEventData.displayRegisterSlotResponse = [];
+    this.selectedEventData.displayCancelClassFrame = [];
     this.selectedEventData.registerEmail = [];
+    this.selectedEventData.cancelledClass = [];
+    this.cancelClassMessage = [];
 
     //load spaces for event user data
     this.eventUserData.UID = [];
@@ -641,7 +647,10 @@ export class ManageClassesComponent implements OnInit {
               this.selectedEventData.weekNumber.push(i+1);
               this.selectedEventData.displayEditSlots.push(0);
               this.selectedEventData.displayRegisterSlot.push(0);
+              this.selectedEventData.displayCancelClassFrame.push(0);
               this.selectedEventData.displayRegisterSlotResponse.push(0);
+              this.selectedEventData.cancelledClass.push(res[i].active);
+              this.cancelClassMessage.push("Class has already been cancelled");
             }
           }
         },
@@ -869,7 +878,7 @@ export class ManageClassesComponent implements OnInit {
       categoryID = this.editClassVal.categoryID;
     }
 
-    let data = {'classID': this.selectedClassData.classID, 'className': this.selectedClassData.className, 'classLocation': this.selectedClassData.classLocation, 'instructorID': instructorID, 'categoryID': categoryID, 'classImage': this.addClassImage};
+    let data = {'classID': this.selectedClassData.classID, 'className': this.selectedClassData.className, 'classLocation': this.selectedClassData.classLocation, 'instructorID': instructorID, 'categoryID': categoryID, 'classImage': this.addClassImage, 'classDescription':this.editClassVal.classDescription};
     this.http.post(this.jsonURL.getUpdateClassDetailsURL(), data)
     .subscribe(
       (res) => {
@@ -892,4 +901,57 @@ export class ManageClassesComponent implements OnInit {
       }
     );
   }
+
+  enableShowCancelClassConfirm($event) {
+    var currentID = $event["srcElement"]["id"];
+    currentID = currentID.slice(18);
+    console.log(currentID);
+
+    if(this.selectedEventData.displayCancelClassFrame[currentID] == 1) {
+      this.selectedEventData.displayCancelClassFrame [currentID] = 0;
+      return;
+    }
+    else {
+      this.resetRegistersFrames();
+      this.selectedEventData.displayCancelClassFrame[currentID] = 1;
+    }
+    this.loadExtUserList();
+  }
+
+  resetCancelClassFrames() {
+    for(let i =0; i < this.selectedEventData.displayRegisterSlot.length; i++) {
+      this.selectedEventData.displayCancelClassFrame[i] = 0;
+    }
+  }
+
+  cancelClass($i) {
+    var currentEventID = this.selectedEventData.eventID[$i];
+    let data = {'eventID': currentEventID};
+    this.http.post(this.jsonURL.getCancelClassURL(), data)
+    .subscribe(
+      (res) => {
+        if(!res) {
+          console.log("here");
+          return;
+        }
+        if(res.toString() != "") {
+          if(res["valid"] == 1) {
+            this.cancelClassMessage[$i] = res["message"];
+            this.selectedEventData.cancelledClass[$i] = 0;
+          }
+          else {
+          }
+        }
+      },
+      err => {
+        console.log(err);
+        //finish loading
+      }
+    );
+  }
+
+  cancelClassNo($i) {
+    this.selectedEventData.displayCancelClassFrame[$i] = 0;
+  }
+
 }
