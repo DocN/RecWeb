@@ -1,0 +1,90 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+          <div class="row">
+            <div class="col-3">
+              <div class="dashIcon">
+              <i class="fa fa-user"></i>
+              </div>
+              <div class="dashtotalFrame">
+                {{this.summary.numberOfExtUsers}} <br>
+                Total External Users
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="dashIcon2">
+                <i class="fa fa-calendar-o"></i>
+                </div>
+                <div class="dashtotalFrame">
+                  {{this.summary.numberOfEvents}} <br>
+                  Total Classes Scheduled
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="dashIcon3">
+                <i class="fa fa-star"></i>
+                </div>
+                <div class="dashtotalFrame">
+                  {{this.summary.numberOfReviews}} <br>
+                  Total Reviews
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="dashIcon4">
+                <i class="fa fa-male"></i>
+                </div>
+                <div class="dashtotalFrame">
+                  {{this.summary.numberOfInstructors}} <br>
+                  Total Instructors
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-1"></div>
+      </div>
+      <div class="row">
+        <div class="dashpadding50"></div>
+      </div>
+      <div class="row">
+        <div class="col-4">
+          <div class="card cardwidth">
+            <div class="card-body">
+              <h3>Newest Users</h3>
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Email</th>
+                    <th scope="col">Name</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let currentUID of newUser.UID;let i = index">
+                    <td>{{this.newUser.email[i]}}</td>
+                    <td>{{this.newUser.firstName[i]}} {{this.newUser.lastName[i]}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="card cardwidth">
+            <div class="card-body">
+              <h3>Classes This Week</h3>
+            </div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="card cardwidth">
+            <div class="card-body">
+              <h3>Recent Reviews</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

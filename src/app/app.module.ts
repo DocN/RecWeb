@@ -39,6 +39,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
 //material angular
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { ViewReviewsComponent } from './dashboard-modules/view-reviews/view-reviews.component';
+import { MaindashComponent } from './dashboard-modules/maindash/maindash.component';
 
 const appRoutes:Routes = [
   {
@@ -67,6 +68,7 @@ const appRoutes:Routes = [
     ManageClassesComponent,
     ManageClasscategoriesComponent,
     ViewReviewsComponent,
+    MaindashComponent,
   ],
   imports: [
     BrowserModule,
