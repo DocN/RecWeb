@@ -101,15 +101,21 @@
                 <thead>
                   <tr>
                     <th scope="col">Class Name</th>
-                    <th scope="col">Class Location</th>
-                    <th scope="col">Day of Class</th>
+                    <th scope="col">Instructor</th>
+                    <th scope="col">Comment</th>
+                    <th scope="col">Review</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let currentUID of dashReview.className;let i = index">
                     <td>{{this.dashReview.className[i]}}</td>
                     <td>{{this.dashReview.firstname[i]}} {{this.dashReview.lastname[i]}}</td>
-                    <td>{{this.dashReview.starRating[i]}} </td>
+                    <td>{{this.dashReview.reviewText[i]}}</td>
+                    <td>
+                      <span class="stars alignleft">
+                          <span [ngStyle]="{'width':this.dashReview.starRatingDisplay[i]}"></span>
+                      </span>
+                    </td>
                   </tr>
                 </tbody>
               </table>

@@ -129,7 +129,9 @@ export class MaindashComponent implements OnInit {
     this.dashReview.className = [];
     this.dashReview.firstname = [];
     this.dashReview.lastname = [];
+    this.dashReview.reviewText = [];
     this.dashReview.starRating = [];
+    this.dashReview.starRatingDisplay = [];
 
     let data = {};
     this.http.post(this.jsonURL.getDashReviewsURL(), data)
@@ -148,7 +150,9 @@ export class MaindashComponent implements OnInit {
               this.dashReview.className.push(res[i].className);
               this.dashReview.firstname.push(res[i].firstname);
               this.dashReview.lastname.push(res[i].lastname);
+              this.dashReview.reviewText.push(res[i].reviewText);
               this.dashReview.starRating.push(res[i].starRating);
+              this.dashReview.starRatingDisplay.push(this.constructorStar(res[i].starRating));
             }
           }
         },
@@ -170,4 +174,15 @@ export class MaindashComponent implements OnInit {
     this.sundayUnix = this.sundayUnix + 25200;
     console.log(this.mondayUnix + " " + this.sundayUnix);
   }
+
+  constructorStar($rating) {
+    console.log($rating);
+    // Get the value
+    var val = parseFloat($rating);
+    // Turn value into number/100
+    var size = val/5*100;
+    console.log(size);
+    return size + '%';
+  }
+
 }
