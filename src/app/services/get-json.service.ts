@@ -39,6 +39,9 @@ export class GetJsonService {
   private reviewTableURL = 'http://127.0.0.1/bcitrec/reviews/getReviewsTable.php';
   private summaryDashURL = 'http://127.0.0.1/bcitrec/getDashboardData.php';
   private newUsersDashURL = 'http://127.0.0.1/bcitrec/getDashNewUsers.php';
+  private userSettingPasswordURL = 'http://127.0.0.1/bcitrec/userSettingPassword.php';
+  private dashEventsURL = 'http://127.0.0.1/bcitrec/getDashEvents.php';
+  private dashReviewsURL = 'http://127.0.0.1/bcitrec/getDashReviews.php';
   constructor() { }
 
   getAdminModulesURL() {
@@ -171,5 +174,17 @@ export class GetJsonService {
 
   getNewUsersDashURL() {
     return this.newUsersDashURL;
+  }
+
+  getUserSettingPasswordURL() {
+    return this.userSettingPasswordURL;
+  }
+
+  getDashEventsURL() {
+    return this.dashEventsURL;
+  }
+
+  getDashReviewsURL() {
+    return this.dashReviewsURL;
   }
 }

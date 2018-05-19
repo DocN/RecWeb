@@ -18,12 +18,18 @@ export class MaindashComponent implements OnInit {
   private mondayUnix;
   private sundayUnix;
 
+  private dashEvent: any= {};
+
+  private dashReview: any= {};
+
   constructor(private router:Router, private http: HttpClient, private session:SessionService, private jsonURL:GetJsonService, private dashroute:DashrouteService) { }
 
   ngOnInit() {
     this.getSummaryNumbers();
     this.getDashNewUsers();
     this.getWeek();
+    this.getDashWeeklyEvents();
+    this.getDashReview();
   }
 
   getSummaryNumbers() {
@@ -81,6 +87,78 @@ export class MaindashComponent implements OnInit {
         }
     );
   }
+
+  getDashWeeklyEvents() {
+    this.dashEvent.eventID = [];
+    this.dashEvent.classID = [];
+    this.dashEvent.eventDay = [];
+    this.dashEvent.className = [];
+    this.dashEvent.classLocation = [];
+    let data = {};
+    this.http.post(this.jsonURL.getDashEventsURL(), data)
+      .subscribe(
+        (res) => {
+          if(res == null) {
+            return;
+          }
+          if(res.toString() != "") {
+            var count = 0;
+            while(res[count] != null) {
+              count = count +1;
+            }
+            
+            for(let i =0; i < count; i++) {
+              this.dashEvent.eventID.push(res[i].UID);
+              this.dashEvent.classID.push(res[i].email);
+              this.dashEvent.eventDay.push(res[i].eventDay);
+              this.dashEvent.className.push(res[i].className);
+              this.dashEvent.classLocation.push(res[i].classLocation);
+            }
+          }
+        },
+        err => {
+          console.log(err);
+          //finish loading
+        }
+    );
+  }
+
+  
+
+  getDashReview() {
+    this.dashReview.className = [];
+    this.dashReview.firstname = [];
+    this.dashReview.lastname = [];
+    this.dashReview.starRating = [];
+
+    let data = {};
+    this.http.post(this.jsonURL.getDashReviewsURL(), data)
+      .subscribe(
+        (res) => {
+          if(res == null) {
+            return;
+          }
+          if(res.toString() != "") {
+            var count = 0;
+            while(res[count] != null) {
+              count = count +1;
+            }
+            
+            for(let i =0; i < count; i++) {
+              this.dashReview.className.push(res[i].className);
+              this.dashReview.firstname.push(res[i].firstname);
+              this.dashReview.lastname.push(res[i].lastname);
+              this.dashReview.starRating.push(res[i].starRating);
+            }
+          }
+        },
+        err => {
+          console.log(err);
+          //finish loading
+        }
+    );
+  }
+
 
   getWeek() {
     var curr = new Date;

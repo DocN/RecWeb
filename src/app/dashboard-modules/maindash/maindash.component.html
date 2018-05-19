@@ -74,6 +74,22 @@
           <div class="card cardwidth">
             <div class="card-body">
               <h3>Classes This Week</h3>
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Class Name</th>
+                    <th scope="col">Class Location</th>
+                    <th scope="col">Day of Class</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let currentUID of dashEvent.className;let i = index">
+                    <td>{{this.dashEvent.className[i]}}</td>
+                    <td>{{this.dashEvent.classLocation[i]}}</td>
+                    <td>{{this.dashEvent.eventDay[i] * 1000 | date:'EEEE MMMM-dd-yyyy'}} </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -81,6 +97,22 @@
           <div class="card cardwidth">
             <div class="card-body">
               <h3>Recent Reviews</h3>
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Class Name</th>
+                    <th scope="col">Class Location</th>
+                    <th scope="col">Day of Class</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let currentUID of dashReview.className;let i = index">
+                    <td>{{this.dashReview.className[i]}}</td>
+                    <td>{{this.dashReview.firstname[i]}} {{this.dashReview.lastname[i]}}</td>
+                    <td>{{this.dashReview.starRating[i]}} </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>

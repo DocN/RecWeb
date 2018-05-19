@@ -1,0 +1,51 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-1"></div>
+    <div class="col-10">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-6">
+              <div class="addAccountTitle">
+                Account Details
+              </div>
+              <div class="addAccountFont margin15Spacing">Username: 
+                <input name="settingUsername" [(ngModel)]="currentUserSettings.settingUsername" #settingUsername="ngModel" type="text" readonly>
+              </div>
+              <div class="addAccountFont margin15Spacing">First Name: 
+                <input name="settingFirstname" [(ngModel)]="currentUserSettings.settingFirstname" #settingFirstname="ngModel" type="text" readonly>
+              </div>
+              <div class="addAccountFont margin15Spacing">Last Name: 
+                <input name="settingLastname" [(ngModel)]="currentUserSettings.settingLastname" #settingLastname="ngModel" type="text" readonly>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="addAccountTitle">
+                Change Password
+              </div>
+              <div class="addAccountFont warningRed">
+                {{passwordReport}}
+              </div>
+              <div class="addAccountFont margin15Spacing">
+                  Old Password: 
+                  <input name="oldPassword" [(ngModel)]="currentUserSettings.oldPassword" #oldPassword="ngModel" type="password">
+              </div>
+              <div class="addAccountFont margin15Spacing">
+                New Password:
+                <input name="newPassword" [(ngModel)]="currentUserSettings.newPassword" #newPassword="ngModel" type="password"(keyup)="verifyPassword()">
+              </div>
+              <div class="addAccountFont margin15Spacing">
+                Re-type New Password:
+                <input name="reNewPassword" [(ngModel)]="currentUserSettings.reNewPassword" #reNewPassword="ngModel" type="password" (keyup)="verifyPassword()">
+              </div>
+              <div class="addAccountFont margin15Spacing">
+                  <button type="button" class="btn btn-success"(click)="changePassword()">Change Password</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-1"></div>
+  </div>
+</div>
