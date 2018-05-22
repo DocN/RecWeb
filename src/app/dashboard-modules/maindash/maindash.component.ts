@@ -34,14 +34,15 @@ export class MaindashComponent implements OnInit {
 
   getSummaryNumbers() {
     let data = {};
-    this.http.post(this.jsonURL.getscheduleURL(), data)
+    this.http.post(this.jsonURL.getSummaryDashURL(), data)
       .subscribe(
         (res) => {
           if(res == null) {
+            console.log("here asdsad");
             return;
           }
           if(res.toString() != "") {
-            console.log(res);
+            console.log("here");
             this.summary.numberOfExtUsers= res['numberOfExtUsers'];
             this.summary.numberOfEvents= res['numberOfEvents'];
             this.summary.numberOfReviews = res['numberOfReviews'];
