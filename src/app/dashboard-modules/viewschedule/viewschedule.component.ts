@@ -96,7 +96,7 @@ export class ViewscheduleComponent implements OnInit {
   }
 
   createWeeklyCal() {
-    for(let i =0; i <this.dashEvent.classLocation.length; i++) {
+    for(let i =0; i <this.dashEvent.className.length; i++) {
       if(this.dashEvent.dayOfWeek[i] == 1) {
         this.currentWeek.monday.className.push(this.dashEvent.className[i]);
         this.currentWeek.monday.location.push(this.dashEvent.classLocation[i]);
@@ -118,6 +118,7 @@ export class ViewscheduleComponent implements OnInit {
       }
       else if(this.dashEvent.dayOfWeek[i] == 4) {
         if(this.dashEvent.className[i]) {
+          console.log(this.dashEvent.className[i]);
           this.currentWeek.thursday.className.push(this.dashEvent.className[i]);
           this.currentWeek.thursday.location.push(this.dashEvent.classLocation[i]);
           this.currentWeek.thursday.time.push(this.dashEvent.beginHour[i] + ":" + this.dashEvent.beginMin[i] + "-" + this.dashEvent.endHour[i] + ":" + this.dashEvent.endMin[i]);
