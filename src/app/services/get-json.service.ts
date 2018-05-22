@@ -2,48 +2,50 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class GetJsonService {
-  private adminModulesURL = 'http://127.0.0.1/bcitrec/getModules.php';
-  private userInternalCreateURL = 'http://127.0.0.1/bcitrec/addInternalUser.php';
-  private validateUsernameURL = 'http://127.0.0.1/bcitrec/validateUser.php';
-  private getUserInternalListURL = 'http://127.0.0.1/bcitrec/getInternalUsers.php';
-  private changeInternalUserPWURL = 'http://127.0.0.1/bcitrec/updateUserInternalPassword.php';
-  private applyInternalUserChangesURL = 'http://127.0.0.1/bcitrec/updateUserInternalEdit.php';
-  private registerExternalUserURL = 'http://127.0.0.1/bcitrec/external/addExternalUser.php';
-  private validateExtuserURL = 'http://127.0.0.1/bcitrec/external/validateExternalUser.php';
-  private extUsersTableURL = 'http://127.0.0.1/bcitrec/external/getExternalUsers.php';
-  private resetPin = 'http://127.0.0.1/bcitrec/external/resetExtPin.php';
-  private applyAccountURL = "http://127.0.0.1/bcitrec/external/updateExtUserEdit.php";
-  private deleteExtAccountURL = 'http://127.0.0.1/bcitrec/external/deleteExtUser.php';
-  private uploadImageURL = 'http://127.0.0.1/bcitrec/instructor/upload.php';
-  private addInstructorURL = 'http://127.0.0.1/bcitrec/instructor/addInstructor.php';
-  private InstructorTableURL = 'http://127.0.0.1/bcitrec/instructor/getInstructors.php';
-  private deleteInstructorURL = 'http://127.0.0.1/bcitrec/instructor/deleteInstructor.php';
-  private updateInstructorURL = 'http://127.0.0.1/bcitrec/instructor/updateInstructor.php';
-  private uploadClassImageURL = 'http://127.0.0.1/bcitrec/classes/upload.php';
-  private addClassURL = 'http://127.0.0.1/bcitrec/classes/addClass.php';
-  private classCategoriesURL = 'http://127.0.0.1/bcitrec/classes/getClassCategory.php';
-  private createClassCategoryURL = 'http://127.0.0.1/bcitrec/classes/createClassCategory.php';
-  private deleteCategoryURL = 'http://127.0.0.1/bcitrec/classes/deleteClass.php';
-  private updateClassCategoryURL = 'http://127.0.0.1/bcitrec/classes/updateClassCategory.php';
-  private ClassTableURL = 'http://127.0.0.1/bcitrec/classes/getClassesTable.php';
-  private reservedSlotURL = 'http://127.0.0.1/bcitrec/classes/getReservedSlots.php';
-  private updateReservedSlotURL = 'http://127.0.0.1/bcitrec/classes/updateReservedSlot.php';
-  private classEventsURL = 'http://127.0.0.1/bcitrec/classes/getClassEvents.php';
-  private eventUsersURL = 'http://127.0.0.1/bcitrec/classes/getEventUsers.php';
-  private extUserEmailsURL = 'http://127.0.0.1/bcitrec/classes/getExtUserEmails.php';
-  private registerForEventURL = 'http://127.0.0.1/bcitrec/classes/registerForEvent.php';
-  private cancelReservationURL = 'http://127.0.0.1/bcitrec/classes/cancelReservation.php';
-  private updateClassDetailsURL = 'http://127.0.0.1/bcitrec/classes/updateClassDetails.php';
-  private userRegisteredEventsURL = 'http://127.0.0.1/bcitrec/external/getUserRegisteredEvents.php';
-  private cancelClassURL = 'http://127.0.0.1/bcitrec/classes/cancelClass.php';
-  private reviewTableURL = 'http://127.0.0.1/bcitrec/reviews/getReviewsTable.php';
-  private summaryDashURL = 'http://127.0.0.1/bcitrec/getDashboardData.php';
-  private newUsersDashURL = 'http://127.0.0.1/bcitrec/getDashNewUsers.php';
-  private userSettingPasswordURL = 'http://127.0.0.1/bcitrec/userSettingPassword.php';
-  private dashEventsURL = 'http://127.0.0.1/bcitrec/getDashEvents.php';
-  private dashReviewsURL = 'http://127.0.0.1/bcitrec/getDashReviews.php';
-  private messageClassURL = 'http://127.0.0.1/bcitrec/classes/sendClassMsg.php';
-  private scheduleURL = 'http://127.0.0.1/bcitrec/schedule/getSchedule.php';
+  private originalURL = "http://159.89.138.93/bcitrec/";
+  private adminModulesURL = this.originalURL + 'getModules.php';
+  private userInternalCreateURL = this.originalURL + 'addInternalUser.php';
+  private validateUsernameURL = this.originalURL + 'validateUser.php';
+  private getUserInternalListURL = this.originalURL + 'getInternalUsers.php';
+  private changeInternalUserPWURL = this.originalURL + 'updateUserInternalPassword.php';
+  private applyInternalUserChangesURL = this.originalURL + 'updateUserInternalEdit.php';
+  private registerExternalUserURL = this.originalURL + 'external/addExternalUser.php';
+  private validateExtuserURL = this.originalURL + 'external/validateExternalUser.php';
+  private extUsersTableURL = this.originalURL + 'external/getExternalUsers.php';
+  private resetPin = this.originalURL + 'external/resetExtPin.php';
+  private applyAccountURL = this.originalURL + "external/updateExtUserEdit.php";
+  private deleteExtAccountURL = this.originalURL + 'external/deleteExtUser.php';
+  private uploadImageURL = this.originalURL + 'instructor/upload.php';
+  private addInstructorURL = this.originalURL + 'instructor/addInstructor.php';
+  private InstructorTableURL = this.originalURL + 'instructor/getInstructors.php';
+  private deleteInstructorURL = this.originalURL + 'instructor/deleteInstructor.php';
+  private updateInstructorURL = this.originalURL + 'instructor/updateInstructor.php';
+  private uploadClassImageURL = this.originalURL + 'classes/upload.php';
+  private addClassURL = this.originalURL + 'classes/addClass.php';
+  private classCategoriesURL = this.originalURL + 'classes/getClassCategory.php';
+  private createClassCategoryURL = this.originalURL + 'classes/createClassCategory.php';
+  private deleteCategoryURL = this.originalURL + 'classes/deleteClass.php';
+  private updateClassCategoryURL = this.originalURL + 'classes/updateClassCategory.php';
+  private ClassTableURL = this.originalURL + 'classes/getClassesTable.php';
+  private reservedSlotURL = this.originalURL + 'classes/getReservedSlots.php';
+  private updateReservedSlotURL = this.originalURL + 'classes/updateReservedSlot.php';
+  private classEventsURL = this.originalURL + 'classes/getClassEvents.php';
+  private eventUsersURL = this.originalURL + 'classes/getEventUsers.php';
+  private extUserEmailsURL = this.originalURL + 'classes/getExtUserEmails.php';
+  private registerForEventURL = this.originalURL + 'classes/registerForEvent.php';
+  private cancelReservationURL = this.originalURL + 'classes/cancelReservation.php';
+  private updateClassDetailsURL = this.originalURL + 'classes/updateClassDetails.php';
+  private userRegisteredEventsURL = this.originalURL + 'external/getUserRegisteredEvents.php';
+  private cancelClassURL = this.originalURL + 'classes/cancelClass.php';
+  private reviewTableURL = this.originalURL + 'reviews/getReviewsTable.php';
+  private summaryDashURL = this.originalURL + 'getDashboardData.php';
+  private newUsersDashURL = this.originalURL + 'getDashNewUsers.php';
+  private userSettingPasswordURL = this.originalURL + 'userSettingPassword.php';
+  private dashEventsURL = this.originalURL + 'getDashEvents.php';
+  private dashReviewsURL = this.originalURL + 'getDashReviews.php';
+  private messageClassURL = this.originalURL + 'classes/sendClassMsg.php';
+  private scheduleURL = this.originalURL + 'schedule/getSchedule.php';
+  private fullDeleteClassURL = this.originalURL + 'classes/fullDeleteClass.php';
   constructor() { }
 
   getAdminModulesURL() {
@@ -196,4 +198,9 @@ export class GetJsonService {
   getscheduleURL() {
     return this.scheduleURL;
   }
+
+  getFullDeleteClassURL() {
+    return this.fullDeleteClassURL;
+  }
+
 }

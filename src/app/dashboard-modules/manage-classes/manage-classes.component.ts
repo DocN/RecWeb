@@ -181,7 +181,7 @@ export class ManageClassesComponent implements OnInit {
     this.selectedInstructor = $event;
     this.editClassVal.instructorID = this.instructorTable.instructorID[$event];
     console.log(this.editClassVal.instructorID);
-    //this.loadInstructor();
+    this.loadInstructor();
   }
 
   loadInstructor() {
@@ -1034,5 +1034,30 @@ export class ManageClassesComponent implements OnInit {
         }
     );
   }
-
+  /*
+  deleteClass() {
+    let data = {'classID': this.selectedClassData.classID};
+    this.http.post(this.jsonURL.getFullDeleteClassURL(), data)
+      .subscribe(
+        (res) => {
+          if(!res) {
+            return;
+          }
+          if(res.toString() != "") {
+            if(res["valid"] == 1) {
+              this.messageResponse[$i] = res["message"];
+              this.selectedEventData.displayMsgResponse[$i] = 1;
+            }
+            else {
+              this.messageErrorMsg[$i] = res["message"];
+            }
+          }
+        },
+        err => {
+          console.log(err);
+          //finish loading
+        }
+    );
+  }
+  */
 }

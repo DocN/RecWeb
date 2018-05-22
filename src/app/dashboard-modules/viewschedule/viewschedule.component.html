@@ -6,26 +6,77 @@
           <h1>Current Week</h1>
         </div>
         <div class="row">
-          <table class="table table-striped">
-          <thead>
-            <tr>
-              <th scope="col">Monday</th>
-              <th scope="col">Tuesday</th>
-              <th scope="col">Wednesday</th>
-              <th scope="col">Thursday</th>
-              <th scope="col">Friday</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let currentEvent of currentWeek.monday.className;let i = index">
-              <td style="width: 20%">{{currentWeek.monday.className[i]}} <br> {{currentWeek.monday.location[i]}} <br>{{currentWeek.monday.time[i]}}</td>
-              <td style="width: 20%">{{currentWeek.tuesday.className[i]}} <br> {{currentWeek.tuesday.location[i]}} <br>{{currentWeek.tuesday.time[i]}}</td>
-              <td style="width: 20%">{{currentWeek.wednesday.className[i]}} <br> {{currentWeek.wednesday.location[i]}} <br>{{currentWeek.wednesday.time[i]}}</td>
-              <td style="width: 20%">{{currentWeek.thursday.className[i]}} <br> {{currentWeek.thursday.location[i]}} <br>{{currentWeek.thursday.time[i]}}</td>
-              <td style="width: 20%">{{currentWeek.friday.className[i]}} <br> {{currentWeek.friday.location[i]}} <br>{{currentWeek.friday.time[i]}}</td>
-            </tr>
-          </tbody>
-        </table>
+          <div class="col-1"></div>
+          <div class="col-2">
+            <table class="table table-striped pull-left">
+            <thead>
+              <tr>
+                <th scope="col">Monday</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let currentEvent of currentWeek.monday.className;let i = index">
+                <td style="width: 20%">{{currentWeek.monday.className[i]}} <br> {{currentWeek.monday.location[i]}} <br>{{currentWeek.monday.time[i]}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-2">
+          <table class="table table-striped pull-left">
+            <thead>
+              <tr>
+                <th scope="col">Tuesday</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let currentEvent of currentWeek.tuesday.className;let i = index">
+                <td style="width: 20%">{{currentWeek.tuesday.className[i]}} <br> {{currentWeek.tuesday.location[i]}} <br>{{currentWeek.tuesday.time[i]}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-2">
+          <table class="table table-striped pull-left">
+            <thead>
+              <tr>
+                <th scope="col">Wednesday</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let currentEvent of currentWeek.wednesday.className;let i = index">
+                <td style="width: 20%">{{currentWeek.wednesday.className[i]}} <br> {{currentWeek.wednesday.location[i]}} <br>{{currentWeek.wednesday.time[i]}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-2">
+          <table class="table table-striped pull-left">
+            <thead>
+              <tr>
+                <th scope="col">Thursday</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let currentEvent of currentWeek.wednesday.className;let i = index">
+                <td style="width: 20%">{{currentWeek.thursday.className[i]}} <br> {{currentWeek.thursday.location[i]}} <br>{{currentWeek.thursday.time[i]}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-2">
+          <table class="table table-striped pull-left">
+            <thead>
+              <tr>
+                <th scope="col">Friday</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let currentEvent of currentWeek.wednesday.className;let i = index">
+                <td style="width: 20%">{{currentWeek.friday.className[i]}} <br> {{currentWeek.friday.location[i]}} <br>{{currentWeek.friday.time[i]}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>

@@ -16,7 +16,7 @@ export class LoginPortalComponent implements OnInit {
   private model: any = {};
 
   //auth url
-  private loginurl = "http://127.0.0.1/bcitrec/login.php"
+  private loginurl = "http://159.89.138.93/bcitrec/login.php"
   
   ngOnInit() {
   }
