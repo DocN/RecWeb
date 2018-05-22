@@ -41,6 +41,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { ViewReviewsComponent } from './dashboard-modules/view-reviews/view-reviews.component';
 import { MaindashComponent } from './dashboard-modules/maindash/maindash.component';
 import { UsersettingsComponent } from './dashboard-modules/usersettings/usersettings.component';
+import { ViewscheduleComponent } from './dashboard-modules/viewschedule/viewschedule.component';
 
 const appRoutes:Routes = [
   {
@@ -71,6 +72,7 @@ const appRoutes:Routes = [
     ViewReviewsComponent,
     MaindashComponent,
     UsersettingsComponent,
+    ViewscheduleComponent,
   ],
   imports: [
     BrowserModule,

@@ -42,6 +42,8 @@ export class GetJsonService {
   private userSettingPasswordURL = 'http://127.0.0.1/bcitrec/userSettingPassword.php';
   private dashEventsURL = 'http://127.0.0.1/bcitrec/getDashEvents.php';
   private dashReviewsURL = 'http://127.0.0.1/bcitrec/getDashReviews.php';
+  private messageClassURL = 'http://127.0.0.1/bcitrec/classes/sendClassMsg.php';
+  private scheduleURL = 'http://127.0.0.1/bcitrec/schedule/getSchedule.php';
   constructor() { }
 
   getAdminModulesURL() {
@@ -186,5 +188,12 @@ export class GetJsonService {
 
   getDashReviewsURL() {
     return this.dashReviewsURL;
+  }
+  getMessageClassURL() {
+    return this.messageClassURL;
+  }
+
+  getscheduleURL() {
+    return this.scheduleURL;
   }
 }

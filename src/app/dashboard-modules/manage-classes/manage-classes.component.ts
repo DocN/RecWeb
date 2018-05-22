@@ -63,6 +63,11 @@ export class ManageClassesComponent implements OnInit {
   //cancel class
   private cancelClassMessage = [];
   //validation patterns
+
+  //message class
+  private messageResponse = [];
+  private messageErrorMsg = [];
+
   emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
 
 
@@ -615,8 +620,12 @@ export class ManageClassesComponent implements OnInit {
     this.selectedEventData.displayEditSlots = [];
     this.selectedEventData.displayRegisterSlot = [];
     this.selectedEventData.displayRegisterSlotResponse = [];
+    this.selectedEventData.displayMsgResponse = [];
     this.selectedEventData.displayCancelClassFrame = [];
+    this.selectedEventData.displayMessageClassFrame = [];
     this.selectedEventData.registerEmail = [];
+    this.selectedEventData.msgSubject = [];
+    this.selectedEventData.msgBody = [];
     this.selectedEventData.cancelledClass = [];
     this.cancelClassMessage = [];
 
@@ -648,7 +657,9 @@ export class ManageClassesComponent implements OnInit {
               this.selectedEventData.displayEditSlots.push(0);
               this.selectedEventData.displayRegisterSlot.push(0);
               this.selectedEventData.displayCancelClassFrame.push(0);
+              this.selectedEventData.displayMessageClassFrame.push(0);
               this.selectedEventData.displayRegisterSlotResponse.push(0);
+              this.selectedEventData.displayMsgResponse.push(0);
               this.selectedEventData.cancelledClass.push(res[i].active);
               this.cancelClassMessage.push("Class has already been cancelled");
             }
@@ -952,6 +963,76 @@ export class ManageClassesComponent implements OnInit {
 
   cancelClassNo($i) {
     this.selectedEventData.displayCancelClassFrame[$i] = 0;
+  }
+
+  resetDisplayMessageClassFrame() {
+    for(let i =0; i < this.selectedEventData.displayCancelClassFrame.length; i++) {
+      this.selectedEventData.displayCancelClassFrame[i] = 0;
+    }
+  }
+
+  enableShowMessageClassFrame($event) {
+    var currentID = $event["srcElement"]["id"];
+    currentID = currentID.slice(18);
+    console.log(currentID);
+
+    if(this.selectedEventData.displayMessageClassFrame[currentID] == 1) {
+      this.selectedEventData.displayMessageClassFrame[currentID] = 0;
+      return;
+    }
+    else {
+      this.resetRegistersFrames();
+      this.resetDisplayMessageClassFrame();
+      this.selectedEventData.displayMessageClassFrame[currentID] = 1;
+    }
+    this.loadExtUserList();
+  }
+
+  sentEventMessage($event, $i) {
+    console.log($i);
+    var validation = true;
+    this.regErrors = [];
+    if(!this.selectedEventData.msgSubject[$i] || this.selectedEventData.msgSubject[$i].length < 0) {
+      this.regErrors.push("*Error please enter a valid subject");
+      validation = false;
+    }
+    if(!this.selectedEventData.msgBody[$i] || this.selectedEventData.msgBody[$i].length < 0) {
+      this.regErrors.push("*Error please enter a valid message");
+      validation = false;
+    }
+
+    if(validation == false) {
+      return;
+    }
+    var currentSubject = this.selectedEventData.msgSubject[$i];
+    var currentMessage = this.selectedEventData.msgBody[$i];
+    
+    console.log(currentSubject + currentMessage);
+  //message class
+
+    let data = {'eventID': this.selectedEventData.eventID[$i], 'msgSubject': currentSubject, 'msgBody': currentMessage};
+    this.http.post(this.jsonURL.getMessageClassURL(), data)
+      .subscribe(
+        (res) => {
+          if(!res) {
+            return;
+          }
+          if(res.toString() != "") {
+
+            if(res["valid"] == 1) {
+              this.messageResponse[$i] = res["message"];
+              this.selectedEventData.displayMsgResponse[$i] = 1;
+            }
+            else {
+              this.messageErrorMsg[$i] = res["message"];
+            }
+          }
+        },
+        err => {
+          console.log(err);
+          //finish loading
+        }
+    );
   }
 
 }

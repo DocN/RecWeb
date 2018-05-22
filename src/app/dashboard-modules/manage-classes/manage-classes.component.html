@@ -400,6 +400,7 @@
                       <button id="showDropinSlots{{i}}" type="button" class="btn btn-secondary pull-left" (click)="enableShowDropinSlot($event)">{{selectedEventData.usedSlots[i]}}/{{selectedEventData.maxSlots[i]}} Manage Drop-in Slots</button>
                       <button id="registerDropinSlot{{i}}" type="button" class="btn btn-info pull-left" (click)="enableShowRegisterDropinSlot($event)">Register User</button>
                       <button id="registerDropinSlot{{i}}" type="button" class="btn btn-danger pull-left" (click)="enableShowCancelClassConfirm($event)">Cancel Class</button>
+                      <button id="registerDropinSlot{{i}}" type="button" class="btn btn-warning pull-left" (click)="enableShowMessageClassFrame($event)">Contact Class</button>
                     </div>
                   </div>
                   <!-- display table of users registered in drop in-->
@@ -474,6 +475,38 @@
                     </div>
                   </div>
                   <!--display registration form END-->
+
+                  <!--Display contact form Begin -->
+                  <div class="row" *ngIf="this.selectedEventData.displayMessageClassFrame[i] == 1">
+                    <div class="col-12">
+                        <div class="card editUserCard">
+                          <div class="card-body" *ngIf="this.selectedEventData.displayMsgResponse[i] == 0">
+                            <h1>Message the Class</h1>
+                            <div class="row">
+                              <div class="col-6">
+                                Subject:
+                                <input class="width100" [(ngModel)]="selectedEventData.msgSubject[i]" type="text">
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-6">
+                                Message: <br>
+                                <textarea class="width100" [(ngModel)]="selectedEventData.msgBody[i]" rows="4" cols="50"></textarea>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-12">
+                                <button id="sendMessage{{i}}" type="button" class="btn btn-success pull-right" (click)="sentEventMessage($event, i)">Send Message</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="card-body" *ngIf="this.selectedEventData.displayMsgResponse[i] == 1">
+                          <div class="successregisterMessage"><i class="fa fa-check"> </i> {{this.messageResponse[i]}}</div>
+                        </div>
+                    </div>
+                  </div>
+                  <!--Display contact form END -->
 
                   <!--Display class cancellation frame -->
                   <div class="row" *ngIf="this.selectedEventData.displayCancelClassFrame[i] == 1">

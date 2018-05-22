@@ -83,5 +83,8 @@ export class DashboardComponent implements OnInit {
     else if($event == '/reviews') {
       this.dashroute.currentTitle = "Reviews Summary";
     }
+    else if($event == '/schedule') {
+      this.dashroute.currentTitle = "View Schedule";
+    }
   }
 }
