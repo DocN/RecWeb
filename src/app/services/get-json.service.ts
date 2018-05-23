@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class GetJsonService {
-  private originalURL = "http://159.89.138.93/bcitrec/";
+  //private originalURL = "http://159.89.138.93/bcitrec/";
+  private originalURL = "http://127.0.0.1/bcitrec/";
   private adminModulesURL = this.originalURL + 'getModules.php';
   private userInternalCreateURL = this.originalURL + 'addInternalUser.php';
   private validateUsernameURL = this.originalURL + 'validateUser.php';

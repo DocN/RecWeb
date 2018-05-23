@@ -352,6 +352,14 @@
                     </select>
                   </div>
                 </div>
+                <div class="addAccountFont frameIt rowPadding">
+                  Delete the Class: <br>
+                  <button type="button" class="btn btn-danger" (click)="openPromptDeleteClass()">Delete Class</button> <br>
+                  <div *ngIf="this.promptDeleteClass == 1">
+                    Are you sure you want to delete this class? <br>
+                    <button type="button" class="btn btn-danger" (click)="deleteClass()">Yes</button><button type="button" class="btn btn-warning" (click)="openPromptDeleteClass()">No</button>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="row">
@@ -368,6 +376,7 @@
       <div class="padSpacing50"></div>
     </div>
   </div>
+
    <!-- Selected Class Edit END-->
   <div *ngIf="this.route == 3 && this.subRoute == 2">
     <div class="container">

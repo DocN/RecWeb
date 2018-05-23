@@ -68,6 +68,9 @@ export class ManageClassesComponent implements OnInit {
   private messageResponse = [];
   private messageErrorMsg = [];
 
+  //deleted class
+  private deletedClassResponse = "";
+  private promptDeleteClass = 0;
   emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
 
 
@@ -1034,7 +1037,15 @@ export class ManageClassesComponent implements OnInit {
         }
     );
   }
-  /*
+
+  openPromptDeleteClass() {
+    if(this.promptDeleteClass == 0) {
+      this.promptDeleteClass = 1;
+    }
+    else {
+      this.promptDeleteClass = 0;
+    }
+  }
   deleteClass() {
     let data = {'classID': this.selectedClassData.classID};
     this.http.post(this.jsonURL.getFullDeleteClassURL(), data)
@@ -1045,11 +1056,9 @@ export class ManageClassesComponent implements OnInit {
           }
           if(res.toString() != "") {
             if(res["valid"] == 1) {
-              this.messageResponse[$i] = res["message"];
-              this.selectedEventData.displayMsgResponse[$i] = 1;
-            }
-            else {
-              this.messageErrorMsg[$i] = res["message"];
+              this.successMessageInternal = res["message"];
+              this.route = 3;
+              this.subRoute = 2;
             }
           }
         },
@@ -1059,5 +1068,4 @@ export class ManageClassesComponent implements OnInit {
         }
     );
   }
-  */
 }
