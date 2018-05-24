@@ -3,6 +3,7 @@ import * as crypto from 'crypto-js';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { SessionService } from '../services/session.service';
+import { GetJsonService } from '../services/get-json.service';
 
 @Component({
   selector: 'app-login-portal',
@@ -11,14 +12,15 @@ import { SessionService } from '../services/session.service';
 })
 export class LoginPortalComponent implements OnInit {
 
-  constructor(private router:Router, private http: HttpClient, private session:SessionService) { }
+  constructor(private router:Router, private http: HttpClient, private session:SessionService, private jsonURL:GetJsonService) { }
   //credentials array
   private model: any = {};
 
   //auth url
-  private loginurl = "http://159.89.138.93/bcitrec/login.php"
+  private loginurl = "";
   
   ngOnInit() {
+    this.loginurl = this.jsonURL.getloginURL();
   }
 
   login() {

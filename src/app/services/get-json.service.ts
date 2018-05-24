@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class GetJsonService {
-  //private originalURL = "http://159.89.138.93/bcitrec/";
-  private originalURL = "http://127.0.0.1/bcitrec/";
+  private originalURL = "http://159.89.147.136/bcitrec/";
+  //private originalURL = "http://127.0.0.1/bcitrec/";
   private adminModulesURL = this.originalURL + 'getModules.php';
   private userInternalCreateURL = this.originalURL + 'addInternalUser.php';
   private validateUsernameURL = this.originalURL + 'validateUser.php';
@@ -47,6 +47,7 @@ export class GetJsonService {
   private messageClassURL = this.originalURL + 'classes/sendClassMsg.php';
   private scheduleURL = this.originalURL + 'schedule/getSchedule.php';
   private fullDeleteClassURL = this.originalURL + 'classes/fullDeleteClass.php';
+  private loginURL = this.originalURL + 'login.php';
   constructor() { }
 
   getAdminModulesURL() {
@@ -202,6 +203,10 @@ export class GetJsonService {
 
   getFullDeleteClassURL() {
     return this.fullDeleteClassURL;
+  }
+
+  getloginURL() {
+    return this.loginURL;
   }
 
 }
